@@ -12,13 +12,109 @@
 
     <link rel="stylesheet" href="./pages/index.css" />
   </head>
-  <body>
-    <header class="header"></header>
+  <body class="page">
+    <header class="header">
+      <img
+        class="header__logo"
+        src="./images/HeaderLogo.svg"
+        alt="Graphic Around the World in the US"
+      />
+    </header>
     <main>
-      <section class="profile"></section>
-      <section class="cards"></section>
+      <section class="profile">
+        <img
+          class="profile__avatar"
+          src="./images/Profile.jpg"
+          alt="Picture of Jack Cousteau"
+        />
+        <div class="profile__details">
+          <h1 class="profile__name">Jacques Cousteau</h1>
+          <button class="profile__button-edit"></button>
+          <p class="profile__about">Explorer</p>
+        </div>
+        <button class="profile__button-add"></button>
+      </section>
+      <section class="cards">
+        <ul class="cards__list">
+          <li class="cards__item">
+            <img
+              src="./images/Yosemite.jpg"
+              alt="Yosemite Valley"
+              class="cards__image"
+            />
+            <div class="cards__textbox">
+              <h1 class="cards__text">Yosemite Valley</h1>
+              <img src="./images/heartemoji.svg" alt="heart emoji"
+              class="cards__emoji";
+            </div>
+          </li>
+
+          <li class="cards__item">
+            <img
+              src="./images/lakelouise.jpg"
+              alt="Lake Louise"
+              class="cards__image"
+            />
+            <div class="cards__textbox">
+              <h1 class="cards__text">Lake Louise</h1>
+              <img src="./images/heartemoji.svg" alt="heart emoji"
+              class="cards__emoji";
+            </div>
+          </li>
+          <li class="cards__item">
+            <img
+              src="./images/baldmountains.jpg"
+              alt="Bald Mountains"
+              class="cards__image"
+            />
+            <div class="cards__textbox">
+              <h1 class="cards__text">Bald Mountains</h1>
+              <img src="./images/heartemoji.svg" alt="heart emoji"
+              class="cards__emoji";
+            </div>
+          </li>
+          <li class="cards__item">
+            <img
+              src="./images/latemar.jpg"
+              alt="Latemar"
+              class="cards__image"
+            />
+            <div class="cards__textbox">
+              <h1 class="cards__text">Latemar</h1>
+              <img src="./images/heartemoji.svg" alt="heart emoji"
+              class="cards__emoji";
+            </div>
+          </li>
+          <li class="cards__item">
+            <img
+              src="./images/vanoise.jpg"
+              alt="Vanoise National Park"
+              class="cards__image"
+            />
+            <div class="cards__textbox">
+              <h1 class="cards__text">Vanoise National Park</h1>
+              <img src="./images/heartemoji.svg" alt="heart emoji"
+              class="cards__emoji";
+            </div>
+          </li>
+          <li class="cards__item">
+            <img
+              src="./images/lagodibraies.jpg"
+              alt="Lago di Braies"
+              class="cards__image"
+            />
+            <div class="cards__textbox">
+              <h1 class="cards__text">Lago di Braies</h1>
+              <img src="./images/heartemoji.svg" alt="heart emoji"
+              class="cards__emoji";
+            </div>
+          </li>
+        </ul>
+      </section>
     </main>
-    <footer class="footer"></footer>
-    <script></script>
+    <footer class="footer">
+      <h2 class="footer__text">© 2021 Around The U.S.</h2>
+    </footer>
+    <script defer src="./scripts/index.js"></script>
   </body>
 </html>
