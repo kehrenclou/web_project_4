@@ -11,3 +11,14 @@
   max-width: 173px;
   max-height: 33px;
 }
+
+@media screen and (max-width: 625px) {
+  /*was at 409 625 is where other breaks are*/
+  .header {
+    padding: 28px 0 32px 8px;
+  }
+  .header__logo {
+    max-width: 126px;
+    max-height: 24px;
+  }
+}

@@ -80,3 +80,41 @@
   opacity: 0.6;
   border: 1px solid white;
 }
+
+@media screen and (max-width: 770px) {
+  .profile {
+    flex-direction: column;
+  }
+  .profile__details {
+    margin-top: 30px;
+    margin-left: 0;
+    grid-template-areas:
+      "name button-add"
+      "about about";
+  }
+  .profile__about {
+    text-align: center;
+  }
+  .profile__button-add {
+    margin: 36px auto 0;
+    min-width: 282px;
+  }
+}
+@media screen and (max-width: 625px) {
+  /*was at 490px tablet view awkward at 667px, 670 nice 625 where other break is*/
+  .profile_-details {
+    margin-top: 42px;
+    row-gap: 14px;
+  }
+  .profile__name {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+  .profile__button-edit {
+    width: 18px;
+    height: 18px;
+  }
+  .profile__about {
+    font-size: 14px;
+  }
+}

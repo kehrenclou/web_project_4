@@ -39,10 +39,19 @@
 }
 .cards__emoji {
   margin-left: auto;
+  transition: opacity 0.25s ease-in-out;
+}
+.cards__emoji:hover {
+  opacity: 0.5;
 }
 
 @media screen and (max-width: 920px) {
   .cards__list {
     max-width: 581px;
+  }
+}
+@media screen and (max-width: 625px) {
+  .cards__list {
+    max-width: 282px;
   }
 }
