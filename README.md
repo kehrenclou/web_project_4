@@ -20,6 +20,8 @@ This is a project that creates a social media type platform similar to Instagram
 
 ## Link to Github Project
 
+https://github.com/kehrenclou/web_project_4.git
+
 ## Plan on improving project
 
 - TBD
