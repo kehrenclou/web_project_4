@@ -10,8 +10,7 @@
   grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
   gap: 20px 17px;
 }
-.cards__item {
-}
+
 .cards__image {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -22,6 +21,7 @@
   background-color: white;
   padding: 25px 15px 31px 21px;
   justify-content: center;
+  align-items: center;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   max-width: 282px;
@@ -37,14 +37,26 @@
   white-space: nowrap;
   overflow: hidden;
 }
-.cards__emoji {
+
+.cards__button-like {
   margin-left: auto;
+  width: 21px;
+  height: 19px;
+
+  background-image: url("../images/heartemoji.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
   transition: opacity 0.25s ease-in-out;
 }
-.cards__emoji:hover {
+.cards__button-like:hover {
   opacity: 0.5;
 }
 
+.cards__button-like_active {
+  background-image: url("../images/heartemojiactive.svg");
+}
 @media screen and (max-width: 920px) {
   .cards__list {
     max-width: 581px;

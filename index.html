@@ -28,15 +28,18 @@
           alt="Picture of Jack Cousteau"
         />
         <div class="profile__details">
-          <h1 class="profile__name">Jacques Cousteau</h1>
-          <button class="profile__button-edit"></button>
-          <p class="profile__about">Explorer</p>
+          <h1 class="profile__name" id="profile-name">Jacques Cousteau</h1>
+          <button
+            class="profile__button-edit"
+            id="edit-profile-open-button"
+          ></button>
+          <p class="profile__about" id="profile-about">Explorer</p>
         </div>
         <button class="profile__button-add"></button>
       </section>
       <section class="cards">
         <ul class="cards__list">
-          <li class="cards__item">
+          <li>
             <img
               src="./images/Yosemite.jpg"
               alt="Yosemite Valley"
@@ -44,12 +47,11 @@
             />
             <div class="cards__textbox">
               <h1 class="cards__text">Yosemite Valley</h1>
-              <img src="./images/heartemoji.svg" alt="heart emoji"
-              class="cards__emoji";
+              <button class="cards__button-like"></button>
             </div>
           </li>
 
-          <li class="cards__item">
+          <li>
             <img
               src="./images/lakelouise.jpg"
               alt="Lake Louise"
@@ -57,11 +59,10 @@
             />
             <div class="cards__textbox">
               <h1 class="cards__text">Lake Louise</h1>
-              <img src="./images/heartemoji.svg" alt="heart emoji"
-              class="cards__emoji";
+              <button class="cards__button-like"></button>
             </div>
           </li>
-          <li class="cards__item">
+          <li>
             <img
               src="./images/baldmountains.jpg"
               alt="Bald Mountains"
@@ -69,11 +70,10 @@
             />
             <div class="cards__textbox">
               <h1 class="cards__text">Bald Mountains</h1>
-              <img src="./images/heartemoji.svg" alt="heart emoji"
-              class="cards__emoji";
+              <button class="cards__button-like"></button>
             </div>
           </li>
-          <li class="cards__item">
+          <li>
             <img
               src="./images/latemar.jpg"
               alt="Latemar"
@@ -81,11 +81,10 @@
             />
             <div class="cards__textbox">
               <h1 class="cards__text">Latemar</h1>
-              <img src="./images/heartemoji.svg" alt="heart emoji"
-              class="cards__emoji";
+              <button class="cards__button-like"></button>
             </div>
           </li>
-          <li class="cards__item">
+          <li>
             <img
               src="./images/vanoise.jpg"
               alt="Vanoise National Park"
@@ -93,11 +92,10 @@
             />
             <div class="cards__textbox">
               <h1 class="cards__text">Vanoise National Park</h1>
-              <img src="./images/heartemoji.svg" alt="heart emoji"
-              class="cards__emoji";
+              <button class="cards__button-like"></button>
             </div>
           </li>
-          <li class="cards__item">
+          <li>
             <img
               src="./images/lagodibraies.jpg"
               alt="Lago di Braies"
@@ -105,8 +103,7 @@
             />
             <div class="cards__textbox">
               <h1 class="cards__text">Lago di Braies</h1>
-              <img src="./images/heartemoji.svg" alt="heart emoji"
-              class="cards__emoji";
+              <button class="cards__button-like"></button>
             </div>
           </li>
         </ul>
@@ -115,6 +112,27 @@
     <footer class="footer">
       <h2 class="footer__text">© 2021 Around The U.S.</h2>
     </footer>
-    <script defer src="./scripts/index.js"></script>
+    <div class="modal" id="modal-edit-profile">
+      <div class="modal__content">
+        <button class="modal__button-close" id="modal-close-button"></button>
+        <h2 class="modal__title">Edit profile</h1>
+        <form class="modal__form" id="modal-form-edit-profile">
+          <input name="input-name" placeholder="Name" class="modal__input" />
+          <input
+            name="input-about"
+            placeholder="About me"
+            class="modal__input"
+          />
+          <button
+            type="submit"
+            id="edit-profile-submit-button"
+            class="modal__button-submit"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
