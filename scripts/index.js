@@ -16,36 +16,43 @@ const profileName = document.querySelector("#profile-name");
 const profileAbout = document.querySelector("#profile-about");
 
 //functions
+function openEditModal() {
+  editProfileModalEl.classList.add("modal_open");
+}
 function closeEditModal() {
   editProfileModalEl.classList.remove("modal_open");
 }
 
-//event listeners
-
-openEditProfileButtonEl.addEventListener("click", () => {
-  editProfileModalEl.classList.add("modal_open");
+function populateFormInputs() {
   editFormNameInput.value = profileName.textContent;
   editFormAboutInput.value = profileAbout.textContent;
-});
+}
 
-// editFormNameInput.addEventListener("click", () => {
-//   editFormNameInput.value = "";
-// });
-
-// editFormAboutInput.addEventListener("click", () => {
-//   editFormAboutInput.value = "";
-// });
-
-// closeEditProfileButtonEl.addEventListener("click", () => {
-//   closeEditModal();
-// });
-
-editProfileFormEl.addEventListener("submit", (e) => {
-  e.preventDefault();
+function populatePageFromFormInputs() {
   profileName.textContent = editFormNameInput.value;
   profileAbout.textContent = editFormAboutInput.value;
-  closeEditModal();
-});
+}
+
+//event listeners
+
+openEditProfileButtonEl.addEventListener(
+  "click",
+  openEditModal,
+  true
+); /*true sets capture handle parent first*/
+openEditProfileButtonEl.addEventListener("click", populateFormInputs);
+
+closeEditProfileButtonEl.addEventListener("click", closeEditModal);
+
+editProfileFormEl.addEventListener(
+  "submit",
+  (e) => {
+    e.preventDefault();
+  },
+  true
+);
+editProfileFormEl.addEventListener("submit", populatePageFromFormInputs);
+editProfileFormEl.addEventListener("submit", closeEditModal);
 
 // //heart scripts
 // //variables
