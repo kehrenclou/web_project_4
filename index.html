@@ -30,12 +30,18 @@
         <div class="profile__details">
           <h1 class="profile__name" id="profile-name">Jacques Cousteau</h1>
           <button
-            class="profile__button-edit"
+            aria-label="Edit Profile Button"
+            type="button"
+            class="button profile__button-edit"
             id="edit-profile-open-button"
           ></button>
           <p class="profile__about" id="profile-about">Explorer</p>
         </div>
-        <button class="profile__button-add"></button>
+        <button
+          aria-label="Add Place Button"
+          type="button"
+          class="button profile__button-add"
+        ></button>
       </section>
       <section class="cards">
         <ul class="cards__list">
@@ -47,7 +53,11 @@
             />
             <div class="cards__textbox">
               <p class="cards__text">Yosemite Valley</p>
-              <button class="cards__button-like"></button>
+              <button
+                aria-label="Like Button"
+                type="button"
+                class="button cards__button-like"
+              ></button>
             </div>
           </li>
 
@@ -59,7 +69,11 @@
             />
             <div class="cards__textbox">
               <p class="cards__text">Lake Louise</p>
-              <button class="cards__button-like"></button>
+              <button
+                aria-label="Like Button"
+                type="button"
+                class="button cards__button-like"
+              ></button>
             </div>
           </li>
           <li>
@@ -70,7 +84,11 @@
             />
             <div class="cards__textbox">
               <p class="cards__text">Bald Mountains</p>
-              <button class="cards__button-like"></button>
+              <button
+                aria-label="Like Button"
+                type="button"
+                class="button cards__button-like"
+              ></button>
             </div>
           </li>
           <li>
@@ -81,7 +99,11 @@
             />
             <div class="cards__textbox">
               <p class="cards__text">Latemar</p>
-              <button class="cards__button-like"></button>
+              <button
+                aria-label="Like Button"
+                type="button"
+                class="button cards__button-like"
+              ></button>
             </div>
           </li>
           <li>
@@ -92,7 +114,11 @@
             />
             <div class="cards__textbox">
               <p class="cards__text">Vanoise National Park</p>
-              <button class="cards__button-like"></button>
+              <button
+                aria-label="Like Button"
+                type="button"
+                class="button cards__button-like"
+              ></button>
             </div>
           </li>
           <li>
@@ -103,7 +129,11 @@
             />
             <div class="cards__textbox">
               <p class="cards__text">Lago di Braies</p>
-              <button class="cards__button-like"></button>
+              <button
+                aria-label="Like Button"
+                type="button"
+                class="button cards__button-like"
+              ></button>
             </div>
           </li>
         </ul>
@@ -114,7 +144,12 @@
     </footer>
     <div class="modal" id="modal-edit-profile">
       <div class="modal__content">
-        <button class="modal__button-close" id="modal-close-button"></button>
+        <button
+          aria-label="Close Form Button"
+          type="button"
+          class="button modal__button-close"
+          id="modal-close-button"
+        ></button>
         <h2 class="modal__title">Edit profile</h2>
         <form
           class="modal__form"
@@ -128,9 +163,10 @@
             class="modal__input"
           />
           <button
+            aria-label="Submit Form Button"
             type="submit"
             id="edit-profile-submit-button"
-            class="modal__button-submit"
+            class="button modal__button-submit"
           >
             Save
           </button>

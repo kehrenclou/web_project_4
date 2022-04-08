@@ -76,6 +76,9 @@
   background-color: #fff;
   box-sizing: border-box;
 }
+.modal__input:focus {
+  background-color: rgba(226, 226, 218, 0.7);
+}
 .modal__button-submit {
   margin-top: 18px;
   margin-bottom: 36px;
