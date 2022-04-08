@@ -28,17 +28,17 @@ openEditProfileButtonEl.addEventListener("click", () => {
   editFormAboutInput.value = profileAbout.textContent;
 });
 
-editFormNameInput.addEventListener("click", () => {
-  editFormNameInput.value = "";
-});
+// editFormNameInput.addEventListener("click", () => {
+//   editFormNameInput.value = "";
+// });
 
-editFormAboutInput.addEventListener("click", () => {
-  editFormAboutInput.value = "";
-});
+// editFormAboutInput.addEventListener("click", () => {
+//   editFormAboutInput.value = "";
+// });
 
-closeEditProfileButtonEl.addEventListener("click", () => {
-  closeEditModal();
-});
+// closeEditProfileButtonEl.addEventListener("click", () => {
+//   closeEditModal();
+// });
 
 editProfileFormEl.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -47,16 +47,16 @@ editProfileFormEl.addEventListener("submit", (e) => {
   closeEditModal();
 });
 
-//heart scripts
-//variables
-const allHeartButtons = document.querySelectorAll(".cards__button-like");
-const heartButton = document.querySelector(".cards__button-like");
+// //heart scripts
+// //variables
+// const allHeartButtons = document.querySelectorAll(".cards__button-like");
+// const heartButton = document.querySelector(".cards__button-like");
 
-//functions
+// //functions
 
-//eventlisteners
-allHeartButtons.forEach((heartButton) => {
-  heartButton.addEventListener("click", () => {
-    heartButton.classList.toggle("cards__button-like_active");
-  });
-});
+// //eventlisteners
+// allHeartButtons.forEach((heartButton) => {
+//   heartButton.addEventListener("click", () => {
+//     heartButton.classList.toggle("cards__button-like_active");
+//   });
+// });

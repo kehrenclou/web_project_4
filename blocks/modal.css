@@ -1,6 +1,6 @@
 .modal {
   height: 100vh;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   left: 0;
@@ -43,6 +43,11 @@
   height: 27px;
   border: none;
   display: block;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.modal__button-close:hover {
+  opacity: 0.7;
 }
 .modal__title {
   margin: 0;
@@ -91,14 +96,10 @@
 }
 
 @media screen and (max-width: 625px) {
-  .modal {
-    justify-content: flex-start;
-  }
   .modal__content {
     max-width: 282px;
-    max-height: 322px;
+
     padding: 25px 22px;
-    margin-top: 123px;
   }
   .modal__button-close {
     top: -40px; /*?-20px*/
@@ -116,7 +117,6 @@
     padding: 0 0 9px;
   }
   .modal__button-submit {
-    margin-top: 16px;
-    margin-bottom: 25px;
+    margin: 16px 0 0;
   }
 }
