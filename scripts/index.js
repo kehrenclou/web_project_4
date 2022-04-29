@@ -1,58 +1,67 @@
-//edit profile scripts
-//variables
+///////////////
+//Declarations
+///////////////
 
-const openEditProfileButtonEl = document.querySelector(
+//Wrappers
+const editProfileModal = document.querySelector("#modal-edit-profile");
+const editProfileForm = document.querySelector("#modal-form-edit-profile");
+
+//Form data
+const profileNameInputValue = document.querySelector('[name="input-name"]');
+const profileAboutInputValue = document.querySelector('[name="input-about"]');
+
+//Buttons and other DOM elements
+const editProfileOpenButton = document.querySelector(
   "#edit-profile-open-button"
 );
-const editProfileModalEl = document.querySelector("#modal-edit-profile");
-const closeEditProfileButtonEl = document.querySelector("#modal-close-button");
-
-const editProfileFormEl = document.querySelector("#modal-form-edit-profile");
-
-const editFormNameInput = document.querySelector('[name="input-name"]');
-const editFormAboutInput = document.querySelector('[name="input-about"]');
+const editProfileCloseButton = document.querySelector("#modal-close-button");
 
 const profileName = document.querySelector("#profile-name");
 const profileAbout = document.querySelector("#profile-about");
+//Wrappers
 
-//functions
-function openEditModal() {
-  editProfileModalEl.classList.add("modal_open");
+/////////////
+//Functions
+////////////
+function openEditProfileModal() {
+  editProfileModal.classList.add("modal_open");
 }
-function closeEditModal() {
-  editProfileModalEl.classList.remove("modal_open");
-}
-
-function populateFormInputs() {
-  editFormNameInput.value = profileName.textContent;
-  editFormAboutInput.value = profileAbout.textContent;
+function closeEditProfileModal() {
+  editProfileModal.classList.remove("modal_open");
 }
 
-function populatePageFromFormInputs() {
-  profileName.textContent = editFormNameInput.value;
-  profileAbout.textContent = editFormAboutInput.value;
+function populateProfileFormInputs() {
+  profileNameInputValue.value = profileName.textContent;
+  profileAboutInputValue.value = profileAbout.textContent;
 }
 
-//event listeners
+function populateProfileFromFormInputs() {
+  profileName.textContent = profileNameInputValue.value;
+  profileAbout.textContent = profileAboutInputValue.value;
+}
 
-openEditProfileButtonEl.addEventListener(
+/////////////////
+//Event Handlers
+////////////////
+
+editProfileOpenButton.addEventListener(
   "click",
-  openEditModal,
+  openEditProfileModal,
   true
 ); /*true sets capture handle parent first*/
-openEditProfileButtonEl.addEventListener("click", populateFormInputs);
+editProfileOpenButton.addEventListener("click", populateProfileFormInputs);
 
-closeEditProfileButtonEl.addEventListener("click", closeEditModal);
+editProfileCloseButton.addEventListener("click", closeEditProfileModal);
 
-editProfileFormEl.addEventListener(
+editProfileForm.addEventListener(
   "submit",
   (e) => {
     e.preventDefault();
   },
   true
 );
-editProfileFormEl.addEventListener("submit", populatePageFromFormInputs);
-editProfileFormEl.addEventListener("submit", closeEditModal);
+editProfileForm.addEventListener("submit", populateProfileFromFormInputs);
+editProfileForm.addEventListener("submit", closeEditProfileModal);
 
 // //heart scripts
 // //variables

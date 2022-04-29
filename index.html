@@ -45,7 +45,7 @@
       </section>
       <section class="cards">
         <ul class="cards__list">
-          <li>
+          <!-- <li>
             <img
               src="./images/Yosemite.jpg"
               alt="Yosemite Valley"
@@ -135,7 +135,7 @@
                 class="button cards__button-like"
               ></button>
             </div>
-          </li>
+          </li> -->
         </ul>
       </section>
     </main>
@@ -173,6 +173,19 @@
         </form>
       </div>
     </div>
+    <template id="card-template">
+      <li>
+        <img src="" alt="" class="cards__image" />
+        <div class="cards__textbox">
+          <h2 class="cards__text"></h2>
+          <button
+            aria-label="Like Button"
+            type="button"
+            class="button cards__button-like"
+          ></button>
+        </div>
+      </li>
+    </template>
     <script src="./scripts/index.js"></script>
   </body>
 </html>
