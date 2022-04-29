@@ -15,6 +15,11 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   display: block;
+  /* from dev tools to fix image sizes - need to figure out 
+  something other than hard coding sizes*/
+  height: 282px;
+  width: 282px;
+  object-fit: fill;
 }
 .cards__textbox {
   display: flex;
