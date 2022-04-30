@@ -56,21 +56,25 @@ const cardTemplate = document
 /* -------------------------------------------------------------------------- */
 
 /* ------------------------------ profile Edit ------------------------------ */
-function openEditProfileModal() {
-  editProfileModal.classList.add("modal_open");
-}
-function closeEditProfileModal() {
-  editProfileModal.classList.remove("modal_open");
-}
 
 function populateProfileFormInputs() {
   profileNameInputValue.value = profileName.textContent;
   profileAboutInputValue.value = profileAbout.textContent;
 }
-
 function populateProfileFromFormInputs() {
   profileName.textContent = profileNameInputValue.value;
   profileAbout.textContent = profileAboutInputValue.value;
+}
+/* -------------------------------------------------------------------------- */
+/*                                    modal                                   */
+/* -------------------------------------------------------------------------- */
+//test open and close
+function openModal(modalName) {
+  modalName.classList.add("modal_open");
+}
+
+function closeModal(modalName) {
+  modalName.classList.remove("modal_open");
 }
 
 /* ------------------------------ card Template ----------------------------- */
@@ -97,13 +101,14 @@ function renderCard(card) {
 
 editProfileOpenButton.addEventListener(
   "click",
-  openEditProfileModal,
+  () => openModal(editProfileModal),
   true
 ); /*true sets capture handle parent first*/
 editProfileOpenButton.addEventListener("click", populateProfileFormInputs);
 
-editProfileCloseButton.addEventListener("click", closeEditProfileModal);
-
+editProfileCloseButton.addEventListener("click", () =>
+  closeModal(editProfileModal)
+);
 editProfileForm.addEventListener(
   "submit",
   (e) => {
@@ -112,9 +117,22 @@ editProfileForm.addEventListener(
   true
 );
 editProfileForm.addEventListener("submit", populateProfileFromFormInputs);
-editProfileForm.addEventListener("submit", closeEditProfileModal);
 
-// //heart scripts
+editProfileForm.addEventListener("submit", () => closeModal(editProfileModal));
+/* -------------------------------------------------------------------------- */
+/*                                  Test Area                                 */
+/* -------------------------------------------------------------------------- */
+initialCards.forEach(function (card) {
+  //append to the list
+  const newCard = createCard(card);
+  renderCard(newCard);
+  // placesList.append(newCard);
+  //loop
+});
+/*------------------------------------------------------------------ */
+/*                                heart scripts                               */
+/* -------------------------------------------------------------------------- */
+
 // //variables
 // const allHeartButtons = document.querySelectorAll(".cards__button-like");
 // const heartButton = document.querySelector(".cards__button-like");
@@ -127,11 +145,3 @@ editProfileForm.addEventListener("submit", closeEditProfileModal);
 //     heartButton.classList.toggle("cards__button-like_active");
 //   });
 // });
-
-initialCards.forEach(function (card) {
-  //append to the list
-  const newCard = createCard(card);
-  renderCard(newCard);
-  // placesList.append(newCard);
-  //loop
-});
