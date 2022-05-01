@@ -41,102 +41,13 @@
           aria-label="Add Place Button"
           type="button"
           class="button profile__button-add"
+          id="add-place-open-button"
+          ;
         ></button>
       </section>
       <section class="cards">
-        <ul class="cards__list">
-          <!-- <li>
-            <img
-              src="./images/Yosemite.jpg"
-              alt="Yosemite Valley"
-              class="cards__image"
-            />
-            <div class="cards__textbox">
-              <h2 class="cards__text">Yosemite Valley</h2>
-              <button
-                aria-label="Like Button"
-                type="button"
-                class="button cards__button-like"
-              ></button>
-            </div>
-          </li>
-
-          <li>
-            <img
-              src="./images/lakelouise.jpg"
-              alt="Lake Louise"
-              class="cards__image"
-            />
-            <div class="cards__textbox">
-              <h2 class="cards__text">Lake Louise</h2>
-              <button
-                aria-label="Like Button"
-                type="button"
-                class="button cards__button-like"
-              ></button>
-            </div>
-          </li>
-          <li>
-            <img
-              src="./images/baldmountains.jpg"
-              alt="Bald Mountains"
-              class="cards__image"
-            />
-            <div class="cards__textbox">
-              <h2 class="cards__text">Bald Mountains</h2>
-              <button
-                aria-label="Like Button"
-                type="button"
-                class="button cards__button-like"
-              ></button>
-            </div>
-          </li>
-          <li>
-            <img
-              src="./images/latemar.jpg"
-              alt="Latemar"
-              class="cards__image"
-            />
-            <div class="cards__textbox">
-              <h2 class="cards__text">Latemar</h2>
-              <button
-                aria-label="Like Button"
-                type="button"
-                class="button cards__button-like"
-              ></button>
-            </div>
-          </li>
-          <li>
-            <img
-              src="./images/vanoise.jpg"
-              alt="Vanoise National Park"
-              class="cards__image"
-            />
-            <div class="cards__textbox">
-              <h2 class="cards__text">Vanoise National Park</h2>
-              <button
-                aria-label="Like Button"
-                type="button"
-                class="button cards__button-like"
-              ></button>
-            </div>
-          </li>
-          <li>
-            <img
-              src="./images/lagodibraies.jpg"
-              alt="Lago di Braies"
-              class="cards__image"
-            />
-            <div class="cards__textbox">
-              <h2 class="cards__text">Lago di Braies</h2>
-              <button
-                aria-label="Like Button"
-                type="button"
-                class="button cards__button-like"
-              ></button>
-            </div>
-          </li> -->
-        </ul>
+        <ul class="cards__list"></ul>
+        <!-- cards added dynamically -->
       </section>
     </main>
     <footer class="footer">
@@ -148,7 +59,7 @@
           aria-label="Close Form Button"
           type="button"
           class="button modal__button-close"
-          id="modal-close-button"
+          id="edit-profile-close-button"
         ></button>
         <h2 class="modal__title">Edit profile</h2>
         <form
@@ -156,11 +67,17 @@
           id="modal-form-edit-profile"
           name="form-edit-profile"
         >
-          <input name="input-name" placeholder="Name" class="modal__input" />
+          <input
+            name="input-name"
+            placeholder="Name"
+            class="modal__input"
+            id="input-profile-name"
+          />
           <input
             name="input-about"
             placeholder="About me"
             class="modal__input"
+            id="input-profile-about"
           />
           <button
             aria-label="Submit Form Button"
@@ -173,15 +90,71 @@
         </form>
       </div>
     </div>
+    <!-- /* start working on places add modal window here*/ -->
+    <div class="modal" id="modal-image-popup">
+      <div class="modal__content modal__content_type_image">
+        <button
+          aria-label="Close Image Button"
+          type="button"
+          class="button modal__button-close"
+          id="modal-image-close-button"
+        ></button>
+        <img src=""" alt"" class="modal__image">
+        <p class="modal__caption"></p>
+      </div>
+    </div>
+    <div class="modal" id="modal-add-place">
+      <div class="modal__content">
+        <button
+          aria-label="Close Form Button"
+          type="button"
+          class="button modal__button-close"
+          id="add-place-close-button"
+        ></button>
+        <h2 class="modal__title">New Place</h2>
+        <form
+          class="modal__form"
+          id="modal-form-add-place"
+          name="form-add-place"
+        >
+          <input
+            name="input-place-title"
+            placeholder="Title"
+            class="modal__input"
+            id="input-place-title"
+          />
+          <input
+            name="input-place-link"
+            placeholder="Image link"
+            class="modal__input"
+            id="input-place-link"
+          />
+          <button
+            aria-label="Submit New Places Form Button"
+            type="submit"
+            id="add-place-submit-button"
+            class="button modal__button-submit"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
     <template id="card-template">
       <li class="cards__item">
+        <button
+          aria-label="Delete button"
+          type="button"
+          class="button cards__button_type_delete"
+          id="place-delete-button"
+        ></button>
         <img src="" alt="" class="cards__image" id="card-image" />
         <div class="cards__textbox">
-          <h2 class="cards__text"></h2>
+          <h2 class="cards__text" id="card-text"></h2>
           <button
             aria-label="Like Button"
             type="button"
-            class="button cards__button-like"
+            class="button cards__button_type_like"
           ></button>
         </div>
       </li>
