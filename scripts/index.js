@@ -54,13 +54,14 @@ const editProfileCloseButton = document.querySelector(
 const addPlaceOpenButton = document.querySelector("#add-place-open-button");
 const addPlaceCloseButton = document.querySelector("#add-place-close-button");
 
-const deletePlaceButton = document.querySelector("#place-delete-button");
+const closeButtons = document.querySelectorAll(".modal__button-close");
 
 const profileName = document.querySelector("#profile-name");
 const profileAbout = document.querySelector("#profile-about");
 
 const modalImageElement = imageModal.querySelector(".modal__image");
 const modalCaption = imageModal.querySelector(".modal__caption");
+
 /* -------------------------------- Templates ------------------------------- */
 const cardTemplate = document
   .querySelector("#card-template")
@@ -93,16 +94,27 @@ function createCard(card) {
   const cardElement = cardTemplate.cloneNode(true);
   const imageElement = cardElement.querySelector("#card-image");
   const titleElement = cardElement.querySelector("#card-text");
+  const deleteButton = cardElement.querySelector("#place-delete-button");
+  const likeButton = cardElement.querySelector(".cards__button_type_like");
 
   imageElement.src = card.link;
   imageElement.textContent = card.name;
   titleElement.textContent = card.name;
 
-  //add event listener
+  //add event listeners
   imageElement.addEventListener("click", () => {
     modalImageElement.src = card.link;
     modalCaption.textContent = card.name;
     openModal(imageModal);
+  });
+
+  deleteButton.addEventListener("click", () => {
+    const cardItem = deleteButton.closest(".cards__item");
+    cardItem.remove();
+  });
+
+  likeButton.addEventListener("click", () => {
+    likeButton.classList.toggle("cards__button_type_like-active");
   });
 
   return cardElement;
@@ -120,85 +132,50 @@ function addPlaceToCards() {
   const newCardElement = createCard(newCard);
   placesList.prepend(newCardElement);
 }
-
-// function deletePlace() {
-//   const card = deletePlaceButton.closest(".cards__item");
-//   console.log(card);
-// }
+/* ----------------------------- Event Handlers ----------------------------- */
+function editProfileOpenButtonEvtHandler() {
+  openModal(editProfileModal);
+  populateProfileFormInputs();
+}
+function editProfileFormEvtHandler(e) {
+  e.preventDefault();
+  populateProfileFromFormInputs();
+  closeModal(editProfileModal);
+}
+function addPlaceFormEvtHandler(e) {
+  e.preventDefault();
+  addPlaceToCards();
+  closeModal(addPlaceModal);
+}
 /* -------------------------------------------------------------------------- */
 /*                               Event Listeners                              */
-/* -------------------------------------------------------------------------- */
-/* ------------------------- profile Edit Listeners ------------------------- */
+
 editProfileOpenButton.addEventListener(
   "click",
-  () => openModal(editProfileModal),
-  true
-); /*true sets capture handle parent first*/
-editProfileOpenButton.addEventListener("click", populateProfileFormInputs);
-
-editProfileCloseButton.addEventListener("click", () =>
-  closeModal(editProfileModal)
+  editProfileOpenButtonEvtHandler
 );
-editProfileForm.addEventListener(
-  "submit",
-  (e) => {
-    e.preventDefault();
-  },
-  true
-);
-editProfileForm.addEventListener("submit", populateProfileFromFormInputs);
+editProfileForm.addEventListener("submit", editProfileFormEvtHandler, true);
 
-editProfileForm.addEventListener("submit", () => closeModal(editProfileModal));
-
-/* -------------------------- places Add Listeners -------------------------- */
 addPlaceOpenButton.addEventListener(
   "click",
   () => openModal(addPlaceModal),
   true
 );
-addPlaceCloseButton.addEventListener("click", () => closeModal(addPlaceModal));
-addPlaceForm.addEventListener(
-  "submit",
-  (e) => {
-    e.preventDefault();
-  },
-  true
-);
 
-addPlaceForm.addEventListener("submit", addPlaceToCards);
-
-addPlaceForm.addEventListener("submit", () => closeModal(addPlaceModal));
-
-// deletePlaceButton.addEventListener(
-//   "click",
-//   deletePlace
-//   // find location in array
-//   // remove from array ?splice
-// );
+addPlaceForm.addEventListener("submit", addPlaceFormEvtHandler);
 
 /* -------------------------------------------------------------------------- */
-/*                                  Test Area - scripts                                */
+/*                                 scripts                                */
 /* -------------------------------------------------------------------------- */
 initialCards.forEach(function (card) {
   //append to the list
   const newCard = createCard(card);
   renderCard(newCard);
-  // placesList.append(newCard);
-  //loop
 });
-/*------------------------------------------------------------------ */
-/*                                heart scripts                               */
-/* -------------------------------------------------------------------------- */
 
-// //variables
-// const allHeartButtons = document.querySelectorAll(".cards__button_type_like");
-// const heartButton = document.querySelector(".cards__button_type_like");
-
-// //functions
-
-// //eventlisteners
-// allHeartButtons.forEach((heartButton) => {
-//   heartButton.addEventListener("click", () => {
-//     heartButton.classList.toggle("cards__button_type_like_active");
-//   });
-// });
+closeButtons.forEach((closebutton) => {
+  closebutton.addEventListener("click", () => {
+    const modalName = closebutton.closest(".modal");
+    closeModal(modalName);
+  });
+});

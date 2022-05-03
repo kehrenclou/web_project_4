@@ -7,15 +7,27 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
 
-  /* display: flex; */ /*call display flex when modal is open .modal_open - modifier*/
-  display: none;
+  display: flex; /*call display flex when modal is open .modal_open - modifier
+  /* display: none; */ /*hidden set below with visibility and op0acity for transition*/
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  visibility: hidden;
+  opacity: 0;
+
+  /*transition on close*/
+  transition: visibility 0s 0.5s, opacity 0.5s ease-out;
+}
+.modal_type_image {
+  background-color: rgba(0, 0, 0, 0.9);
 }
 .modal_open {
   /* modifier to call when modal is open*/
   display: flex; /*use flex here when modal open*/
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s 0.5s, opacity 0.5s ease-in-out;
 }
 .modal__content {
   background-color: white;
@@ -35,13 +47,15 @@
   padding: 0;
   max-height: 75vh;
   max-width: 75vw;
-  height: auto;
+  width: auto;
+
   flex-direction: row;
   justify-content: center;
-  width: auto;
 }
 .modal__image {
   object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
 }
 .modal__caption {
   position: absolute;
@@ -144,5 +158,10 @@
   }
   .modal__button-submit {
     margin: 16px 0 0;
+  }
+  .modal__content_type_image {
+    padding: 0;
+    margin: auto;
+    max-width: 75vw;
   }
 }

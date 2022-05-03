@@ -25,6 +25,9 @@
   padding: 0;
   border: none;
 }
+.cards__button_type_delete:hover {
+  opacity: 0.6;
+}
 .cards__image {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -33,7 +36,6 @@
   something other than hard coding sizes*/
   height: 282px;
   width: 282px;
-  object-fit: fill;
 }
 .cards__textbox {
   display: flex;
@@ -69,11 +71,11 @@
   border: none;
   transition: opacity 0.25s ease-in-out;
 }
-.cards__button-like:hover {
+.cards__button_type_like:hover {
   opacity: 0.5;
 }
 
-.cards__button-like_active {
+.cards__button_type_like-active {
   background-image: url("../images/heartemojiactive.svg");
 }
 @media screen and (max-width: 920px) {
