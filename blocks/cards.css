@@ -36,6 +36,7 @@
   something other than hard coding sizes*/
   height: 282px;
   width: 282px;
+  cursor: pointer;
 }
 .cards__textbox {
   display: flex;
