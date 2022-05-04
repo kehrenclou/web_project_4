@@ -145,12 +145,12 @@ function handleEditProfileOpenButtonClick() {
   openModal(editProfileModal);
   populateProfileFormInputs();
 }
-function HandleEditProfileFormSubmit(e) {
+function handleEditProfileFormSubmit(e) {
   e.preventDefault();
   populateProfileFromFormInputs();
   closeModal(editProfileModal);
 }
-function HandleAddPlaceFormSubmit(e) {
+function handleAddPlaceFormSubmit(e) {
   e.preventDefault();
   addPlaceToCards();
   resetForm();
