@@ -8,7 +8,7 @@
   background-color: rgba(0, 0, 0, 0.5);
 
   display: flex; /*call display flex when modal is open .modal_open - modifier
-  /* display: none; */ /*hidden set below with visibility and op0acity for transition*/
+  /* display: none; */ /*hidden set below with visibility and opacity for transition*/
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -24,10 +24,9 @@
 }
 .modal_open {
   /* modifier to call when modal is open*/
-  display: flex; /*use flex here when modal open*/
   visibility: visible;
   opacity: 1;
-  transition: visibility 0s 0.5s, opacity 0.5s ease-in-out;
+  transition: visibility 0s, opacity 0.5s ease-in-out;
 }
 .modal__content {
   background-color: white;
