@@ -140,6 +140,19 @@ function deletePlacefromCards(button) {
   const cardItem = button.closest(".cards__item");
   cardItem.remove();
 }
+function clickOutsideImageClose(e) {
+  const isOutside = !e.target.closest(".modal__content_type_image");
+
+  if (isOutside) {
+    closeModal(imageModal);
+  }
+}
+
+function clickEscapeImageClose(e) {
+  if (e.key === "Escape") {
+    closeModal(imageModal);
+  }
+}
 /* ----------------------------- Event Handlers ----------------------------- */
 function handleEditProfileOpenButtonClick() {
   openModal(editProfileModal);
@@ -156,6 +169,7 @@ function HandleAddPlaceFormSubmit(e) {
   resetForm();
   closeModal(addPlaceModal);
 }
+
 /* -------------------------------------------------------------------------- */
 /*                               Event Listeners                              */
 
@@ -172,6 +186,9 @@ addPlaceOpenButton.addEventListener(
 );
 
 addPlaceForm.addEventListener("submit", HandleAddPlaceFormSubmit);
+
+imageModal.addEventListener("click", clickOutsideImageClose);
+document.addEventListener("keydown", clickEscapeImageClose);
 
 /* -------------------------------------------------------------------------- */
 /*                                 scripts                                */
