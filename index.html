@@ -65,19 +65,30 @@
           class="modal__form"
           id="modal-form-edit-profile"
           name="form-edit-profile"
+          novalidate
         >
           <input
             name="input-name"
             placeholder="Name"
             class="modal__input"
             id="input-profile-name"
+            type="text"
+            minlength="2"
+            maxlength="40"
+            required
           />
+          <span class="modal__error" id="input-profile-name-error"></span>
           <input
             name="input-about"
             placeholder="About me"
             class="modal__input"
             id="input-profile-about"
+            type="text"
+            minlength="2"
+            maxlength="200"
+            required
           />
+          <span class="modal__error" id="input-profile-about-error"></span>
           <button
             aria-label="Submit Form Button"
             type="submit"
@@ -115,21 +126,28 @@
           class="modal__form"
           id="modal-form-add-place"
           name="form-add-place"
+          novalidate
         >
           <input
             name="input-place-title"
             placeholder="Title"
             class="modal__input"
             id="input-place-title"
+            type="text"
+            minlength="1"
+            maxlength="30"
             required
           />
+          <span class="modal__error" id="input-place-title-error"></span>
           <input
             name="input-place-link"
             placeholder="Image link"
             class="modal__input"
             id="input-place-link"
+            type="url"
             required
           />
+          <span class="modal__error" id="input-place-link-error"></span>
           <button
             aria-label="Submit New Places Form Button"
             type="submit"
@@ -162,5 +180,6 @@
       </li>
     </template>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
   </body>
 </html>
