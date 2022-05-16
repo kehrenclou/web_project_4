@@ -53,6 +53,7 @@ const editProfileCloseButton = document.querySelector(
 );
 const addPlaceOpenButton = document.querySelector("#add-place-open-button");
 const addPlaceCloseButton = document.querySelector("#add-place-close-button");
+const addPlaceSubmitButton = document.querySelector("#add-place-submit-button");
 
 const closeButtons = document.querySelectorAll(".modal__button-close");
 
@@ -73,10 +74,20 @@ const cardTemplate = document
 /* ---------------------------------- modals --------------------------------- */
 
 function openModal(modal) {
-  modal.classList.add("modal_open");
+  const submitButton = modal.querySelector(".modal__button-submit");
+
+  if (submitButton === addPlaceSubmitButton) {
+    disableSubmitButton(addPlaceSubmitButton, "modal__button-submit_disabled");
+    modal.classList.add("modal_open");
+  } else {
+    modal.classList.add("modal_open");
+  }
+  document.addEventListener("keydown", clickEscapeImageClose);
 }
+
 function closeModal(modal) {
   modal.classList.remove("modal_open");
+  document.removeEventListener("keydown", clickEscapeImageClose);
 }
 /* ------------------------------ profile Edit ------------------------------ */
 
@@ -177,7 +188,7 @@ editProfileOpenButton.addEventListener(
   "click",
   handleEditProfileOpenButtonClick
 );
-editProfileForm.addEventListener("submit", HandleEditProfileFormSubmit, true);
+editProfileForm.addEventListener("submit", handleEditProfileFormSubmit, true);
 
 addPlaceOpenButton.addEventListener(
   "click",
@@ -185,7 +196,7 @@ addPlaceOpenButton.addEventListener(
   true
 );
 
-addPlaceForm.addEventListener("submit", HandleAddPlaceFormSubmit);
+addPlaceForm.addEventListener("submit", handleAddPlaceFormSubmit);
 
 imageModal.addEventListener("click", clickOutsideImageClose);
 document.addEventListener("keydown", clickEscapeImageClose);
