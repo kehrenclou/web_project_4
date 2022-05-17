@@ -74,20 +74,15 @@ const cardTemplate = document
 /* ---------------------------------- modals --------------------------------- */
 
 function openModal(modal) {
-  const submitButton = modal.querySelector(".modal__button-submit");
-
-  if (submitButton === addPlaceSubmitButton) {
-    disableSubmitButton(addPlaceSubmitButton, "modal__button-submit_disabled");
-    modal.classList.add("modal_open");
-  } else {
-    modal.classList.add("modal_open");
-  }
-  document.addEventListener("keydown", clickEscapeImageClose);
+  modal.classList.add("modal_open");
+  document.addEventListener("keydown", closeModalWithEsc);
+  document.addEventListener("mousedown", closeModalOnRemoteClick);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_open");
-  document.removeEventListener("keydown", clickEscapeImageClose);
+  document.removeEventListener("keydown", closeModalWithEsc);
+  document.removeEventListener("mousedown", closeModalOnRemoteClick);
 }
 /* ------------------------------ profile Edit ------------------------------ */
 
@@ -121,7 +116,7 @@ function createCard(card) {
   });
 
   deleteButton.addEventListener("click", () =>
-    deletePlacefromCards(deleteButton)
+    deletePlaceFromCards(deleteButton)
   );
 
   likeButton.addEventListener("click", () => {
@@ -144,24 +139,28 @@ function addPlaceToCards() {
   renderCard(newCard);
 }
 
-function resetForm() {
-  document.getElementById("modal-form-add-place").reset();
-}
-function deletePlacefromCards(button) {
+function deletePlaceFromCards(button) {
   const cardItem = button.closest(".cards__item");
   cardItem.remove();
 }
-function clickOutsideImageClose(e) {
-  const isOutside = !e.target.closest(".modal__content_type_image");
+/* ------------------------------ form behavior ----------------------------- */
+function resetAddPlaceForm(formID) {
+  document.getElementById(formID.id).reset();
+}
+
+function closeModalOnRemoteClick(e) {
+  const isOutside = !e.target.closest(".modal__content");
+  const openedModal = document.querySelector(".modal_open");
 
   if (isOutside) {
-    closeModal(imageModal);
+    closeModal(openedModal);
   }
 }
 
-function clickEscapeImageClose(e) {
+function closeModalWithEsc(e) {
   if (e.key === "Escape") {
-    closeModal(imageModal);
+    const openedModal = document.querySelector(".modal_open");
+    closeModal(openedModal);
   }
 }
 /* ----------------------------- Event Handlers ----------------------------- */
@@ -177,7 +176,8 @@ function handleEditProfileFormSubmit(e) {
 function handleAddPlaceFormSubmit(e) {
   e.preventDefault();
   addPlaceToCards();
-  resetForm();
+  resetAddPlaceForm(addPlaceForm);
+  //add submit button toggle here
   closeModal(addPlaceModal);
 }
 
@@ -197,9 +197,6 @@ addPlaceOpenButton.addEventListener(
 );
 
 addPlaceForm.addEventListener("submit", handleAddPlaceFormSubmit);
-
-imageModal.addEventListener("click", clickOutsideImageClose);
-document.addEventListener("keydown", clickEscapeImageClose);
 
 /* -------------------------------------------------------------------------- */
 /*                                 scripts                                */
