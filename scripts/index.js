@@ -76,13 +76,13 @@ const cardTemplate = document
 function openModal(modal) {
   modal.classList.add("modal_open");
   document.addEventListener("keydown", closeModalWithEsc);
-  document.addEventListener("mousedown", closeModalOnRemoteClick);
+  modal.addEventListener("mousedown", closeModalOnRemoteClick);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_open");
   document.removeEventListener("keydown", closeModalWithEsc);
-  document.removeEventListener("mousedown", closeModalOnRemoteClick);
+  modal.removeEventListener("mousedown", closeModalOnRemoteClick);
 }
 /* ------------------------------ profile Edit ------------------------------ */
 
@@ -144,15 +144,12 @@ function deletePlaceFromCards(button) {
   cardItem.remove();
 }
 /* ------------------------------ form behavior ----------------------------- */
-function resetAddPlaceForm(formID) {
-  document.getElementById(formID.id).reset();
-}
 
 function closeModalOnRemoteClick(e) {
   const isOutside = !e.target.closest(".modal__content");
-  const openedModal = document.querySelector(".modal_open");
 
   if (isOutside) {
+    const openedModal = document.querySelector(".modal_open");
     closeModal(openedModal);
   }
 }
@@ -176,8 +173,8 @@ function handleEditProfileFormSubmit(e) {
 function handleAddPlaceFormSubmit(e) {
   e.preventDefault();
   addPlaceToCards();
-  resetAddPlaceForm(addPlaceForm);
-  //add submit button toggle here
+
+  addPlaceForm.reset();
   closeModal(addPlaceModal);
 }
 
