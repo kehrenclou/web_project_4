@@ -1,6 +1,7 @@
 # Project 4: Around The U.S.
 
 This is a project that creates a social media type platform similar to Instagram with the ability to like photos/places. It is the 4th project of the Web Development/Software Engineering program at Paracticum by Yandex. This is the beginning of a project that will be furthur enhanced in future sprints.
+Edit - refactored code to use classes for Cards and Form Validation
 
 ## Project Features
 
@@ -13,6 +14,8 @@ This is a project that creates a social media type platform similar to Instagram
   - querySelect
   - Functions
   - eventListener
+  - classes
+  - templates
 
 ## Figma Design
 
