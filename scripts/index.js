@@ -1,4 +1,12 @@
 /* -------------------------------------------------------------------------- */
+/*                                   Imports                                  */
+/* -------------------------------------------------------------------------- */
+import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
+
+import { closeModal, openModal } from "./utility.js";
+
+/* -------------------------------------------------------------------------- */
 /*                                Declarations                                */
 /* -------------------------------------------------------------------------- */
 
@@ -31,12 +39,11 @@ const initialCards = [
 /* -------------------------------- wrappers -------------------------------- */
 const editProfileModal = document.querySelector("#modal-edit-profile");
 const editProfileForm = document.querySelector("#modal-form-edit-profile");
-const placesList = document.querySelector(".cards__list");
+
+const placesList = document.querySelector(".cards__list"); //used in in scripts
 
 const addPlaceModal = document.querySelector("#modal-add-place");
 const addPlaceForm = document.querySelector("#modal-form-add-place");
-
-const imageModal = document.querySelector("#modal-image-popup");
 
 /* -------------------------------- Form data ------------------------------- */
 const profileNameInputElement = document.querySelector("#input-profile-name");
@@ -44,46 +51,18 @@ const profileAboutInputElement = document.querySelector("#input-profile-about");
 
 const placeTitleInputElement = document.querySelector("#input-place-title");
 const placeLinkInputElement = document.querySelector("#input-place-link");
+
 /* --------------------- Buttons and other DOM elements --------------------- */
 const editProfileOpenButton = document.querySelector(
   "#edit-profile-open-button"
 );
-const editProfileCloseButton = document.querySelector(
-  "#edit-profile-close-button"
-);
 const addPlaceOpenButton = document.querySelector("#add-place-open-button");
-const addPlaceCloseButton = document.querySelector("#add-place-close-button");
-const addPlaceSubmitButton = document.querySelector("#add-place-submit-button");
 
 const closeButtons = document.querySelectorAll(".modal__button-close");
 
 const profileName = document.querySelector("#profile-name");
 const profileAbout = document.querySelector("#profile-about");
 
-const modalImageElement = imageModal.querySelector(".modal__image");
-const modalCaption = imageModal.querySelector(".modal__caption");
-
-/* -------------------------------- Templates ------------------------------- */
-const cardTemplate = document
-  .querySelector("#card-template")
-  .content.querySelector(".cards__item");
-
-/* -------------------------------------------------------------------------- */
-/*                                  Functions                                 */
-/* -------------------------------------------------------------------------- */
-/* ---------------------------------- modals --------------------------------- */
-
-function openModal(modal) {
-  modal.classList.add("modal_open");
-  document.addEventListener("keydown", closeModalWithEsc);
-  modal.addEventListener("mousedown", closeModalOnRemoteClick);
-}
-
-function closeModal(modal) {
-  modal.classList.remove("modal_open");
-  document.removeEventListener("keydown", closeModalWithEsc);
-  modal.removeEventListener("mousedown", closeModalOnRemoteClick);
-}
 /* ------------------------------ profile Edit ------------------------------ */
 
 function populateProfileFormInputs() {
@@ -96,39 +75,11 @@ function populateProfileFromFormInputs() {
 }
 
 /* ------------------------------- places Add ------------------------------- */
-function createCard(card) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const imageElement = cardElement.querySelector("#card-image");
-  const titleElement = cardElement.querySelector("#card-text");
-  const deleteButton = cardElement.querySelector("#place-delete-button");
-  const likeButton = cardElement.querySelector(".cards__button_type_like");
 
-  imageElement.src = card.link;
-  imageElement.alt = card.name;
-  titleElement.textContent = card.name;
+function renderCard(data, cardWrap) {
+  const card = new Card(data, "#card-template").createCard();
 
-  //add event listeners
-  imageElement.addEventListener("click", () => {
-    modalImageElement.src = card.link;
-    modalImageElement.alt = card.name;
-    modalCaption.textContent = card.name;
-    openModal(imageModal);
-  });
-
-  deleteButton.addEventListener("click", () =>
-    deletePlaceFromCards(deleteButton)
-  );
-
-  likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("cards__button_type_like-active");
-  });
-
-  return cardElement;
-}
-
-function renderCard(card) {
-  const newCardElement = createCard(card);
-  placesList.prepend(newCardElement);
+  cardWrap.prepend(card);
 }
 
 function addPlaceToCards() {
@@ -136,39 +87,24 @@ function addPlaceToCards() {
     name: placeTitleInputElement.value,
     link: placeLinkInputElement.value,
   };
-  renderCard(newCard);
+  renderCard(newCard, placesList);
 }
 
-function deletePlaceFromCards(button) {
-  const cardItem = button.closest(".cards__item");
-  cardItem.remove();
-}
-/* ------------------------------ form behavior ----------------------------- */
-
-function closeModalOnRemoteClick(e) {
-  const isOutside = !e.target.closest(".modal__content");
-
-  if (isOutside) {
-    const openedModal = document.querySelector(".modal_open");
-    closeModal(openedModal);
-  }
-}
-
-function closeModalWithEsc(e) {
-  if (e.key === "Escape") {
-    const openedModal = document.querySelector(".modal_open");
-    closeModal(openedModal);
-  }
-}
 /* ----------------------------- Event Handlers ----------------------------- */
 function handleEditProfileOpenButtonClick() {
   openModal(editProfileModal);
   populateProfileFormInputs();
+  editFormValidator.resetValidation();
 }
 function handleEditProfileFormSubmit(e) {
   e.preventDefault();
   populateProfileFromFormInputs();
   closeModal(editProfileModal);
+}
+
+function handleAddPlaceOpenButtonClick() {
+  openModal(addPlaceModal);
+  addFormValidator.resetValidation();
 }
 function handleAddPlaceFormSubmit(e) {
   e.preventDefault();
@@ -187,11 +123,7 @@ editProfileOpenButton.addEventListener(
 );
 editProfileForm.addEventListener("submit", handleEditProfileFormSubmit, true);
 
-addPlaceOpenButton.addEventListener(
-  "click",
-  () => openModal(addPlaceModal),
-  true
-);
+addPlaceOpenButton.addEventListener("click", handleAddPlaceOpenButtonClick);
 
 addPlaceForm.addEventListener("submit", handleAddPlaceFormSubmit);
 
@@ -199,9 +131,7 @@ addPlaceForm.addEventListener("submit", handleAddPlaceFormSubmit);
 /*                                 scripts                                */
 /* -------------------------------------------------------------------------- */
 initialCards.forEach(function (card) {
-  // const newCard = createCard(card);
-  // renderCard(newCard);
-  renderCard(card);
+  renderCard(card, placesList);
 });
 
 closeButtons.forEach((closeButton) => {
@@ -210,3 +140,19 @@ closeButtons.forEach((closeButton) => {
     closeModal(modalName);
   });
 });
+/* ----------------------------- FormValidation ----------------------------- */
+const formValidatorConfig = {
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button-submit",
+  inactiveButtonClass: "modal__button-submit_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
+const addFormValidator = new FormValidator(formValidatorConfig, addPlaceForm);
+const editFormValidator = new FormValidator(
+  formValidatorConfig,
+  editProfileForm
+);
+addFormValidator.enableValidation();
+editFormValidator.enableValidation();
