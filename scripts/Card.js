@@ -34,13 +34,13 @@ class Card {
     openModal(imageModal);
   }
 
-  _handleLikeCardButton() {
-    this.classList.toggle("cards__button_type_like-active");
+  _handleLikeCardButton(evt) {
+    evt.target.classList.toggle("cards__button_type_like-active");
   }
 
-  _handleDeleteCardButton() {
+  _handleDeleteCardButton(evt) {
     // console.log(this); //this is returning the delete button
-    this.closest(".cards__item").remove();
+    evt.target.closest(".cards__item").remove();
   }
 
   _setEventListeners() {

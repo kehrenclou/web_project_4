@@ -94,7 +94,7 @@ function addPlaceToCards() {
 function handleEditProfileOpenButtonClick() {
   openModal(editProfileModal);
   populateProfileFormInputs();
-  editFormValidator.resetValidation();
+  formValidators[editProfileForm.getAttribute("name")].resetValidation();
 }
 function handleEditProfileFormSubmit(e) {
   e.preventDefault();
@@ -104,7 +104,7 @@ function handleEditProfileFormSubmit(e) {
 
 function handleAddPlaceOpenButtonClick() {
   openModal(addPlaceModal);
-  addFormValidator.resetValidation();
+  formValidators[addPlaceForm.getAttribute("name")].resetValidation();
 }
 function handleAddPlaceFormSubmit(e) {
   e.preventDefault();
@@ -147,12 +147,38 @@ const formValidatorConfig = {
   inactiveButtonClass: "modal__button-submit_disabled",
   inputErrorClass: "modal__input_type_error",
   errorClass: "modal__error_visible",
+  formSelector: ".modal__form",
 };
 
-const addFormValidator = new FormValidator(formValidatorConfig, addPlaceForm);
-const editFormValidator = new FormValidator(
-  formValidatorConfig,
-  editProfileForm
-);
-addFormValidator.enableValidation();
-editFormValidator.enableValidation();
+//create empty object to store form validators
+const formValidators = {};
+
+const createValidatorInstances = (config) => {
+  //create array of all forms on page
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+
+  //for each form,
+  formList.forEach((formElement) => {
+    //instantiate a formValidator instance
+    const validator = new FormValidator(config, formElement);
+    //get name of form
+    const formName = formElement.getAttribute("name");
+
+    //store validator by name of form
+    formValidators[formName] = validator;
+
+    //run validator.enableValidation() (from FormValidator.js)
+    validator.enableValidation();
+  });
+};
+
+createValidatorInstances(formValidatorConfig);
+
+//above code replaces this:
+// const addFormValidator = new FormValidator(formValidatorConfig, addPlaceForm);
+// const editFormValidator = new FormValidator(
+//   formValidatorConfig,
+//   editProfileForm
+// );
+// addFormValidator.enableValidation();
+// editFormValidator.enableValidation();
