@@ -2,9 +2,9 @@
 /*                                   Imports                                  */
 /* -------------------------------------------------------------------------- */
 import Card from "./Card.js";
-import FormValidator from "./FormValidator.js";
+import FormValidator from "../components/FormValidator.js";
 
-import { closeModal, openModal } from "./utility.js";
+import { closeModal, openModal } from "../utils/utility.js";
 
 /* -------------------------------------------------------------------------- */
 /*                                Declarations                                */
@@ -36,6 +36,17 @@ const initialCards = [
     link: "https://code.s3.yandex.net/web-code/lago.jpg",
   },
 ];
+/* -------------------------------------------------------------------------- */
+/*                                start refactoring                                */
+/* -------------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/*                               end refactoring                              */
+/* -------------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/*                               start old code                               */
+/* -------------------------------------------------------------------------- */
 /* -------------------------------- wrappers -------------------------------- */
 const editProfileModal = document.querySelector("#modal-edit-profile");
 const editProfileForm = document.querySelector("#modal-form-edit-profile");
@@ -75,7 +86,7 @@ function populateProfileFromFormInputs() {
 }
 
 /* ------------------------------- places Add ------------------------------- */
-
+//renderCard refactored and put functionality into const cardList= new Section...
 function renderCard(data, cardWrap) {
   const card = new Card(data, "#card-template").createCard();
 

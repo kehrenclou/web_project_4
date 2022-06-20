@@ -1,6 +1,7 @@
 /* --------------------------------- import --------------------------------- */
 
-import { openModal, imageModal } from "./utility.js";
+import { imageModal } from "../utils/utility.js";
+// import { openModal, imageModal } from "../utils/utility.js";
 /* -------------------------------------------------------------------------- */
 /*                                Declarations                                */
 /* -------------------------------------------------------------------------- */
@@ -26,13 +27,13 @@ class Card {
     return cardTemplate;
   }
 
-  _handleModalImage() {
-    modalImageElement.src = this._link;
-    modalImageElement.alt = this._name;
+  // _handleModalImage() {
+  //   modalImageElement.src = this._link;
+  //   modalImageElement.alt = this._name;
 
-    modalImageCaption.textContent = this._name;
-    openModal(imageModal);
-  }
+  //   modalImageCaption.textContent = this._name;
+  //   openModal(imageModal);
+  // }
 
   _handleLikeCardButton(evt) {
     evt.target.classList.toggle("cards__button_type_like-active");
