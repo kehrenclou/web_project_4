@@ -2,6 +2,7 @@
 
 import { imageModal } from "../utils/utility.js";
 // import { openModal, imageModal } from "../utils/utility.js";
+import { handlePopupWithImage } from "../pages/index.js";
 /* -------------------------------------------------------------------------- */
 /*                                Declarations                                */
 /* -------------------------------------------------------------------------- */
@@ -47,8 +48,11 @@ class Card {
   _setEventListeners() {
     this._likeButton.addEventListener("click", this._handleLikeCardButton);
     this._deleteButton.addEventListener("click", this._handleDeleteCardButton);
+    // this._cardImage.addEventListener("click", () => {
+    //   this._handleModalImage();
+
     this._cardImage.addEventListener("click", () => {
-      this._handleModalImage();
+      handlePopupWithImage(this._cardSelector, this._name, this._link);
     });
   }
   createCard() {

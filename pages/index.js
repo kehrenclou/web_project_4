@@ -9,6 +9,8 @@ import Popup from "../components/Popup.js";
 
 //import otherstuff
 import { initialCards, selectors } from "../components/constants.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import { imageModal } from "../utils/utility.js";
 // import { closeModal, openModal } from "../utils/utility.js";
 
 /* -------------------------------------------------------------------------- */
@@ -34,4 +36,18 @@ const newPopup = new Popup(selectors.addPlaceModalSelector);
 
 // newPopup.setEventListeners();
 
-newPopup.open();
+// newPopup.open();
+
+function handlePopupWithImage(imageSelector, title, link) {
+  // const imageSelector = imageSelector;
+  // // const imageElement = document.querySelector.imageSelector;
+  // const imageTitle = title;
+  // const imageLink = link;
+  const newImagePopup = new PopupWithImage(imageSelector);
+  // newImagePopup.open();
+  // console.log("handlePopupWithImage is firing new imagepopou", newImagePopup);
+  // console.log(imageTitle);
+  newImagePopup.open(selectors.imageModalSelector, title, link);
+}
+
+export { handlePopupWithImage };
