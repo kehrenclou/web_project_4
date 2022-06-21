@@ -1,7 +1,7 @@
 /* --------------------------------- import --------------------------------- */
 
 /* ------------------------------ declarations ------------------------------ */
-const imageModal = document.querySelector("#modal-image-popup");
+// const imageModal = document.querySelector("#modal-image-popup");
 
 /* -------------------------------- functions ------------------------------- */
 // function openModal(modal) {
@@ -32,10 +32,10 @@ const imageModal = document.querySelector("#modal-image-popup");
 // }
 
 /* --------------------------------- exports -------------------------------- */
-export {
-  // closeModalOnRemoteClick,
-  // closeModalWithEsc,
-  // closeModal,
-  // openModal,
-  imageModal,
-};
+// export {
+//   // closeModalOnRemoteClick,
+//   // closeModalWithEsc,
+//   // closeModal,
+//   // openModal,
+//   imageModal,
+// };

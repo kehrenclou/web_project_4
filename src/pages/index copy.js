@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------- */
 /*                                   Imports                                  */
 /* -------------------------------------------------------------------------- */
-import Card from "./Card.js";
+import Card from "./Card.js.js";
 import FormValidator from "../components/FormValidator.js";
 
 import { closeModal, openModal } from "../utils/utility.js";

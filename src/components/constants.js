@@ -32,4 +32,7 @@ export const selectors = {
   editProfileModalSelector: "#modal-edit-profile",
   addPlaceModalSelector: "#modal-add-place",
   imageModalSelector: "#modal-image-popup",
+  imgSelector: ".modal__image",
+  captionSelector: ".modal__caption",
+  inputSelector: ".modal__input",
 };

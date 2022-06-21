@@ -7,6 +7,7 @@
 // along with a caption for the image.
 /* --------------------------------- imports -------------------------------- */
 import Popup from "./Popup.js";
+import { selectors } from "./constants.js";
 
 /* ---------------------------------- class --------------------------------- */
 export default class PopupWithImage extends Popup {
@@ -14,15 +15,17 @@ export default class PopupWithImage extends Popup {
     super(modalSelector);
     this._cardImage = this._modal.querySelector("modal__image");
   }
-  // console.log(data);
-  test() {
-    console.log(this._link);
-  }
 
   open(imageSelector, title, link) {
-    console.log("this is new open");
-    console.log(this._modal);
-    console.log(imageSelector, title, link);
+    const modalImageEl = document.querySelector(selectors.imgSelector);
+    const modalCaptionEl = document.querySelector(selectors.captionSelector);
+
+    modalImageEl.src = link;
+    modalImageEl.alt = title;
+    modalCaptionEl.textContent = title;
+
+    //get image element from within the popup set source and alt
+    //call parent
     super.open();
   }
 }

@@ -1,14 +1,14 @@
 /* --------------------------------- import --------------------------------- */
 
-import { imageModal } from "../utils/utility.js";
+// import { imageModal } from "../utils/utility.js";
 // import { openModal, imageModal } from "../utils/utility.js";
 import { handlePopupWithImage } from "../pages/index.js";
 /* -------------------------------------------------------------------------- */
 /*                                Declarations                                */
 /* -------------------------------------------------------------------------- */
 
-const modalImageElement = imageModal.querySelector(".modal__image");
-const modalImageCaption = imageModal.querySelector(".modal__caption");
+// const modalImageElement = imageModal.querySelector(".modal__image");
+// const modalImageCaption = imageModal.querySelector(".modal__caption");
 
 /* ---------------------------------- class --------------------------------- */
 class Card {
