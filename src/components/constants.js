@@ -35,4 +35,16 @@ export const selectors = {
   imgSelector: ".modal__image",
   captionSelector: ".modal__caption",
   inputSelector: ".modal__input",
+  // profileNameSelector:"#profile-name", // maynot need
+  // profileAboutSelector:"#profile-about" //may not need
 };
+
+export const names = {
+  inputName: "input-name",
+  inputAbout: "input-about",
+  inputPlaceLink: "input-place-link",
+  inputPlaceTitle: "input-place-title",
+};
+//consider refactoring to inputs like selectors
+export const profileName = document.querySelector("#profile-name");
+export const profileAbout = document.querySelector("#profile-about");

@@ -6,6 +6,7 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import Popup from "../components/Popup.js";
+import UserInfo from "../components/UserInfo.js";
 
 //import otherstuff
 import { initialCards, selectors } from "../components/constants.js";
@@ -83,7 +84,10 @@ const newEditProfileForm = new PopupWithForm(
       //prevent default put onto event listener
       //get input values is done in class and put into dom
       //close modal
-      populateProfileFromFormInputs(formData);
+      // console.log({ formData[0] });
+      const newUser = new UserInfo(formData);
+      newUser.setUserInfo();
+      // populateProfileFromFormInputs(formData);
       newEditProfileForm.close();
     },
   }
@@ -91,4 +95,4 @@ const newEditProfileForm = new PopupWithForm(
 
 // newEditProfileForm.open();
 /* --------------------------------- export --------------------------------- */
-export { handlePopupWithImage };
+export { handlePopupWithImage }; //imports in Card
