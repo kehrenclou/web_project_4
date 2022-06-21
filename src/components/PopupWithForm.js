@@ -53,7 +53,6 @@ export default class PopupWithForm extends Popup {
 
   close() {
     super.close();
-    console.log(this._form);
-    // this._form.reset(); //check if this needs to happen on submit
+    this._form.reset(); //check if this needs to happen on submit
   }
 }

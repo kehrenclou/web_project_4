@@ -89,6 +89,6 @@ const newEditProfileForm = new PopupWithForm(
   }
 );
 
-newEditProfileForm.open();
+// newEditProfileForm.open();
 /* --------------------------------- export --------------------------------- */
 export { handlePopupWithImage };
