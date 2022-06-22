@@ -9,7 +9,7 @@ import Popup from "../components/Popup.js";
 import UserInfo from "../components/UserInfo.js";
 
 //import otherstuff
-import { initialCards, selectors } from "../components/constants.js";
+import { initialCards, selectors, names } from "../components/constants.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 // import { imageModal } from "../utils/utility.js";
@@ -18,6 +18,8 @@ import PopupWithForm from "../components/PopupWithForm.js";
 /* ------------------------ constants used only once ------------------------ */
 const profileName = document.querySelector("#profile-name");
 const profileAbout = document.querySelector("#profile-about");
+const inputNameElement = document.querySelector("#input-profile-name"); //used in handleEditProfileOPenButton
+const inputAboutElement = document.querySelector("#input-profile-about");
 
 const editProfileOpenButton = document.querySelector(
   "#edit-profile-open-button"
@@ -28,14 +30,20 @@ const editProfileOpenButton = document.querySelector(
 /* -------------------------------------------------------------------------- */
 /* -------------------------------- functions ------------------------------- */
 function handleEditProfileOpenButtonClick() {
+  const testInfo = newUserInfo.getUserInfo();
+
+  inputNameElement.value = testInfo.userName;
+  inputAboutElement.value = testInfo.userAbout;
+
   newEditProfileForm.open();
+
   // populateProfileFormInputs();
   // formValidators[editProfileForm.getAttribute("name")].resetValidation();
 }
-function populateProfileFromFormInputs(formData) {
-  profileName.textContent = formData["input-name"];
-  profileAbout.textContent = formData["input-about"];
-}
+// function populateProfileFromFormInputs(formData) {
+//   profileName.textContent = formData["input-name"];
+//   profileAbout.textContent = formData["input-about"];
+// }
 
 /* -------------------------- open event listeners -------------------------- */
 editProfileOpenButton.addEventListener(
@@ -69,6 +77,10 @@ function handlePopupWithImage(imageSelector, title, link) {
 }
 
 /* --------------------------- PopupWithForm Class -------------------------- */
+//userInfo
+const newUserInfo = new UserInfo({ names: selectors, selectors: selectors });
+
+newUserInfo.test();
 //edit profile
 
 const newEditProfileForm = new PopupWithForm(
@@ -85,8 +97,8 @@ const newEditProfileForm = new PopupWithForm(
       //get input values is done in class and put into dom
       //close modal
       // console.log({ formData[0] });
-      const newUser = new UserInfo(formData);
-      newUser.setUserInfo();
+      // const newUser = new UserInfo(formData);
+      newUserInfo.setUserInfo(formData);
       // populateProfileFromFormInputs(formData);
       newEditProfileForm.close();
     },
@@ -95,4 +107,4 @@ const newEditProfileForm = new PopupWithForm(
 
 // newEditProfileForm.open();
 /* --------------------------------- export --------------------------------- */
-export { handlePopupWithImage }; //imports in Card
+export { handlePopupWithImage, profileName }; //imports in Card

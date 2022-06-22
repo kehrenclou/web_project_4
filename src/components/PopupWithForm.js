@@ -17,6 +17,7 @@
 
 /* --------------------------------- imports -------------------------------- */
 import Popup from "./Popup.js";
+// import UserInfo from "./UserInfo.js";
 import { selectors } from "./constants.js";
 
 /* ---------------------------------- class --------------------------------- */
