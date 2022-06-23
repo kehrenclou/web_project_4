@@ -10,7 +10,6 @@ export default class UserInfo {
   //is data: selectors being used in SetUserInfo or is it a direct call?
 
   constructor({ nameSelector, aboutSelector }) {
-    // debugger;
     this._profileNameElement = document.querySelector(nameSelector);
     this._profileAboutElement = document.querySelector(aboutSelector);
   }
@@ -33,5 +32,3 @@ export default class UserInfo {
     this._profileAboutElement.textContent = formData[selectors.inputAboutName];
   }
 }
-
-//remove selectors argument from user info

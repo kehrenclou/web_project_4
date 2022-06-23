@@ -19,7 +19,7 @@ export default class Popup {
     this._closeButton = this._modal.querySelector(
       `${selectors.closeModalButtonSelector}`
     );
-    //_closeButton null on puimage
+
     this._handleCloseButton = this._handleCloseButton.bind(this);
 
     this.setEventListeners();
@@ -42,7 +42,7 @@ export default class Popup {
   }
   open() {
     this._modal.classList.add("modal_open");
-    // this.setEventListeners()//this here creates a new set event lister every time popup opened and not removed on close
+    // this.setEventListeners()//if this is used here creates a new set event lister every time popup opened and not removed on close
     document.addEventListener("keydown", this._handleEscClose);
     this._modal.addEventListener("mousedown", this._handleRemoteClickClose);
   }

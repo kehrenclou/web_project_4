@@ -14,9 +14,6 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 
 /* ------------------------ constants used only once ------------------------ */
-//used in new UserInfo
-const profileNameID = "#profile-name"; //Userinfo.js
-const profileAboutID = "#profile-about"; //not used yet
 
 //used in handleEditProfileOPenButton
 const inputNameElement = document.querySelector(selectors.inputNameID);
@@ -42,8 +39,8 @@ function handleEditProfileOpenButtonClick() {
 
   newEditProfileForm.open();
 }
+
 function handleAddPlaceOpenButtonClick() {
-  console.log("handleAddPlaceOpenButonClick called");
   newAddPlaceForm.open();
 }
 /* -------------------------- open event listeners -------------------------- */
@@ -59,9 +56,20 @@ const cardSection = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const cardElement = new Card(item, {
-        templateSelector: selectors.cardTemplateId,
-      });
+      const cardElement = new Card(
+        item,
+        {
+          templateSelector: selectors.cardTemplateId,
+        },
+        {
+          handleCardClick: (imageModalSelector, title, link) => {
+            const imagePopup = new PopupWithImage({
+              modalSelector: imageModalSelector,
+            });
+            imagePopup.open(title, link);
+          },
+        }
+      );
       cardSection.addItem(cardElement.createCard());
     },
   },
@@ -71,21 +79,11 @@ const cardSection = new Section(
 //initialize cards
 cardSection.renderItems(initialCards);
 
-/* -------------------------- PopupWithImage Class -------------------------- */
-//should be handleCardClick(){}
-function handlePopupWithImage(imageModalSelector, title, link) {
-  const newImagePopup = new PopupWithImage({
-    modalSelector: imageModalSelector,
-  });
-
-  newImagePopup.open(title, link);
-}
-
 /* ------------------------------ userinfoClass ----------------------------- */
 
 const newUserInfo = new UserInfo({
-  nameSelector: profileNameID,
-  aboutSelector: profileAboutID,
+  nameSelector: selectors.profileNameID,
+  aboutSelector: selectors.profileAboutID,
 });
 
 /* --------------------------- PopupWithForms Class - Edit Profile -------------------------- */
@@ -117,9 +115,6 @@ const newAddPlaceForm = new PopupWithForm(
   { modalSelector: selectors.addPlaceModalID },
   {
     handleFormSubmit: (formData) => {
-      //need to set new src, alt and place name
-      //gets input list array on submit - formData
-      //need to grab these things and set up the new place card
       const newPlaceContainer = document.querySelector(
         selectors.cardSectionSelector
       );
@@ -127,17 +122,60 @@ const newAddPlaceForm = new PopupWithForm(
         name: formData[selectors.inputTitleName],
         link: formData[selectors.inputLinkName],
       };
-      // const { "input-place-link": link, "input-place-title": name } = formData;
+      // how to uppack form data instead of using placeData above
+      //const { "input-place-link": link, "input-place-title": name } = formData;
 
-      const newPlace = new Card(placeData, {
-        templateSelector: selectors.cardTemplateId,
-      });
+      const newPlace = new Card(
+        placeData,
+        {
+          templateSelector: selectors.cardTemplateId,
+        },
+        {
+          handleCardClick: (imageModalSelector, title, link) => {
+            const imagePopup = new PopupWithImage({
+              modalSelector: imageModalSelector,
+            });
+            imagePopup.open(title, link);
+          },
+        }
+      );
 
       newPlaceContainer.prepend(newPlace.createCard());
       newAddPlaceForm.close();
     },
   }
 );
+/* ----------------------------- FormValidation ----------------------------- */
+const formValidatorConfig = {
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button-submit",
+  inactiveButtonClass: "modal__button-submit_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+  formSelector: ".modal__form",
+};
 
+//create empty object to store form validators
+const formValidators = {};
+
+const createValidatorInstances = (config) => {
+  //create array of all forms on page
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+
+  //for each form,
+  formList.forEach((formElement) => {
+    //instantiate a formValidator instance
+    const validator = new FormValidator(config, formElement);
+    //get name of form
+    const formName = formElement.getAttribute("name");
+
+    //store validator by name of form
+    formValidators[formName] = validator;
+
+    //run validator.enableValidation() (from FormValidator.js)
+    validator.enableValidation();
+  });
+};
+
+createValidatorInstances(formValidatorConfig);
 /* --------------------------------- export --------------------------------- */
-export { handlePopupWithImage }; //imports in Card

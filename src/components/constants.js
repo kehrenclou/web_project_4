@@ -35,11 +35,13 @@ export const selectors = {
   imgSelector: ".modal__image", //section.js
   captionSelector: ".modal__caption", //section.js
 
-  // modalSelector: ".modal", //not sure if used can't find doesn't break
   editProfileModalID: "#modal-edit-profile", //index.js
   addPlaceModalID: "#modal-add-place", //?need
 
-  formSelector: ".modal__form", //popup.js //gets cannot access b4 initialization error on open button click
+  profileNameID: "#profile-name", //index.js
+  profileAboutID: "#profile-about", //index.js
+
+  formSelector: ".modal__form", //popup.js
   inputSelector: ".modal__input", //popupWithForm.js
   inputNameID: "#input-profile-name", //index.js
   inputAboutID: "#input-profile-about", //index.js
@@ -51,18 +53,4 @@ export const selectors = {
   editProfileOpenButtonID: "#edit-profile-open-button", //index.js
   addPlaceOpenButtonID: "#add-place-open-button", //index.js
   closeModalButtonSelector: ".modal__button-close",
-
-  // inputPlaceLinkName: "input-place-link",//not used yet
-  // inputPlaceTitleName: "input-place-title",not used yet
-  sprofileNameID: "#profile-name",
-  sprofileAboutID: "#profile-about",
 };
-
-//consider refactoring to inputs like selectors
-
-export const profileName = document.querySelector("#profile-name");
-export const profileAbout = document.querySelector("#profile-about");
-
-//UserInfo const
-// export const profileNameID = "#profile-name"; //Userinfo.js
-// export const profileAboutID = "#profile-about"; //not used yet

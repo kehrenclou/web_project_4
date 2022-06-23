@@ -17,7 +17,6 @@
 
 /* --------------------------------- imports -------------------------------- */
 import Popup from "./Popup.js";
-// import UserInfo from "./UserInfo.js";
 import { selectors } from "./constants.js";
 
 /* ---------------------------------- class --------------------------------- */
@@ -45,8 +44,6 @@ export default class PopupWithForm extends Popup {
   setEventListeners() {
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      //add a _handleFormSubmit()function call
-      //Pass an object which is the result of the _getInputValues work to it
       this._handleFormSubmit(this._getInputValues());
     });
     super.setEventListeners();

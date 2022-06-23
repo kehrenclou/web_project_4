@@ -22,8 +22,6 @@ export default class PopupWithImage extends Popup {
     this._modalImageEl.alt = title;
     this._modalCaptionEl.textContent = title;
 
-    //get image element from within the popup set source and alt
-    //call parent
     super.open();
   }
 }

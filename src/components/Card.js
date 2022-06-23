@@ -1,6 +1,5 @@
 /* --------------------------------- import --------------------------------- */
 
-import { handlePopupWithImage } from "../pages/index.js";
 import { selectors } from "./constants.js";
 /* -------------------------------------------------------------------------- */
 /*                                Declarations                                */
@@ -8,13 +7,14 @@ import { selectors } from "./constants.js";
 
 /* ---------------------------------- class --------------------------------- */
 class Card {
-  constructor(data, { templateSelector }) {
+  constructor(data, { templateSelector }, { handleCardClick }) {
     this._name = data.name;
     this._link = data.link;
 
     this._templateSelector = templateSelector;
     this._cardListItemSelector = selectors.cardListItemSelector;
     this._imageModalSelector = selectors.imageModalID;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -31,19 +31,15 @@ class Card {
   }
 
   _handleDeleteCardButton(evt) {
-    // console.log(this); //this is returning the delete button
     evt.target.closest(".cards__item").remove();
   }
 
   _setEventListeners() {
     this._likeButton.addEventListener("click", this._handleLikeCardButton);
     this._deleteButton.addEventListener("click", this._handleDeleteCardButton);
-    // this._cardImage.addEventListener("click", () => {
-    //   this._handleModalImage();
 
     this._cardImage.addEventListener("click", () => {
-      handlePopupWithImage(this._imageModalSelector, this._name, this._link);
-      //names?
+      this._handleCardClick(this._imageModalSelector, this._name, this._link);
     });
   }
   createCard() {

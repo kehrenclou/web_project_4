@@ -1,9 +1,7 @@
-/* ---------------------------------- class --------------------------------- */
 //Section class renders the markup returned by card class
-
-// import Card from "./Card";
-
 //and inserts it into the DOM
+
+/* ---------------------------------- class --------------------------------- */
 export default class Section {
   constructor({ items, renderer }, { containerSelector }) {
     this._initialArray = items;
