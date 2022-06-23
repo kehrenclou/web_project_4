@@ -11,18 +11,16 @@ import { selectors } from "./constants.js";
 
 /* ---------------------------------- class --------------------------------- */
 export default class PopupWithImage extends Popup {
-  constructor(modalSelector) {
+  constructor({ modalSelector }) {
     super(modalSelector);
-    this._cardImage = this._modal.querySelector("modal__image");
+    this._modalImageEl = this._modal.querySelector(selectors.imgSelector);
+    this._modalCaptionEl = this._modal.querySelector(selectors.captionSelector);
   }
 
-  open(imageSelector, title, link) {
-    const modalImageEl = document.querySelector(selectors.imgSelector);
-    const modalCaptionEl = document.querySelector(selectors.captionSelector);
-
-    modalImageEl.src = link;
-    modalImageEl.alt = title;
-    modalCaptionEl.textContent = title;
+  open(title, link) {
+    this._modalImageEl.src = link;
+    this._modalImageEl.alt = title;
+    this._modalCaptionEl.textContent = title;
 
     //get image element from within the popup set source and alt
     //call parent

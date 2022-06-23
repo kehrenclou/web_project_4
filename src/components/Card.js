@@ -1,40 +1,30 @@
 /* --------------------------------- import --------------------------------- */
 
-// import { imageModal } from "../utils/utility.js";
-// import { openModal, imageModal } from "../utils/utility.js";
 import { handlePopupWithImage } from "../pages/index.js";
+import { selectors } from "./constants.js";
 /* -------------------------------------------------------------------------- */
 /*                                Declarations                                */
 /* -------------------------------------------------------------------------- */
 
-// const modalImageElement = imageModal.querySelector(".modal__image");
-// const modalImageCaption = imageModal.querySelector(".modal__caption");
-
 /* ---------------------------------- class --------------------------------- */
 class Card {
-  constructor(data, cardSelector) {
+  constructor(data, { templateSelector }) {
     this._name = data.name;
     this._link = data.link;
 
-    this._cardSelector = cardSelector;
+    this._templateSelector = templateSelector;
+    this._cardListItemSelector = selectors.cardListItemSelector;
+    this._imageModalSelector = selectors.imageModalID;
   }
 
   _getTemplate() {
     // grab template
     const cardTemplate = document
-      .querySelector(this._cardSelector)
-      .content.querySelector(".cards__item")
+      .querySelector(this._templateSelector)
+      .content.querySelector(this._cardListItemSelector)
       .cloneNode(true);
     return cardTemplate;
   }
-
-  // _handleModalImage() {
-  //   modalImageElement.src = this._link;
-  //   modalImageElement.alt = this._name;
-
-  //   modalImageCaption.textContent = this._name;
-  //   openModal(imageModal);
-  // }
 
   _handleLikeCardButton(evt) {
     evt.target.classList.toggle("cards__button_type_like-active");
@@ -52,7 +42,8 @@ class Card {
     //   this._handleModalImage();
 
     this._cardImage.addEventListener("click", () => {
-      handlePopupWithImage(this._cardSelector, this._name, this._link);
+      handlePopupWithImage(this._imageModalSelector, this._name, this._link);
+      //names?
     });
   }
   createCard() {

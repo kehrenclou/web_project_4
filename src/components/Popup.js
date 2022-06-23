@@ -6,14 +6,19 @@
 // It stores a public method named setEventListeners() that adds a click event listener
 //to the close icon of the popup.
 //The modal window should also close when users click on the shaded area around the form. -->
+/* --------------------------------- imports -------------------------------- */
+import { selectors } from "./constants.js";
 
+/* ---------------------------------- class --------------------------------- */
 export default class Popup {
   constructor(modalSelector) {
     this._modal = document.querySelector(modalSelector);
-    this._form = this._modal.querySelector(".modal__form");
+    this._form = this._modal.querySelector(`${selectors.formSelector}`);
     this._handleEscClose = this._handleEscClose.bind(this);
     this._handleRemoteClickClose = this._handleRemoteClickClose.bind(this);
-    this._closeButton = this._modal.querySelector(".modal__button-close");
+    this._closeButton = this._modal.querySelector(
+      `${selectors.closeModalButtonSelector}`
+    );
     //_closeButton null on puimage
     this._handleCloseButton = this._handleCloseButton.bind(this);
 
@@ -22,7 +27,6 @@ export default class Popup {
 
   _handleEscClose(e) {
     if (e.key === "Escape") {
-      e.preventDefault();
       this.close();
     }
   }
@@ -39,8 +43,8 @@ export default class Popup {
   open() {
     this._modal.classList.add("modal_open");
     // this.setEventListeners()//this here creates a new set event lister every time popup opened and not removed on close
-    // document.addEventListener("keydown", this._handleEscClose);
-    // this._modal.addEventListener("mousedown", this._handleRemoteClickClose);
+    document.addEventListener("keydown", this._handleEscClose);
+    this._modal.addEventListener("mousedown", this._handleRemoteClickClose);
   }
   close() {
     this._modal.classList.remove("modal_open");
@@ -49,7 +53,7 @@ export default class Popup {
   }
   setEventListeners() {
     this._closeButton.addEventListener("click", this._handleCloseButton);
-    document.addEventListener("keydown", this._handleEscClose);
-    this._modal.addEventListener("mousedown", this._handleRemoteClickClose);
+    // document.addEventListener("keydown", this._handleEscClose);
+    // this._modal.addEventListener("mousedown", this._handleRemoteClickClose);
   }
 }

@@ -9,102 +9,135 @@ import Popup from "../components/Popup.js";
 import UserInfo from "../components/UserInfo.js";
 
 //import otherstuff
-import { initialCards, selectors, names } from "../components/constants.js";
+import { initialCards, selectors } from "../components/constants.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-// import { imageModal } from "../utils/utility.js";
-// import { closeModal, openModal } from "../utils/utility.js";
 
 /* ------------------------ constants used only once ------------------------ */
-const profileName = document.querySelector("#profile-name");
-const profileAbout = document.querySelector("#profile-about");
-const inputNameElement = document.querySelector("#input-profile-name"); //used in handleEditProfileOPenButton
-const inputAboutElement = document.querySelector("#input-profile-about");
+//used in new UserInfo
+const profileNameID = "#profile-name"; //Userinfo.js
+const profileAboutID = "#profile-about"; //not used yet
 
+//used in handleEditProfileOPenButton
+const inputNameElement = document.querySelector(selectors.inputNameID);
+const inputAboutElement = document.querySelector(selectors.inputAboutID);
+
+//used in OpenEventListeners
 const editProfileOpenButton = document.querySelector(
-  "#edit-profile-open-button"
+  selectors.editProfileOpenButtonID
 );
-
+const addPlaceOpenButton = document.querySelector(
+  selectors.addPlaceOpenButtonID
+);
 /* -------------------------------------------------------------------------- */
 /*                                Refactoring                                */
 /* -------------------------------------------------------------------------- */
 /* -------------------------------- functions ------------------------------- */
 function handleEditProfileOpenButtonClick() {
-  const testInfo = newUserInfo.getUserInfo();
+  //should creation of new UserInfo be done on button click here?
+  const userInfo = newUserInfo.getUserInfo();
 
-  inputNameElement.value = testInfo.userName;
-  inputAboutElement.value = testInfo.userAbout;
+  inputNameElement.value = userInfo.userName;
+  inputAboutElement.value = userInfo.userAbout;
 
   newEditProfileForm.open();
-
-  // populateProfileFormInputs();
-  // formValidators[editProfileForm.getAttribute("name")].resetValidation();
 }
-// function populateProfileFromFormInputs(formData) {
-//   profileName.textContent = formData["input-name"];
-//   profileAbout.textContent = formData["input-about"];
-// }
-
+function handleAddPlaceOpenButtonClick() {
+  console.log("handleAddPlaceOpenButonClick called");
+  newAddPlaceForm.open();
+}
 /* -------------------------- open event listeners -------------------------- */
 editProfileOpenButton.addEventListener(
   "click",
   handleEditProfileOpenButtonClick
 );
 
-/* ------------------------------- Card class ------------------------------- */
+addPlaceOpenButton.addEventListener("click", handleAddPlaceOpenButtonClick);
+
+/* ------------------------------- Section and Card class ------------------------------- */
 const cardSection = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const cardElement = new Card(item, selectors.cardTemplate);
+      const cardElement = new Card(item, {
+        templateSelector: selectors.cardTemplateId,
+      });
       cardSection.addItem(cardElement.createCard());
     },
   },
-  selectors.cardSection
+  { containerSelector: selectors.cardSectionSelector }
 );
 
 //initialize cards
 cardSection.renderItems(initialCards);
-//all the rest
-/* ------------------------------- Popup Class ------------------------------ */
-// const newPopup = new Popup(selectors.addPlaceModalSelector);
 
 /* -------------------------- PopupWithImage Class -------------------------- */
-function handlePopupWithImage(imageSelector, title, link) {
-  const newImagePopup = new PopupWithImage(selectors.imageModalSelector);
+//should be handleCardClick(){}
+function handlePopupWithImage(imageModalSelector, title, link) {
+  const newImagePopup = new PopupWithImage({
+    modalSelector: imageModalSelector,
+  });
 
-  newImagePopup.open(selectors.imageModalSelector, title, link);
+  newImagePopup.open(title, link);
 }
 
-/* --------------------------- PopupWithForm Class -------------------------- */
-//userInfo
-const newUserInfo = new UserInfo({ names: selectors, selectors: selectors });
+/* ------------------------------ userinfoClass ----------------------------- */
 
-newUserInfo.test();
-//edit profile
+const newUserInfo = new UserInfo({
+  nameSelector: profileNameID,
+  aboutSelector: profileAboutID,
+});
+
+/* --------------------------- PopupWithForms Class - Edit Profile -------------------------- */
+//pass formData object containing data from form
+//to a new instance of PopupWithForm
+//formData parameter is a value that will pass
+//to this._handleFormSubmit() when calling it in PopupWith Form
+//on submit click event listener
+//it is an object returned by this._getInputValues()method
+
+//prevent default put onto event listener
+//get input values is done in PopupwithForm class  and put into dom
+//close modal
 
 const newEditProfileForm = new PopupWithForm(
-  selectors.editProfileModalSelector,
+  { modalSelector: selectors.editProfileModalID },
   {
     handleFormSubmit: (formData) => {
-      //pass formData object containing data from form
-      //to a new instance of PopupWithForm
-      //formData parameter is a value that will pass
-      //to this._handleFormSubmit() when calling it in PopupWith Form
-      //it is an object returned by this._getInputValues()method
-
-      //prevent default put onto event listener
-      //get input values is done in class and put into dom
-      //close modal
-      // console.log({ formData[0] });
-      // const newUser = new UserInfo(formData);
       newUserInfo.setUserInfo(formData);
-      // populateProfileFromFormInputs(formData);
+
       newEditProfileForm.close();
     },
   }
 );
 
-// newEditProfileForm.open();
+/* -------------------- PopupWithForms Class - Add Place -------------------- */
+
+const newAddPlaceForm = new PopupWithForm(
+  { modalSelector: selectors.addPlaceModalID },
+  {
+    handleFormSubmit: (formData) => {
+      //need to set new src, alt and place name
+      //gets input list array on submit - formData
+      //need to grab these things and set up the new place card
+      const newPlaceContainer = document.querySelector(
+        selectors.cardSectionSelector
+      );
+      const placeData = {
+        name: formData[selectors.inputTitleName],
+        link: formData[selectors.inputLinkName],
+      };
+      // const { "input-place-link": link, "input-place-title": name } = formData;
+
+      const newPlace = new Card(placeData, {
+        templateSelector: selectors.cardTemplateId,
+      });
+
+      newPlaceContainer.prepend(newPlace.createCard());
+      newAddPlaceForm.close();
+    },
+  }
+);
+
 /* --------------------------------- export --------------------------------- */
-export { handlePopupWithImage, profileName }; //imports in Card
+export { handlePopupWithImage }; //imports in Card

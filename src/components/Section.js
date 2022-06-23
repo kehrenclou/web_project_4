@@ -5,11 +5,11 @@
 
 //and inserts it into the DOM
 export default class Section {
-  constructor({ items, renderer }, classSelector) {
+  constructor({ items, renderer }, { containerSelector }) {
     this._initialArray = items;
     this._renderer = renderer;
 
-    this._container = document.querySelector(classSelector);
+    this._container = document.querySelector(containerSelector);
   }
 
   //render items using renderer called in index.js new Section

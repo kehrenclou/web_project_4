@@ -22,7 +22,7 @@ import { selectors } from "./constants.js";
 
 /* ---------------------------------- class --------------------------------- */
 export default class PopupWithForm extends Popup {
-  constructor(modalSelector, { handleFormSubmit }) {
+  constructor({ modalSelector }, { handleFormSubmit }) {
     super(modalSelector);
 
     this._handleFormSubmit = handleFormSubmit;
