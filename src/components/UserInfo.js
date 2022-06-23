@@ -31,4 +31,4 @@ export default class UserInfo {
     this._profileNameElement.textContent = formData[selectors.inputNameName];
     this._profileAboutElement.textContent = formData[selectors.inputAboutName];
   }
-}
+} 
