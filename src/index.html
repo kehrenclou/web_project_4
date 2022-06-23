@@ -10,13 +10,13 @@
     <meta name="keywords" content="travel, cities" />
     <title>Around the US</title>
 
-    <link rel="stylesheet" href="./pages/index.css" />
+    <!-- <link rel="stylesheet" href="./pages/index.css" /> -->
   </head>
   <body class="page">
     <header class="header">
       <img
         class="header__logo"
-        src="./images/HeaderLogo.svg"
+        src="<%=require('./images/HeaderLogo.svg')%>"
         alt="Graphic Around the World in the US"
       />
     </header>
@@ -24,7 +24,7 @@
       <section class="profile">
         <img
           class="profile__avatar"
-          src="./images/Profile.jpg"
+          src="<%=require('./images/Profile.jpg')%>"
           alt="Picture of Jack Cousteau"
         />
         <div class="profile__details">
@@ -180,9 +180,6 @@
         </div>
       </li>
     </template>
-    <script type="module" src="./pages/index.js"></script>
-    <!-- <script src="./scripts/validate.js"></script>
-    <script type="module" src="./scripts/Card.js"></script>
-    <script type="module" src="./scripts/FormValidator.js"></script> -->
+    <!-- <script type="module" src="./pages/index.js"></script> -->
   </body>
 </html>

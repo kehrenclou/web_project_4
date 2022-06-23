@@ -1,11 +1,13 @@
 /* -------------------------------------------------------------------------- */
 /*                                   Imports                                  */
 /* -------------------------------------------------------------------------- */
+//import css
+import "./index.css";
 //import all the classes
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
-import Popup from "../components/Popup.js";
+// import Popup from "./components/Popup.js";//check if needed
 import UserInfo from "../components/UserInfo.js";
 
 //import otherstuff
@@ -122,8 +124,6 @@ const newAddPlaceForm = new PopupWithForm(
         name: formData[selectors.inputTitleName],
         link: formData[selectors.inputLinkName],
       };
-      // how to uppack form data instead of using placeData above
-      //const { "input-place-link": link, "input-place-title": name } = formData;
 
       const newPlace = new Card(
         placeData,
