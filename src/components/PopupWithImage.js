@@ -7,7 +7,7 @@
 // along with a caption for the image.
 /* --------------------------------- imports -------------------------------- */
 import Popup from "./Popup.js";
-import { selectors } from "./constants.js";
+import { selectors } from "../utils/constants.js";
 
 /* ---------------------------------- class --------------------------------- */
 export default class PopupWithImage extends Popup {

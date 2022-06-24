@@ -7,11 +7,11 @@ import "./index.css";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
-// import Popup from "./components/Popup.js";//check if needed
+import Popup from "../components/Popup.js"; //check if needed
 import UserInfo from "../components/UserInfo.js";
 
 //import otherstuff
-import { initialCards, selectors } from "../components/constants.js";
+import { initialCards, selectors } from "../utils/constants.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 
@@ -32,18 +32,17 @@ const addPlaceOpenButton = document.querySelector(
 /*                                Refactoring                                */
 /* -------------------------------------------------------------------------- */
 /* -------------------------------- functions ------------------------------- */
+function fillProfileForm(data){
+  inputNameElement.value = data.userName;
+  inputAboutElement.value = data.userAbout;
+}
 function handleEditProfileOpenButtonClick() {
-  //should creation of new UserInfo be done on button click here?
-  const userInfo = newUserInfo.getUserInfo();
-
-  inputNameElement.value = userInfo.userName;
-  inputAboutElement.value = userInfo.userAbout;
-
-  newEditProfileForm.open();
+  fillProfileForm( userInfo.getUserInfo());
+  editProfileForm.open();
 }
 
 function handleAddPlaceOpenButtonClick() {
-  newAddPlaceForm.open();
+  addPlaceForm.open();
 }
 /* -------------------------- open event listeners -------------------------- */
 editProfileOpenButton.addEventListener(
@@ -83,7 +82,7 @@ cardSection.renderItems(initialCards);
 
 /* ------------------------------ userinfoClass ----------------------------- */
 
-const newUserInfo = new UserInfo({
+const userInfo = new UserInfo({
   nameSelector: selectors.profileNameID,
   aboutSelector: selectors.profileAboutID,
 });
@@ -100,20 +99,19 @@ const newUserInfo = new UserInfo({
 //get input values is done in PopupwithForm class  and put into dom
 //close modal
 
-const newEditProfileForm = new PopupWithForm(
+const editProfileForm = new PopupWithForm(
   { modalSelector: selectors.editProfileModalID },
   {
     handleFormSubmit: (formData) => {
-      newUserInfo.setUserInfo(formData);
-
-      newEditProfileForm.close();
+      userInfo.setUserInfo(formData);
+      editProfileForm.close();
     },
   }
 );
 
 /* -------------------- PopupWithForms Class - Add Place -------------------- */
 
-const newAddPlaceForm = new PopupWithForm(
+const addPlaceForm = new PopupWithForm(
   { modalSelector: selectors.addPlaceModalID },
   {
     handleFormSubmit: (formData) => {
@@ -141,7 +139,7 @@ const newAddPlaceForm = new PopupWithForm(
       );
 
       newPlaceContainer.prepend(newPlace.createCard());
-      newAddPlaceForm.close();
+      addPlaceForm.close();
     },
   }
 );
@@ -178,4 +176,9 @@ const createValidatorInstances = (config) => {
 };
 
 createValidatorInstances(formValidatorConfig);
+
+/* ---------------------------------- test ---------------------------------- */
+// const testPopup = new Popup("#modal-edit-profile");
+// testPopup.open();
+// testPopup.test();
 /* --------------------------------- export --------------------------------- */

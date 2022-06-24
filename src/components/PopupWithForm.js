@@ -17,7 +17,7 @@
 
 /* --------------------------------- imports -------------------------------- */
 import Popup from "./Popup.js";
-import { selectors } from "./constants.js";
+import { selectors } from "../utils/constants.js";
 
 /* ---------------------------------- class --------------------------------- */
 export default class PopupWithForm extends Popup {
@@ -29,28 +29,29 @@ export default class PopupWithForm extends Popup {
 
   _getInputValues() {
     //get all inputs
-    this._inputList = this._form.querySelectorAll(selectors.inputSelector);
+    const inputList = this._form.querySelectorAll(selectors.inputSelector);
     //create an empty object
-    this._formValues = {};
+    const formValues = {};
     //add values of field to this object
-    this._inputList.forEach((input) => {
-      this._formValues[input.name] = input.value;
+    inputList.forEach((input) => {
+      formValues[input.name] = input.value;
     });
     //return the values object
 
-    return this._formValues;
+    return formValues;
   }
 
   setEventListeners() {
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
+      this._form.reset();
     });
     super.setEventListeners();
   }
 
   close() {
     super.close();
-    this._form.reset(); //check if this needs to happen on submit
+    // this._form.reset(); //check if this needs to happen on submit
   }
 }

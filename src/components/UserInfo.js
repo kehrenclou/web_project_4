@@ -1,6 +1,6 @@
 /* --------------------------------- imports -------------------------------- */
 
-import { selectors } from "./constants.js";
+import { selectors } from "../utils/constants.js";
 
 /* ---------------------------------- class --------------------------------- */
 export default class UserInfo {

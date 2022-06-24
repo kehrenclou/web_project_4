@@ -7,24 +7,31 @@
 //to the close icon of the popup.
 //The modal window should also close when users click on the shaded area around the form. -->
 /* --------------------------------- imports -------------------------------- */
-import { selectors } from "./constants.js";
+import { selectors } from "../utils/constants.js";
 
 /* ---------------------------------- class --------------------------------- */
 export default class Popup {
   constructor(modalSelector) {
     this._modal = document.querySelector(modalSelector);
-    this._form = this._modal.querySelector(`${selectors.formSelector}`);
+    this._form = this._modal.querySelector(selectors.formSelector);
+    // this._form = this._modal.querySelector(`${selectors.formSelector}`);
     this._handleEscClose = this._handleEscClose.bind(this);
     this._handleRemoteClickClose = this._handleRemoteClickClose.bind(this);
+    // this._closeButton = this._modal.querySelector(
+    //   `${selectors.closeModalButtonSelector}`
+    // );
     this._closeButton = this._modal.querySelector(
-      `${selectors.closeModalButtonSelector}`
+      selectors.closeModalButtonSelector
     );
 
     this._handleCloseButton = this._handleCloseButton.bind(this);
-
     this.setEventListeners();
   }
 
+  test(){
+    console.log(this._closeButton);
+    console.log(this._closeButtonTest);
+  }
   _handleEscClose(e) {
     if (e.key === "Escape") {
       this.close();
@@ -53,7 +60,6 @@ export default class Popup {
   }
   setEventListeners() {
     this._closeButton.addEventListener("click", this._handleCloseButton);
-    // document.addEventListener("keydown", this._handleEscClose);
-    // this._modal.addEventListener("mousedown", this._handleRemoteClickClose);
+   
   }
 }

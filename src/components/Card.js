@@ -1,6 +1,6 @@
 /* --------------------------------- import --------------------------------- */
 
-import { selectors } from "./constants.js";
+import { selectors } from "../utils/constants.js";
 /* -------------------------------------------------------------------------- */
 /*                                Declarations                                */
 /* -------------------------------------------------------------------------- */
@@ -30,9 +30,10 @@ class Card {
     evt.target.classList.toggle("cards__button_type_like-active");
   }
 
-  _handleDeleteCardButton(evt) {
-    evt.target.closest(".cards__item").remove();
-  }
+  _handleDeleteCardButton = (evt) => {
+    this._element.remove();
+    this._element = null;
+  };
 
   _setEventListeners() {
     this._likeButton.addEventListener("click", this._handleLikeCardButton);
@@ -49,9 +50,10 @@ class Card {
     this._likeButton = this._element.querySelector(".cards__button_type_like");
     this._deleteButton = this._element.querySelector("#place-delete-button");
     this._cardImage = this._element.querySelector("#card-image");
-    this._titleElement = this._element.querySelector("#card-text");
+    const titleElement = this._element.querySelector("#card-text");
 
-    this._titleElement.textContent = this._name;
+    titleElement.textContent = this._name;
+
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
 
