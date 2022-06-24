@@ -28,10 +28,7 @@ export default class Popup {
     this.setEventListeners();
   }
 
-  test(){
-    console.log(this._closeButton);
-    console.log(this._closeButtonTest);
-  }
+ 
   _handleEscClose(e) {
     if (e.key === "Escape") {
       this.close();

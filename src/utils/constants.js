@@ -29,7 +29,7 @@ export const selectors = {
   cardSectionSelector: ".cards__list", //index.js
   cardTemplateId: "#card-template", //index.js, card.js
   cardListItemSelector: ".cards__item", //cards.js
-  cardLikeButtonSelector: ".cards_button_type_like", // not yet but in card.js
+  cardLikeButtonSelector: ".cards__button_type_like", // not yet but in card.js
 
   imageModalID: "#modal-image-popup", //index.js
   imgSelector: ".modal__image", //section.js

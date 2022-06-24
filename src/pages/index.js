@@ -178,7 +178,5 @@ const createValidatorInstances = (config) => {
 createValidatorInstances(formValidatorConfig);
 
 /* ---------------------------------- test ---------------------------------- */
-// const testPopup = new Popup("#modal-edit-profile");
-// testPopup.open();
-// testPopup.test();
+
 /* --------------------------------- export --------------------------------- */
