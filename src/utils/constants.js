@@ -30,6 +30,9 @@ export const selectors = {
   cardTemplateId: "#card-template", //index.js, card.js
   cardListItemSelector: ".cards__item", //cards.js
   cardLikeButtonSelector: ".cards__button_type_like", // not yet but in card.js
+  placeDeleteButtonID: "#place-delete-button", //card.js
+  cardImageID: "#card-image", //card.js
+  cardTitleID: "#card-text", //card.js
 
   imageModalID: "#modal-image-popup", //index.js
   imgSelector: ".modal__image", //section.js
@@ -42,6 +45,8 @@ export const selectors = {
   profileAboutID: "#profile-about", //index.js
 
   formSelector: ".modal__form", //popup.js
+  placeFormName: "form-add-place", //index.js
+  profileFormName:"form-edit-profile",//index.js
   inputSelector: ".modal__input", //popupWithForm.js
   inputNameID: "#input-profile-name", //index.js
   inputAboutID: "#input-profile-about", //index.js
@@ -52,5 +57,6 @@ export const selectors = {
 
   editProfileOpenButtonID: "#edit-profile-open-button", //index.js
   addPlaceOpenButtonID: "#add-place-open-button", //index.js
+
   closeModalButtonSelector: ".modal__button-close",
 };

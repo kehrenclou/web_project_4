@@ -47,17 +47,20 @@ class Card {
     // make card
     this._element = this._getTemplate();
 
-    this._likeButton = this._element.querySelector(selectors.cardLikeButtonSelector);
-    // this._likeButton = this._element.querySelector(".cards__button_type_like");
-    this._deleteButton = this._element.querySelector("#place-delete-button");
-    this._cardImage = this._element.querySelector("#card-image");
-    const titleElement = this._element.querySelector("#card-text");
+    this._likeButton = this._element.querySelector(
+      selectors.cardLikeButtonSelector
+    );
+
+    this._deleteButton = this._element.querySelector(
+      selectors.placeDeleteButtonID
+    );
+    this._cardImage = this._element.querySelector(selectors.cardImageID);
+    const titleElement = this._element.querySelector(selectors.cardTitleID);
 
     titleElement.textContent = this._name;
 
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
-
 
     //add event listeners
     this._setEventListeners();

@@ -32,18 +32,36 @@ const addPlaceOpenButton = document.querySelector(
 /*                                Refactoring                                */
 /* -------------------------------------------------------------------------- */
 /* -------------------------------- functions ------------------------------- */
-function fillProfileForm(data){
+function fillProfileForm(data) {
   inputNameElement.value = data.userName;
   inputAboutElement.value = data.userAbout;
 }
 function handleEditProfileOpenButtonClick() {
-  fillProfileForm( userInfo.getUserInfo());
+  fillProfileForm(userInfo.getUserInfo());
   editProfileForm.open();
 }
 
 function handleAddPlaceOpenButtonClick() {
   addPlaceForm.open();
 }
+/* --------------------------------- methods -------------------------------- */
+const renderCard = (item) => {
+  const cardElement = new Card(
+    item,
+    {
+      templateSelector: selectors.cardTemplateId,
+    },
+    {
+      handleCardClick: (imageModalSelector, title, link) => {
+        const imagePopup = new PopupWithImage({
+          modalSelector: imageModalSelector,
+        });
+        imagePopup.open(title, link);
+      },
+    }
+  );
+  cardSection.addItem(cardElement.createCard());
+};
 /* -------------------------- open event listeners -------------------------- */
 editProfileOpenButton.addEventListener(
   "click",
@@ -53,26 +71,11 @@ editProfileOpenButton.addEventListener(
 addPlaceOpenButton.addEventListener("click", handleAddPlaceOpenButtonClick);
 
 /* ------------------------------- Section and Card class ------------------------------- */
+
 const cardSection = new Section(
   {
     items: initialCards,
-    renderer: (item) => {
-      const cardElement = new Card(
-        item,
-        {
-          templateSelector: selectors.cardTemplateId,
-        },
-        {
-          handleCardClick: (imageModalSelector, title, link) => {
-            const imagePopup = new PopupWithImage({
-              modalSelector: imageModalSelector,
-            });
-            imagePopup.open(title, link);
-          },
-        }
-      );
-      cardSection.addItem(cardElement.createCard());
-    },
+    renderer: renderCard,
   },
   { containerSelector: selectors.cardSectionSelector }
 );
@@ -105,44 +108,30 @@ const editProfileForm = new PopupWithForm(
     handleFormSubmit: (formData) => {
       userInfo.setUserInfo(formData);
       editProfileForm.close();
+      formValidators[selectors.profileFormName].disableSubmitButton();
     },
   }
 );
 
 /* -------------------- PopupWithForms Class - Add Place -------------------- */
-
 const addPlaceForm = new PopupWithForm(
   { modalSelector: selectors.addPlaceModalID },
   {
     handleFormSubmit: (formData) => {
-      const newPlaceContainer = document.querySelector(
-        selectors.cardSectionSelector
-      );
-      const placeData = {
+      renderCard({
         name: formData[selectors.inputTitleName],
         link: formData[selectors.inputLinkName],
-      };
+      });
 
-      const newPlace = new Card(
-        placeData,
-        {
-          templateSelector: selectors.cardTemplateId,
-        },
-        {
-          handleCardClick: (imageModalSelector, title, link) => {
-            const imagePopup = new PopupWithImage({
-              modalSelector: imageModalSelector,
-            });
-            imagePopup.open(title, link);
-          },
-        }
-      );
-
-      newPlaceContainer.prepend(newPlace.createCard());
       addPlaceForm.close();
+      addPlaceForm.reset();
+
+      formValidators[selectors.placeFormName].disableSubmitButton();
+     
     },
   }
 );
+
 /* ----------------------------- FormValidation ----------------------------- */
 const formValidatorConfig = {
   inputSelector: ".modal__input",

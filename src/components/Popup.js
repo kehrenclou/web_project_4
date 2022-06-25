@@ -14,12 +14,9 @@ export default class Popup {
   constructor(modalSelector) {
     this._modal = document.querySelector(modalSelector);
     this._form = this._modal.querySelector(selectors.formSelector);
-    // this._form = this._modal.querySelector(`${selectors.formSelector}`);
     this._handleEscClose = this._handleEscClose.bind(this);
     this._handleRemoteClickClose = this._handleRemoteClickClose.bind(this);
-    // this._closeButton = this._modal.querySelector(
-    //   `${selectors.closeModalButtonSelector}`
-    // );
+
     this._closeButton = this._modal.querySelector(
       selectors.closeModalButtonSelector
     );
@@ -28,7 +25,6 @@ export default class Popup {
     this.setEventListeners();
   }
 
- 
   _handleEscClose(e) {
     if (e.key === "Escape") {
       this.close();
@@ -57,6 +53,5 @@ export default class Popup {
   }
   setEventListeners() {
     this._closeButton.addEventListener("click", this._handleCloseButton);
-   
   }
 }
