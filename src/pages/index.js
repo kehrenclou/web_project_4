@@ -127,7 +127,6 @@ const addPlaceForm = new PopupWithForm(
       addPlaceForm.reset();
 
       formValidators[selectors.placeFormName].disableSubmitButton();
-     
     },
   }
 );
