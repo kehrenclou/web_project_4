@@ -12,9 +12,12 @@ export default class Section {
 
   //render items using renderer called in index.js new Section
   //call renderer and pass item to it
-  renderItems(item) {
+  renderItems() {
     this._initialArray.forEach(this._renderer);
   }
+  // renderItems(item) {
+  //   this._initialArray.forEach(this._renderer);
+  // }
 
   addItem(element) {
     //take items and render it into this._container

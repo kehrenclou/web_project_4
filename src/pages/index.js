@@ -11,9 +11,12 @@ import Popup from "../components/Popup.js"; //check if needed
 import UserInfo from "../components/UserInfo.js";
 
 //import otherstuff
-import { initialCards, selectors } from "../utils/constants.js";
+import { selectors } from "../utils/constants.js";
+// import { initialCards, selectors } from "../utils/constants.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+
+import { Api, baseUrl, token } from "..//components/Api.js";
 
 /* ------------------------ constants used only once ------------------------ */
 
@@ -31,6 +34,7 @@ const addPlaceOpenButton = document.querySelector(
 /* -------------------------------------------------------------------------- */
 /*                                Refactoring                                */
 /* -------------------------------------------------------------------------- */
+
 /* -------------------------------- functions ------------------------------- */
 function fillProfileForm(data) {
   inputNameElement.value = data.userName;
@@ -45,6 +49,7 @@ function handleAddPlaceOpenButtonClick() {
   addPlaceForm.open();
 }
 /* --------------------------------- methods -------------------------------- */
+
 const renderCard = (item) => {
   const cardElement = new Card(
     item,
@@ -60,6 +65,7 @@ const renderCard = (item) => {
       },
     }
   );
+
   cardSection.addItem(cardElement.createCard());
 };
 /* -------------------------- open event listeners -------------------------- */
@@ -71,24 +77,30 @@ editProfileOpenButton.addEventListener(
 addPlaceOpenButton.addEventListener("click", handleAddPlaceOpenButtonClick);
 
 /* ------------------------------- Section and Card class ------------------------------- */
+//now called in API stuff at bottom
+// const cardSection = new Section(
+//   {
+//     items: initialCards,
+//     renderer: renderCard,
+//   },
+//   { containerSelector: selectors.cardSectionSelector }
+// );
 
-const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: renderCard,
-  },
-  { containerSelector: selectors.cardSectionSelector }
-);
-
-//initialize cards
-cardSection.renderItems(initialCards);
+// //initialize cards
+// // cardSection.renderItems(initialCards);//don't need to pass initial cards here
+// cardSection.renderItems();
 
 /* ------------------------------ userinfoClass ----------------------------- */
 
 const userInfo = new UserInfo({
   nameSelector: selectors.profileNameID,
   aboutSelector: selectors.profileAboutID,
+  avatarSelector: selectors.profileAvatarID,
 });
+// const userInfo = new UserInfo({
+//   nameSelector: selectors.profileNameID,
+//   aboutSelector: selectors.profileAboutID,
+// });
 
 /* --------------------------- PopupWithForms Class - Edit Profile -------------------------- */
 //pass formData object containing data from form
@@ -166,5 +178,39 @@ const createValidatorInstances = (config) => {
 createValidatorInstances(formValidatorConfig);
 
 /* ---------------------------------- test ---------------------------------- */
+// Token: 72dee144-4e03-4ccf-86c7-08640cb55eca
+// Group ID: group-12
+// const baseUrl = "https://around.nomoreparties.co/v1/group-12";
+// const token = "72dee144-4e03-4ccf-86c7-08640cb55eca";
+
+//set Api connection
+const api = new Api({
+  baseUrl: baseUrl,
+  headers: { authorization: token, "Content-Type": "application/json" },
+});
+
+//set card section to null to reset in .then below
+let cardSection = null;
+// let userID = null;
+
+
+api.getAppInfo().then(([userData, initialCards]) => {
+
+  // userID = userData._id;
+
+//   //1. set UserInfo on page
+  userInfo.initializeUserInfo(userData);
+
+  //2. create new section passing in initialCards
+ cardSection = new Section(
+    {
+      items: initialCards,
+      renderer: renderCard,
+    },
+    { containerSelector: selectors.cardSectionSelector }
+  );
+  //3. render items
+  cardSection.renderItems();
+});
 
 /* --------------------------------- export --------------------------------- */

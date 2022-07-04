@@ -9,11 +9,16 @@ export default class UserInfo {
   //to constructor
   //is data: selectors being used in SetUserInfo or is it a direct call?
 
-  constructor({ nameSelector, aboutSelector }) {
+  constructor({ nameSelector, aboutSelector, avatarSelector }) {
     this._profileNameElement = document.querySelector(nameSelector);
     this._profileAboutElement = document.querySelector(aboutSelector);
-
+    this._profileAvatarElement = document.querySelector(avatarSelector);
   }
+  // constructor({ nameSelector, aboutSelector }) {
+  //   this._profileNameElement = document.querySelector(nameSelector);
+  //   this._profileAboutElement = document.querySelector(aboutSelector);
+
+  // }
 
   getUserInfo() {
     //returns an object with info about user from webpage
@@ -32,4 +37,10 @@ export default class UserInfo {
     this._profileNameElement.textContent = formData[selectors.inputNameName];
     this._profileAboutElement.textContent = formData[selectors.inputAboutName];
   }
-} 
+
+  initializeUserInfo(serverData) {
+    this._profileNameElement.textContent = serverData.name;
+    this._profileAboutElement.textContent = serverData.about;
+    this._profileAvatarElement.src = serverData.avatar;
+  }
+}
