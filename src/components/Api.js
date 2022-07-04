@@ -44,7 +44,33 @@ class Api {
     return Promise.all([this.getInfo(), this.getInitialCards()]);
   }
 
+  patchProfileData(inputName, inputAbout){
+    //save profile data to the server
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+      method: "PATCH",
+      body: JSON.stringify({
+        name: inputName,
+        about: inputAbout
+      })
+    })
+      .then(this._handleResponse)
+      .catch(this._handleErrorResponse);
+  
+  }
   //other methods
+  postNewCard(inputName, inputLink){
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
+      method: "POST",
+      body: JSON.stringify({
+        name:inputName,
+        link:inputLink
+      })
+    })
+      .then(this._handleResponse)
+      .catch(this._handleErrorResponse);
+  }
 }
 
 //where does new api get called in index.js or in Api

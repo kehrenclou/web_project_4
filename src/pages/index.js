@@ -114,34 +114,39 @@ const userInfo = new UserInfo({
 //get input values is done in PopupwithForm class  and put into dom
 //close modal
 
-const editProfileForm = new PopupWithForm(
-  { modalSelector: selectors.editProfileModalID },
-  {
-    handleFormSubmit: (formData) => {
-      userInfo.setUserInfo(formData);
-      editProfileForm.close();
-      formValidators[selectors.profileFormName].disableSubmitButton();
-    },
-  }
-);
+// const editProfileForm = new PopupWithForm(
+//   { modalSelector: selectors.editProfileModalID },
+//   {
+//     handleFormSubmit: (formData) => {
+//       const {
+//         [selectors.inputNameName]: name,
+//         [selectors.inputAboutName]: about,
+//       } = formData;
 
-/* -------------------- PopupWithForms Class - Add Place -------------------- */
-const addPlaceForm = new PopupWithForm(
-  { modalSelector: selectors.addPlaceModalID },
-  {
-    handleFormSubmit: (formData) => {
-      renderCard({
-        name: formData[selectors.inputTitleName],
-        link: formData[selectors.inputLinkName],
-      });
+//       userInfo.setUserInfo(name, about);
+//       editProfileForm.close();
+//       formValidators[selectors.profileFormName].disableSubmitButton();
+//     },
+//   }
+// );
 
-      addPlaceForm.close();
-      addPlaceForm.reset();
+// /* -------------------- PopupWithForms Class - Add Place -------------------- */
+// const addPlaceForm = new PopupWithForm(
+//   { modalSelector: selectors.addPlaceModalID },
+//   {
+//     handleFormSubmit: (formData) => {
+//       renderCard({
+//         name: formData[selectors.inputTitleName],
+//         link: formData[selectors.inputLinkName],
+//       });
 
-      formValidators[selectors.placeFormName].disableSubmitButton();
-    },
-  }
-);
+//       addPlaceForm.close();
+//       addPlaceForm.reset();
+
+//       formValidators[selectors.placeFormName].disableSubmitButton();
+//     },
+//   }
+// );
 
 /* ----------------------------- FormValidation ----------------------------- */
 const formValidatorConfig = {
@@ -188,21 +193,20 @@ const api = new Api({
   baseUrl: baseUrl,
   headers: { authorization: token, "Content-Type": "application/json" },
 });
-
+/* -------------------------- create initial cards -------------------------- */
 //set card section to null to reset in .then below
 let cardSection = null;
-// let userID = null;
-
 
 api.getAppInfo().then(([userData, initialCards]) => {
-
   // userID = userData._id;
 
-//   //1. set UserInfo on page
-  userInfo.initializeUserInfo(userData);
+  //1. set UserInfo on page, grab userData._id
+  userInfo.setUserInfo(userData.name, userData.about);
+  userInfo.setUserAvatar(userData.avatar);
+  userInfo.userID = userData._id; //adds user info to userInfo class
 
   //2. create new section passing in initialCards
- cardSection = new Section(
+  cardSection = new Section(
     {
       items: initialCards,
       renderer: renderCard,
@@ -213,4 +217,50 @@ api.getAppInfo().then(([userData, initialCards]) => {
   cardSection.renderItems();
 });
 
+/* ---------------------------- edit the profile ---------------------------- */
+//test - it works
+
+const editProfileForm = new PopupWithForm(
+  { modalSelector: selectors.editProfileModalID },
+  {
+    handleFormSubmit: (formData) => {
+      const {
+        [selectors.inputNameName]: name,
+        [selectors.inputAboutName]: about,
+      } = formData;
+
+      userInfo.setUserInfo(name, about);
+      api.patchProfileData(name, about);
+      editProfileForm.close();
+      formValidators[selectors.profileFormName].disableSubmitButton();
+    },
+  }
+);
+/* -------------------- PopupWithForms Class - Add Place -------------------- */
+const addPlaceForm = new PopupWithForm(
+  { modalSelector: selectors.addPlaceModalID },
+  {
+    handleFormSubmit: (formData) => {
+      console.log(formData);
+      const {
+        [selectors.inputTitleName]: inputName,
+        [selectors.inputLinkName]: inputLink,
+      } = formData;
+
+      // renderCard({
+      //   name: formData[selectors.inputTitleName],
+      //   link: formData[selectors.inputLinkName],
+      // });
+      renderCard({
+        name: inputName,
+        link: inputLink,
+      });
+      api.postNewCard(inputName,inputLink);
+      addPlaceForm.close();
+      addPlaceForm.reset();
+
+      formValidators[selectors.placeFormName].disableSubmitButton();
+    },
+  }
+);
 /* --------------------------------- export --------------------------------- */

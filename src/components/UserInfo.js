@@ -31,16 +31,19 @@ export default class UserInfo {
     };
   }
 
-  setUserInfo(formData) {
-    //takes new user data from form and adds it on the page
+  // setUserInfo(formData) {
+  //   //takes new user data from form and adds it on the page
 
-    this._profileNameElement.textContent = formData[selectors.inputNameName];
-    this._profileAboutElement.textContent = formData[selectors.inputAboutName];
+  //   this._profileNameElement.textContent = formData[selectors.inputNameName];
+  //   this._profileAboutElement.textContent = formData[selectors.inputAboutName];
+  // }
+  setUserInfo(userName, userAbout) {
+    //takes new user data from form or server and adds it on the page
+    this._profileNameElement.textContent = userName;
+    this._profileAboutElement.textContent = userAbout;
   }
 
-  initializeUserInfo(serverData) {
-    this._profileNameElement.textContent = serverData.name;
-    this._profileAboutElement.textContent = serverData.about;
-    this._profileAvatarElement.src = serverData.avatar;
+  setUserAvatar(userAvatar) {
+    this._profileAvatarElement.src = userAvatar;
   }
 }
