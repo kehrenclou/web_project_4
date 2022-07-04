@@ -6,9 +6,17 @@
   align-items: center;
 }
 .profile__avatar {
-  max-width: 120px;
-  max-height: 120px;
+  display: flex;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
+  overflow: hidden;
+}
+.profile__avatar-image {
+  height: 120px;
+  width: 120px;
+  object-fit: cover;
+  object-position: center;
 }
 .profile__details {
   display: grid;
