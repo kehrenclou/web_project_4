@@ -23,11 +23,14 @@ export default class PopupWithButton extends Popup {
    
     this._imageId = id;
     this._card = evt.target.parentElement;
-   
+  
     super.open();
   }
-  close() {
+  removeCard(){
     this._card.remove();
+  }
+  close() {
+    
     super.close();
   }
 }

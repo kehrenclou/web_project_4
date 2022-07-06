@@ -33,12 +33,13 @@ const addPlaceOpenButton = document.querySelector(
   selectors.addPlaceOpenButtonID
 );
 
+const avatarPictureButton=document.querySelector(selectors.profileAvatarImageID)
 /* ------------------------------ userinfoClass ----------------------------- */
 
 const userInfo = new UserInfo({
   nameSelector: selectors.profileNameID,
   aboutSelector: selectors.profileAboutID,
-  avatarSelector: selectors.profileAvatarID,
+  avatarSelector: selectors.profileAvatarImageID,
 });
 
 /* -------------------------------------------------------------------------- */
@@ -95,7 +96,8 @@ const renderCard = (item) => {
     },
 
     handleDeleteClick: (evt) => {
-      checkDeletePopup.open(item._id, evt); //this passes image id to class. opens check delete popup
+      checkDeletePopup.open(item._id, evt); 
+      //this passes image id to class. opens check delete popup
     },
 
     handleLikeButtonClick: (evt) => {
@@ -128,6 +130,7 @@ const checkDeletePopup = new PopupWithButton(
     handleFormSubmit: (cardId) => {
       api.deleteCard(cardId).then(() => {
         //close form/ remove card
+        checkDeletePopup.removeCard();
         checkDeletePopup.close();
       });
     },

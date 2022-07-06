@@ -45,7 +45,7 @@ export const selectors = {
 
   profileNameID: "#profile-name", //index.js
   profileAboutID: "#profile-about", //index.js
-  profileAvatarID: "#profile-avatar", //index.js
+  profileAvatarImageID: "#profile-avatar", //index.js
 
   formSelector: ".modal__form", //popup.js
   placeFormName: "form-add-place", //index.js
