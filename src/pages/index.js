@@ -33,8 +33,6 @@ const addPlaceOpenButton = document.querySelector(
   selectors.addPlaceOpenButtonID
 );
 
-
-
 /* ------------------------------ userinfoClass ----------------------------- */
 
 const userInfo = new UserInfo({
@@ -42,7 +40,6 @@ const userInfo = new UserInfo({
   aboutSelector: selectors.profileAboutID,
   avatarSelector: selectors.profileAvatarID,
 });
-
 
 /* -------------------------------------------------------------------------- */
 /*                                Refactoring                                */
@@ -68,7 +65,7 @@ api.getAppInfo().then(([userData, initialCards]) => {
   userInfo.setUserInfo(userData.name, userData.about);
   userInfo.setUserAvatar(userData.avatar);
   userInfo.setUserID(userData._id);
-  userId = userData._id;
+  userId = userData._id; // how to get this globally accessable
 
   //2. create new section passing in initialCards
   cardSection = new Section(
@@ -84,6 +81,9 @@ api.getAppInfo().then(([userData, initialCards]) => {
 /* --------------------------------- methods -------------------------------- */
 
 const renderCard = (item) => {
+  // console.log(item);
+  //item has likes array, owner, cardid
+  //userid is passing in null
   const cardElement = new Card(item, userId, {
     templateSelector: selectors.cardTemplateId,
 
@@ -95,18 +95,37 @@ const renderCard = (item) => {
     },
 
     handleDeleteClick: (evt) => {
-      checkDeletePopup.open(item._id, evt); //this passes image id to class
+      checkDeletePopup.open(item._id, evt); //this passes image id to class. opens check delete popup
+    },
+
+    handleLikeButtonClick: (evt) => {
+      if (cardElement.checkLikeArrayForUserId()) {
+        //delete like from server
+        api.deleteLikeOnCard(item._id).then((data) => {
+          //remove active class
+          evt.target.classList.remove("cards__button_type_like-active");
+          //update count and array
+          cardElement.updateLikeCount(data);
+        });
+      } else {
+        //add like to server
+        api.addLikeOnCard(item._id).then((data) => {
+          //add active class
+          evt.target.classList.add("cards__button_type_like-active");
+          //update count
+          cardElement.updateLikeCount(data);
+        });
+      }
     },
   });
 
   cardSection.addItem(cardElement.createCard());
 };
-/* -------------------------- delete image POpup -------------------------- */
+/* -------------------------- confirm delete image Ppup -------------------------- */
 const checkDeletePopup = new PopupWithButton(
   { modalSelector: selectors.checkDeleteModalID },
   {
     handleFormSubmit: (cardId) => {
-      
       api.deleteCard(cardId).then(() => {
         //close form/ remove card
         checkDeletePopup.close();
@@ -114,7 +133,6 @@ const checkDeletePopup = new PopupWithButton(
     },
   }
 );
-
 /* ---------------------------- edit the profile ---------------------------- */
 
 const editProfileForm = new PopupWithForm(
@@ -145,13 +163,16 @@ const addPlaceForm = new PopupWithForm(
         [selectors.inputLinkName]: inputLink,
       } = formData;
 
-      api.postNewCard(inputName, inputLink).then(() => {
+      api.postNewCard(inputName, inputLink).then((data) => {
         renderCard({
-          name: inputName,
-          link: inputLink,
-          likes: [],
-          owner: []
+          name: data.name,
+          link: data.link,
+          likes: data.likes,
+          owner: data.owner,
+          _id: data._id,
+          // data
         });
+
         addPlaceForm.close();
         addPlaceForm.reset();
 
@@ -175,9 +196,6 @@ function handleAddPlaceOpenButtonClick() {
   addPlaceForm.open();
 }
 
-// function handleDeleteOpenButtonClick(){
-//   checkDeletePopup.open();
-// }
 /* -------------------------- open event listeners -------------------------- */
 editProfileOpenButton.addEventListener(
   "click",

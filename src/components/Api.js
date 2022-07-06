@@ -21,7 +21,7 @@ class Api {
   }
 
   getInfo() {
-   //get user info from server
+    //get user info from server
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
       method: "GET",
@@ -45,67 +45,63 @@ class Api {
   }
 
   //save profile data
-  patchProfileData(inputName, inputAbout){
+  patchProfileData(inputName, inputAbout) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
       method: "PATCH",
       body: JSON.stringify({
         name: inputName,
-        about: inputAbout
-      })
+        about: inputAbout,
+      }),
     })
       .then(this._handleResponse)
       .catch(this._handleErrorResponse);
-  
   }
   //save new card
-  postNewCard(inputName, inputLink){
+  postNewCard(inputName, inputLink) {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
       method: "POST",
       body: JSON.stringify({
-        name:inputName,
-        link:inputLink
-      })
+        name: inputName,
+        link: inputLink,
+      }),
     })
       .then(this._handleResponse)
       .catch(this._handleErrorResponse);
   }
-//add Like not functional yet
-putLikeCard(cardId){
-  return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-    headers: this._headers,
-    method: "PUT",
-    // body: JSON.stringify({
-    //   name:inputName,
-    //   link:inputLink
-    // })
-  })
-    .then(this._handleResponse)
-    .catch(this._handleErrorResponse);
+  //add Like not functional yet
+  addLikeOnCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      headers: this._headers,
+      method: "PUT",
+      body: JSON.stringify(),
+    })
+      .then(this._handleResponse)
+      .catch(this._handleErrorResponse);
+  }
+
+  //delete like
+  deleteLikeOnCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      headers: this._headers,
+      method: "DELETE",
+      body: JSON.stringify(),
+    })
+      .then(this._handleResponse)
+      .catch(this._handleErrorResponse);
+  }
+  //delete card
+  deleteCard(cardId) {
+    // console.log(`${this._baseUrl}/cards/${cardId}`);
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      headers: this._headers,
+      method: "DELETE",
+    })
+      .then(this._handleResponse)
+      .catch(this._handleErrorResponse);
+  }
 }
-
-//delete like
-
-//delete card
-deleteCard(cardId){
- 
-  // console.log(`${this._baseUrl}/cards/${cardId}`);
-  return fetch(`${this._baseUrl}/cards/${cardId}`, {
-    headers: this._headers,
-    method: "DELETE",
-  
-  })
-    .then(this._handleResponse)
-    .catch(this._handleErrorResponse);
-}
-
-
-
-
-}
-
-
 
 /* --------------------------------- export --------------------------------- */
 export { Api, baseUrl, token };

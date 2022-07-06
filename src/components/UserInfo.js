@@ -14,7 +14,6 @@ export default class UserInfo {
     this._profileAboutElement = document.querySelector(aboutSelector);
     this._profileAvatarElement = document.querySelector(avatarSelector);
   }
- 
 
   getUserInfo() {
     //returns an object with info about user from webpage
@@ -26,7 +25,6 @@ export default class UserInfo {
       userAbout: this._profileAboutElement.textContent,
     };
   }
-
 
   setUserInfo(userName, userAbout) {
     //takes new user data from form or server and adds it on the page
@@ -40,11 +38,10 @@ export default class UserInfo {
 
   setUserID(userId) {
     this._userId = userId;
-   
   }
-  getUserId() {//returns undefined check if used or how to use it!
-   
-    return this._userId;
-  
+  getUserId() {
+    //returns undefined check if used or how to use it!
+
+    return { userID: this._userId };
   }
 }
