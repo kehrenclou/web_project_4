@@ -1,6 +1,6 @@
 /* --------------------------------- imports -------------------------------- */
 
-import { selectors } from "../utils/constants.js";
+import { selectors } from "../utils/constants.js"; //check if still used
 
 /* ---------------------------------- class --------------------------------- */
 export default class UserInfo {
@@ -14,11 +14,7 @@ export default class UserInfo {
     this._profileAboutElement = document.querySelector(aboutSelector);
     this._profileAvatarElement = document.querySelector(avatarSelector);
   }
-  // constructor({ nameSelector, aboutSelector }) {
-  //   this._profileNameElement = document.querySelector(nameSelector);
-  //   this._profileAboutElement = document.querySelector(aboutSelector);
-
-  // }
+ 
 
   getUserInfo() {
     //returns an object with info about user from webpage
@@ -31,12 +27,7 @@ export default class UserInfo {
     };
   }
 
-  // setUserInfo(formData) {
-  //   //takes new user data from form and adds it on the page
 
-  //   this._profileNameElement.textContent = formData[selectors.inputNameName];
-  //   this._profileAboutElement.textContent = formData[selectors.inputAboutName];
-  // }
   setUserInfo(userName, userAbout) {
     //takes new user data from form or server and adds it on the page
     this._profileNameElement.textContent = userName;
@@ -45,5 +36,15 @@ export default class UserInfo {
 
   setUserAvatar(userAvatar) {
     this._profileAvatarElement.src = userAvatar;
+  }
+
+  setUserID(userId) {
+    this._userId = userId;
+   
+  }
+  getUserId() {//returns undefined check if used or how to use it!
+   
+    return this._userId;
+  
   }
 }

@@ -44,8 +44,8 @@ class Api {
     return Promise.all([this.getInfo(), this.getInitialCards()]);
   }
 
+  //save profile data
   patchProfileData(inputName, inputAbout){
-    //save profile data to the server
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
       method: "PATCH",
@@ -58,7 +58,7 @@ class Api {
       .catch(this._handleErrorResponse);
   
   }
-  //other methods
+  //save new card
   postNewCard(inputName, inputLink){
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
@@ -71,16 +71,41 @@ class Api {
       .then(this._handleResponse)
       .catch(this._handleErrorResponse);
   }
+//add Like not functional yet
+putLikeCard(cardId){
+  return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    headers: this._headers,
+    method: "PUT",
+    // body: JSON.stringify({
+    //   name:inputName,
+    //   link:inputLink
+    // })
+  })
+    .then(this._handleResponse)
+    .catch(this._handleErrorResponse);
 }
 
-//where does new api get called in index.js or in Api
+//delete like
 
-// const api = new Api({
-//   baseUrl: baseUrl,
-//   headers: { authorization: token, "Content-Type": "application/json" },
-// });
+//delete card
+deleteCard(cardId){
+ 
+  // console.log(`${this._baseUrl}/cards/${cardId}`);
+  return fetch(`${this._baseUrl}/cards/${cardId}`, {
+    headers: this._headers,
+    method: "DELETE",
+  
+  })
+    .then(this._handleResponse)
+    .catch(this._handleErrorResponse);
+}
 
-// api.getInitialCards();
+
+
+
+}
+
+
 
 /* --------------------------------- export --------------------------------- */
 export { Api, baseUrl, token };

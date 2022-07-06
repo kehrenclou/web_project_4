@@ -25,6 +25,10 @@
   width: 18px;
   padding: 0;
   border: none;
+  visibility: hidden;
+}
+.cards__button_type_delete-active {
+  visibility: visible;
 }
 .cards__button_type_delete:hover {
   opacity: 0.6;
@@ -42,8 +46,8 @@
 .cards__textbox {
   display: flex;
   background-color: white;
-  padding: 25px 15px 31px 21px;
-  justify-content: center;
+  padding: 22px 15px 22px 21px;
+  justify-content: space-between;
   align-items: center;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -60,7 +64,17 @@
   white-space: nowrap;
   overflow: hidden;
 }
-
+.cards__like-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cards__like-count {
+  color: #000;
+  margin: 0;
+  align-items: center;
+  font-size: 13px;
+}
 .cards__button_type_like {
   margin-left: auto;
   width: 21px;
@@ -80,6 +94,7 @@
 .cards__button_type_like-active {
   background-image: url("../images/heartemojiactive.svg");
 }
+
 @media screen and (max-width: 920px) {
   .cards__list {
     max-width: 581px;

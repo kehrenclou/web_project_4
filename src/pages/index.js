@@ -15,6 +15,7 @@ import { selectors } from "../utils/constants.js";
 // import { initialCards, selectors } from "../utils/constants.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithButton from "../components/PopupWIthButton";
 
 import { Api, baseUrl, token } from "..//components/Api.js";
 
@@ -31,9 +32,134 @@ const editProfileOpenButton = document.querySelector(
 const addPlaceOpenButton = document.querySelector(
   selectors.addPlaceOpenButtonID
 );
+
+
+
+/* ------------------------------ userinfoClass ----------------------------- */
+
+const userInfo = new UserInfo({
+  nameSelector: selectors.profileNameID,
+  aboutSelector: selectors.profileAboutID,
+  avatarSelector: selectors.profileAvatarID,
+});
+
+
 /* -------------------------------------------------------------------------- */
 /*                                Refactoring                                */
 /* -------------------------------------------------------------------------- */
+// Token: 72dee144-4e03-4ccf-86c7-08640cb55eca
+// Group ID: group-12
+// const baseUrl = "https://around.nomoreparties.co/v1/group-12";
+// const token = "72dee144-4e03-4ccf-86c7-08640cb55eca";
+
+/* --------------------------------- set Api -------------------------------- */
+const api = new Api({
+  baseUrl: baseUrl,
+  headers: { authorization: token, "Content-Type": "application/json" },
+});
+
+/* -------------------------- create initial cards -------------------------- */
+//set card section to null to reset in .then below
+let cardSection = null;
+let userId = null;
+// pull in userData and initialCard data arrays
+api.getAppInfo().then(([userData, initialCards]) => {
+  //1. set UserInfo on page, grab userData._id
+  userInfo.setUserInfo(userData.name, userData.about);
+  userInfo.setUserAvatar(userData.avatar);
+  userInfo.setUserID(userData._id);
+  userId = userData._id;
+
+  //2. create new section passing in initialCards
+  cardSection = new Section(
+    {
+      items: initialCards,
+      renderer: renderCard,
+    },
+    { containerSelector: selectors.cardSectionSelector }
+  );
+  //3. render items
+  cardSection.renderItems();
+});
+/* --------------------------------- methods -------------------------------- */
+
+const renderCard = (item) => {
+  const cardElement = new Card(item, userId, {
+    templateSelector: selectors.cardTemplateId,
+
+    handleCardClick: (imageModalSelector, title, link) => {
+      const imagePopup = new PopupWithImage({
+        modalSelector: imageModalSelector,
+      });
+      imagePopup.open(title, link);
+    },
+
+    handleDeleteClick: (evt) => {
+      checkDeletePopup.open(item._id, evt); //this passes image id to class
+    },
+  });
+
+  cardSection.addItem(cardElement.createCard());
+};
+/* -------------------------- delete image POpup -------------------------- */
+const checkDeletePopup = new PopupWithButton(
+  { modalSelector: selectors.checkDeleteModalID },
+  {
+    handleFormSubmit: (cardId) => {
+      
+      api.deleteCard(cardId).then(() => {
+        //close form/ remove card
+        checkDeletePopup.close();
+      });
+    },
+  }
+);
+
+/* ---------------------------- edit the profile ---------------------------- */
+
+const editProfileForm = new PopupWithForm(
+  { modalSelector: selectors.editProfileModalID },
+  {
+    handleFormSubmit: (formData) => {
+      const {
+        [selectors.inputNameName]: name,
+        [selectors.inputAboutName]: about,
+      } = formData;
+
+      api.patchProfileData(name, about).then(() => {
+        userInfo.setUserInfo(name, about);
+        editProfileForm.close();
+        formValidators[selectors.profileFormName].disableSubmitButton();
+      });
+    },
+  }
+);
+/* -------------------- PopupWithForms Class - Add Place -------------------- */
+
+const addPlaceForm = new PopupWithForm(
+  { modalSelector: selectors.addPlaceModalID },
+  {
+    handleFormSubmit: (formData) => {
+      const {
+        [selectors.inputTitleName]: inputName,
+        [selectors.inputLinkName]: inputLink,
+      } = formData;
+
+      api.postNewCard(inputName, inputLink).then(() => {
+        renderCard({
+          name: inputName,
+          link: inputLink,
+          likes: [],
+          owner: []
+        });
+        addPlaceForm.close();
+        addPlaceForm.reset();
+
+        formValidators[selectors.placeFormName].disableSubmitButton();
+      });
+    },
+  }
+);
 
 /* -------------------------------- functions ------------------------------- */
 function fillProfileForm(data) {
@@ -48,26 +174,10 @@ function handleEditProfileOpenButtonClick() {
 function handleAddPlaceOpenButtonClick() {
   addPlaceForm.open();
 }
-/* --------------------------------- methods -------------------------------- */
 
-const renderCard = (item) => {
-  const cardElement = new Card(
-    item,
-    {
-      templateSelector: selectors.cardTemplateId,
-    },
-    {
-      handleCardClick: (imageModalSelector, title, link) => {
-        const imagePopup = new PopupWithImage({
-          modalSelector: imageModalSelector,
-        });
-        imagePopup.open(title, link);
-      },
-    }
-  );
-
-  cardSection.addItem(cardElement.createCard());
-};
+// function handleDeleteOpenButtonClick(){
+//   checkDeletePopup.open();
+// }
 /* -------------------------- open event listeners -------------------------- */
 editProfileOpenButton.addEventListener(
   "click",
@@ -89,18 +199,6 @@ addPlaceOpenButton.addEventListener("click", handleAddPlaceOpenButtonClick);
 // //initialize cards
 // // cardSection.renderItems(initialCards);//don't need to pass initial cards here
 // cardSection.renderItems();
-
-/* ------------------------------ userinfoClass ----------------------------- */
-
-const userInfo = new UserInfo({
-  nameSelector: selectors.profileNameID,
-  aboutSelector: selectors.profileAboutID,
-  avatarSelector: selectors.profileAvatarID,
-});
-// const userInfo = new UserInfo({
-//   nameSelector: selectors.profileNameID,
-//   aboutSelector: selectors.profileAboutID,
-// });
 
 /* --------------------------- PopupWithForms Class - Edit Profile -------------------------- */
 //pass formData object containing data from form
@@ -183,84 +281,5 @@ const createValidatorInstances = (config) => {
 createValidatorInstances(formValidatorConfig);
 
 /* ---------------------------------- test ---------------------------------- */
-// Token: 72dee144-4e03-4ccf-86c7-08640cb55eca
-// Group ID: group-12
-// const baseUrl = "https://around.nomoreparties.co/v1/group-12";
-// const token = "72dee144-4e03-4ccf-86c7-08640cb55eca";
 
-//set Api connection
-const api = new Api({
-  baseUrl: baseUrl,
-  headers: { authorization: token, "Content-Type": "application/json" },
-});
-/* -------------------------- create initial cards -------------------------- */
-//set card section to null to reset in .then below
-let cardSection = null;
-
-api.getAppInfo().then(([userData, initialCards]) => {
-  // userID = userData._id;
-
-  //1. set UserInfo on page, grab userData._id
-  userInfo.setUserInfo(userData.name, userData.about);
-  userInfo.setUserAvatar(userData.avatar);
-  userInfo.userID = userData._id; //adds user info to userInfo class
-
-  //2. create new section passing in initialCards
-  cardSection = new Section(
-    {
-      items: initialCards,
-      renderer: renderCard,
-    },
-    { containerSelector: selectors.cardSectionSelector }
-  );
-  //3. render items
-  cardSection.renderItems();
-});
-
-/* ---------------------------- edit the profile ---------------------------- */
-//test - it works
-
-const editProfileForm = new PopupWithForm(
-  { modalSelector: selectors.editProfileModalID },
-  {
-    handleFormSubmit: (formData) => {
-      const {
-        [selectors.inputNameName]: name,
-        [selectors.inputAboutName]: about,
-      } = formData;
-
-      userInfo.setUserInfo(name, about);
-      api.patchProfileData(name, about);
-      editProfileForm.close();
-      formValidators[selectors.profileFormName].disableSubmitButton();
-    },
-  }
-);
-/* -------------------- PopupWithForms Class - Add Place -------------------- */
-const addPlaceForm = new PopupWithForm(
-  { modalSelector: selectors.addPlaceModalID },
-  {
-    handleFormSubmit: (formData) => {
-      console.log(formData);
-      const {
-        [selectors.inputTitleName]: inputName,
-        [selectors.inputLinkName]: inputLink,
-      } = formData;
-
-      // renderCard({
-      //   name: formData[selectors.inputTitleName],
-      //   link: formData[selectors.inputLinkName],
-      // });
-      renderCard({
-        name: inputName,
-        link: inputLink,
-      });
-      api.postNewCard(inputName,inputLink);
-      addPlaceForm.close();
-      addPlaceForm.reset();
-
-      formValidators[selectors.placeFormName].disableSubmitButton();
-    },
-  }
-);
 /* --------------------------------- export --------------------------------- */

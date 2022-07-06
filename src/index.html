@@ -116,6 +116,32 @@
         <p class="modal__caption"></p>
       </div>
     </div>
+    <div class="modal" id="modal-check-delete">
+      <div class="modal__content">
+        <button
+          aria-label="Close Form Button"
+          type="button"
+          class="button modal__button-close"
+          id="check-delete-close-button"
+        ></button>
+        <h2 class="modal__title">Are you sure?</h2>
+        <form
+          class="modal__form"
+          id="modal-form-check-delete"
+          name="form-check-delete"
+          novalidate
+        >
+          <button
+            aria-label="Confirm Card Delete Button"
+            type="submit"
+            id="check-delete-submit-button"
+            class="button modal__button-submit"
+          >
+            Yes
+          </button>
+        </form>
+      </div>
+    </div>
     <div class="modal" id="modal-add-place">
       <div class="modal__content">
         <button
@@ -174,12 +200,17 @@
         <img src=" " alt=" " class="cards__image" id="card-image" />
         <div class="cards__textbox">
           <h2 class="cards__text" id="card-text"></h2>
+         <div class="cards__like-container">
           <button
             aria-label="Like Button"
             type="button"
             class="button cards__button_type_like"
             id="place-like-button"
           ></button>
+          <p class="cards__like-count">
+            #
+          </p>
+          </div>
         </div>
       </li>
     </template>
