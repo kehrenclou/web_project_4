@@ -78,7 +78,7 @@ class Card {
     this._element = this._getTemplate();
 
     this._likeButton = this._element.querySelector(
-      selectors.cardLikeButtonSelector
+      selectors.likePlaceButtonID
     );
     // **new
     this._likeCounter = this._element.querySelector(
@@ -87,7 +87,7 @@ class Card {
     // *end new
 
     this._deleteButton = this._element.querySelector(
-      selectors.placeDeleteButtonID
+      selectors.deletePlaceButtonID
     );
 
     this._cardImage = this._element.querySelector(selectors.cardImageID);

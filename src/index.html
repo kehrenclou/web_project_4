@@ -22,23 +22,26 @@
     </header>
     <main>
       <section class="profile">
-        <div class="profile__avatar">
+        <div class="profile__avatar" id="profile-avatar-container">
           <img
             class="profile__avatar-image"
-            src="<%=require('./images/Profile.jpg')%>"
-            alt="Picture of Jack Cousteau"
-            id="profile-avatar"
+            src="<%=require('./images/Flash.png')%>"
+            alt="Profile Picture"
+            id="profile-avatar-image"
           />
         </div>
+
         <div class="profile__details">
-          <h1 class="profile__name" id="profile-name">Jacques Cousteau</h1>
+          <h1 class="profile__name" id="profile-name"></h1>
+          <!-- <h1 class="profile__name" id="profile-name">Jacques Cousteau</h1> -->
+
           <button
             aria-label="Edit Profile Button"
             type="button"
             class="button profile__button-edit"
             id="edit-profile-open-button"
           ></button>
-          <p class="profile__about" id="profile-about">Explorer</p>
+          <p class="profile__about" id="profile-about"></p>
         </div>
         <button
           aria-label="Add Place Button"
@@ -55,6 +58,41 @@
     <footer class="footer">
       <p class="footer__text">© 2021 Around The U.S.</p>
     </footer>
+    <div class="modal" id="modal-change-avatar">
+      <div class="modal__content">
+        <button
+          aria-label="Close Form Button"
+          type="button"
+          class="button modal__button-close"
+          id="change-avatar-close-button"
+        ></button>
+        <h2 class="modal__title">Change profile picture</h2>
+        <form
+          class="modal__form"
+          id="modal-form-change-avatar"
+          name="form-change-avatar"
+          novalidate
+        >
+          <input
+            name="input-avatar-link"
+            placeholder="Avatar link"
+            class="modal__input"
+            id="input-avatar-link"
+            type="url"
+            required
+          />
+          <span class="modal__error" id="input-avatar-link-error"></span>
+          <button
+            aria-label="Submit New Avatar Form Button"
+            type="submit"
+            id="new-avatar-submit-button"
+            class="button modal__button-submit"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
     <div class="modal" id="modal-edit-profile">
       <div class="modal__content">
         <button
@@ -126,7 +164,7 @@
         ></button>
         <h2 class="modal__title">Are you sure?</h2>
         <form
-          class="modal__form"
+          class="modal__form modal__form_type_inputless"
           id="modal-form-check-delete"
           name="form-check-delete"
           novalidate

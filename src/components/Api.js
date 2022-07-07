@@ -57,6 +57,16 @@ class Api {
       .then(this._handleResponse)
       .catch(this._handleErrorResponse);
   }
+  //update profile picture
+  patchProfileImage(avatarLink) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      headers: this._headers,
+      method: "PATCH",
+      body: JSON.stringify({ avatar: avatarLink }),
+    })
+      .then(this._handleResponse)
+      .catch(this._handleErrorResponse);
+  }
   //save new card
   postNewCard(inputName, inputLink) {
     return fetch(`${this._baseUrl}/cards`, {

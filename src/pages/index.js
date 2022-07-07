@@ -18,7 +18,27 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithButton from "../components/PopupWIthButton";
 
 import { Api, baseUrl, token } from "..//components/Api.js";
-
+/* -------------------------------------------------------------------------- */
+/*                                tokens                                      */
+/* -------------------------------------------------------------------------- */
+// Token: 72dee144-4e03-4ccf-86c7-08640cb55eca
+// Group ID: group-12
+// const baseUrl = "https://around.nomoreparties.co/v1/group-12";
+// const token = "72dee144-4e03-4ccf-86c7-08640cb55eca";
+/* -------------------------------- contents -------------------------------- */
+//constants used only once
+//UserInfoClass
+//Refactoring
+//set API
+//create initialcards (has Section class)
+//renderCard method (has Card class)
+//PopupWithButton class - check Delete Place
+//PopupWithForm class -Edit Profile
+//PopupWithForm class - Add Place
+//PopupWithForm class - Edit Avatar
+//Functions
+//Open event listeners
+//FormValidation class
 /* ------------------------ constants used only once ------------------------ */
 
 //used in handleEditProfileOPenButton
@@ -33,22 +53,16 @@ const addPlaceOpenButton = document.querySelector(
   selectors.addPlaceOpenButtonID
 );
 
-const avatarPictureButton=document.querySelector(selectors.profileAvatarImageID)
-/* ------------------------------ userinfoClass ----------------------------- */
+const editAvatarOpenButton = document.querySelector(
+  selectors.profileAvatarContainerID
+);
+/* ------------------------------ UserInfoClass ----------------------------- */
 
 const userInfo = new UserInfo({
   nameSelector: selectors.profileNameID,
   aboutSelector: selectors.profileAboutID,
-  avatarSelector: selectors.profileAvatarImageID,
+  avatarSelector: selectors.profileAvatarImageID, //
 });
-
-/* -------------------------------------------------------------------------- */
-/*                                Refactoring                                */
-/* -------------------------------------------------------------------------- */
-// Token: 72dee144-4e03-4ccf-86c7-08640cb55eca
-// Group ID: group-12
-// const baseUrl = "https://around.nomoreparties.co/v1/group-12";
-// const token = "72dee144-4e03-4ccf-86c7-08640cb55eca";
 
 /* --------------------------------- set Api -------------------------------- */
 const api = new Api({
@@ -79,7 +93,7 @@ api.getAppInfo().then(([userData, initialCards]) => {
   //3. render items
   cardSection.renderItems();
 });
-/* --------------------------------- methods -------------------------------- */
+/* --------------------------------- renderCard method -------------------------------- */
 
 const renderCard = (item) => {
   // console.log(item);
@@ -96,7 +110,7 @@ const renderCard = (item) => {
     },
 
     handleDeleteClick: (evt) => {
-      checkDeletePopup.open(item._id, evt); 
+      checkDeletePopup.open(item._id, evt);
       //this passes image id to class. opens check delete popup
     },
 
@@ -123,7 +137,8 @@ const renderCard = (item) => {
 
   cardSection.addItem(cardElement.createCard());
 };
-/* -------------------------- confirm delete image Ppup -------------------------- */
+/* --------------- PopupWithButton class - check Delete Place --------------- */
+
 const checkDeletePopup = new PopupWithButton(
   { modalSelector: selectors.checkDeleteModalID },
   {
@@ -136,8 +151,26 @@ const checkDeletePopup = new PopupWithButton(
     },
   }
 );
-/* ---------------------------- edit the profile ---------------------------- */
+/* -------------------- PopupWithForm Class - Edit Avatar ------------------- */
+const editAvatarForm = new PopupWithForm(
+  {
+    modalSelector: selectors.editAvatarModalID,
+  },
+  {
+    handleFormSubmit: (formData) => {
+      const { [selectors.inputAvatarLinkName]: avatar } = formData;
+      // transform key from <image>'s name property to avatarLink
 
+      api.patchProfileImage(avatar).then(() => {
+        userInfo.setUserAvatar(avatar);
+        editAvatarForm.close();
+        formValidators[selectors.avatarFormName].disableSubmitButton();
+      });
+    },
+  }
+);
+
+/* ------------------- PopupWithForms Class - Edit profile ------------------ */
 const editProfileForm = new PopupWithForm(
   { modalSelector: selectors.editProfileModalID },
   {
@@ -155,6 +188,7 @@ const editProfileForm = new PopupWithForm(
     },
   }
 );
+
 /* -------------------- PopupWithForms Class - Add Place -------------------- */
 
 const addPlaceForm = new PopupWithForm(
@@ -198,7 +232,9 @@ function handleEditProfileOpenButtonClick() {
 function handleAddPlaceOpenButtonClick() {
   addPlaceForm.open();
 }
-
+function handleEditAvatarOpenButtonClick() {
+  editAvatarForm.open();
+}
 /* -------------------------- open event listeners -------------------------- */
 editProfileOpenButton.addEventListener(
   "click",
@@ -206,6 +242,8 @@ editProfileOpenButton.addEventListener(
 );
 
 addPlaceOpenButton.addEventListener("click", handleAddPlaceOpenButtonClick);
+
+editAvatarOpenButton.addEventListener("click", handleEditAvatarOpenButtonClick);
 
 /* ------------------------------- Section and Card class ------------------------------- */
 //now called in API stuff at bottom
