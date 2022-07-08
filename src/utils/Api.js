@@ -1,5 +1,5 @@
-const baseUrl = "https://around.nomoreparties.co/v1/group-12";
-const token = "72dee144-4e03-4ccf-86c7-08640cb55eca";
+// const baseUrl = "https://around.nomoreparties.co/v1/group-12";
+// const token = "72dee144-4e03-4ccf-86c7-08640cb55eca";
 
 /* ---------------------------------- class --------------------------------- */
 class Api {

@@ -18,7 +18,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation";
 
-import { Api, baseUrl, token } from "..//components/Api.js";
+import Api from "..//utilities/Api.js";
 /* -------------------------------------------------------------------------- */
 /*                                tokens                                      */
 /* -------------------------------------------------------------------------- */
@@ -63,6 +63,11 @@ const popupSubmitButton = document.querySelector(
 const deletePlaceSubmitButton = document.querySelector(
   selectors.deletePlaceSubmitButtonID
 );
+
+//used in API class
+const baseUrl = "https://around.nomoreparties.co/v1/group-12";
+const token = "72dee144-4e03-4ccf-86c7-08640cb55eca";
+
 /* -------------------------------- functions ------------------------------- */
 function fillProfileForm(data) {
   inputNameElement.value = data.userName;
