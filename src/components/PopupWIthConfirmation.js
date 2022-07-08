@@ -3,7 +3,7 @@ import Popup from "./Popup.js";
 import { selectors } from "../utils/constants.js";
 
 /* ---------------------------------- class --------------------------------- */
-export default class PopupWithButton extends Popup {
+export default class PopupWithConfirmation extends Popup {
   constructor({ modalSelector }, { handleFormSubmit }) {
     super(modalSelector);
     this._handleFormSubmit = handleFormSubmit;

@@ -16,7 +16,7 @@ import { selectors } from "../utils/constants.js";
 // import { initialCards, selectors } from "../utils/constants.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-import PopupWithButton from "../components/PopupWIthButton";
+import PopupWithConfirmation from "../components/PopupWithConfirmation";
 
 import { Api, baseUrl, token } from "..//components/Api.js";
 /* -------------------------------------------------------------------------- */
@@ -34,7 +34,7 @@ import { Api, baseUrl, token } from "..//components/Api.js";
 //Api class - set up API
 //Create initial cards - api.getInfo - Section Class
 //Render Card - Card Class -api.addLikeOnCard/deleteLikeOnCard
-//PopupWithButton class - confirm Delete Place - api.deleteCard
+//PopupWithConfirmation class - confirm Delete Place - api.deleteCard
 //PopupWithForm class - Edit Avatar - api.patchProfileAvatar
 //PopupWithForm class -Edit Profile - api.patchProfileData
 //PopupWithForm class - Add Place - api.postNewCard
@@ -172,9 +172,9 @@ const renderCard = (item) => {
 
   cardSection.addItem(cardElement.createCard());
 };
-/* ------ PopupWithButton class - confirm Delete Place - api.deleteCard ----- */
+/* ------ PopupWithConfirmation class - confirm Delete Place - api.deleteCard ----- */
 
-const checkDeletePopup = new PopupWithButton(
+const checkDeletePopup = new PopupWithConfirmation(
   { modalSelector: selectors.checkDeleteModalID },
   {
     handleFormSubmit: (cardId) => {
