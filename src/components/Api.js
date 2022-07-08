@@ -13,11 +13,11 @@ class Api {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(res);
+    return Promise.reject(`Error: ${res.status}`);
   }
 
   _handleErrorResponse(err) {
-    console.log("Err status code", err.status);
+    console.log(`Error: ${err.status}`);
   }
 
   getInfo() {

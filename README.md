@@ -3,6 +3,7 @@
 This is a project that creates a social media type platform similar to Instagram with the ability to like photos/places. It is the 4th project of the Web Development/Software Engineering program at Paracticum by Yandex. This is the beginning of a project that will be furthur enhanced in future sprints.
 Edit - refactored code to use classes for Cards and Form Validation
 Edit - refactored code to create classes for Popup, PopupWithImage, PopupWithForm, UserInfo. Added Webpack and NPM
+Edit - refactored code to connect to Server via APIs, add ability to change Avatar, confirm delete popups, Like Button counter. Dynamic page passing information to and from server instead of from project files.
 
 ## Project Features
 
@@ -18,8 +19,11 @@ Edit - refactored code to create classes for Popup, PopupWithImage, PopupWithFor
   - classes
   - templates
   - destructuring
-    -Webpack
-    -NPM
+- Webpack
+- NPM
+- Apis
+- UI/UX features
+  -changing alerts on Save
 
 ## Figma Design
 
