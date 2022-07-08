@@ -9,28 +9,33 @@ export default class PopupWithButton extends Popup {
     this._handleFormSubmit = handleFormSubmit;
   }
 
-
   setEventListeners() {
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
-     
+
       this._handleFormSubmit(this._imageId);
     });
     super.setEventListeners();
   }
 
-  open(id,evt) {
+  changeSubmitTextOnUpload() {
    
+    this._submitButton.textContent = "Deleting";
+  }
+  revertSubmitTextAfterUpload() {
+    this._submitButton.textContent = "Yes";
+  }
+
+  open(id, evt) {
     this._imageId = id;
     this._card = evt.target.parentElement;
-  
+
     super.open();
   }
-  removeCard(){
+  removeCard() {
     this._card.remove();
   }
   close() {
-    
     super.close();
   }
 }

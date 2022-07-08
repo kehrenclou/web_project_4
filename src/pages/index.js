@@ -2,6 +2,7 @@
 /*                                   Imports                                  */
 /* -------------------------------------------------------------------------- */
 //import css
+
 import "./index.css";
 //import all the classes
 import Card from "../components/Card.js";
@@ -27,17 +28,16 @@ import { Api, baseUrl, token } from "..//components/Api.js";
 // const token = "72dee144-4e03-4ccf-86c7-08640cb55eca";
 /* -------------------------------- contents -------------------------------- */
 //constants used only once
-//UserInfoClass
-//Refactoring
-//set API
-//create initialcards (has Section class)
-//renderCard method (has Card class)
-//PopupWithButton class - check Delete Place
-//PopupWithForm class -Edit Profile
-//PopupWithForm class - Add Place
-//PopupWithForm class - Edit Avatar
 //Functions
-//Open event listeners
+//Event Listeners - Open Buttons
+//UserInfo Class
+//Api class - set up API
+//Create initial cards - api.getInfo - Section Class
+//Render Card - Card Class -api.addLikeOnCard/deleteLikeOnCard
+//PopupWithButton class - confirm Delete Place - api.deleteCard
+//PopupWithForm class - Edit Avatar - api.patchProfileAvatar
+//PopupWithForm class -Edit Profile - api.patchProfileData
+//PopupWithForm class - Add Place - api.postNewCard
 //FormValidation class
 /* ------------------------ constants used only once ------------------------ */
 
@@ -52,11 +52,46 @@ const editProfileOpenButton = document.querySelector(
 const addPlaceOpenButton = document.querySelector(
   selectors.addPlaceOpenButtonID
 );
-
 const editAvatarOpenButton = document.querySelector(
   selectors.profileAvatarContainerID
 );
-/* ------------------------------ UserInfoClass ----------------------------- */
+
+//used in buttons "Saving"
+const popupSubmitButton = document.querySelector(
+  selectors.popupSubmitButtonSelector
+);
+const deletePlaceSubmitButton = document.querySelector(
+  selectors.deletePlaceSubmitButtonID
+);
+/* -------------------------------- functions ------------------------------- */
+function fillProfileForm(data) {
+  inputNameElement.value = data.userName;
+  inputAboutElement.value = data.userAbout;
+}
+function handleEditProfileOpenButtonClick() {
+  fillProfileForm(userInfo.getUserInfo());
+  editProfileForm.open();
+}
+
+function handleAddPlaceOpenButtonClick() {
+  addPlaceForm.open();
+}
+function handleEditAvatarOpenButtonClick() {
+  editAvatarForm.open();
+}
+
+/* --------------------- Event Listeners - Open Buttons --------------------- */
+
+editProfileOpenButton.addEventListener(
+  "click",
+  handleEditProfileOpenButtonClick
+);
+
+addPlaceOpenButton.addEventListener("click", handleAddPlaceOpenButtonClick);
+
+editAvatarOpenButton.addEventListener("click", handleEditAvatarOpenButtonClick);
+
+/* ------------------------------ UserInfo Class ---------------------------- */
 
 const userInfo = new UserInfo({
   nameSelector: selectors.profileNameID,
@@ -64,13 +99,13 @@ const userInfo = new UserInfo({
   avatarSelector: selectors.profileAvatarImageID, //
 });
 
-/* --------------------------------- set Api -------------------------------- */
+/* ------------------------- Api class - set up Api ------------------------- */
 const api = new Api({
   baseUrl: baseUrl,
   headers: { authorization: token, "Content-Type": "application/json" },
 });
 
-/* -------------------------- create initial cards -------------------------- */
+/* ---------- Create initial cards - getAppInfo Api - Section Class --------- */
 //set card section to null to reset in .then below
 let cardSection = null;
 let userId = null;
@@ -93,7 +128,7 @@ api.getAppInfo().then(([userData, initialCards]) => {
   //3. render items
   cardSection.renderItems();
 });
-/* --------------------------------- renderCard method -------------------------------- */
+/* ------ Render Card - Card Class -api.addLikeOnCard/deleteLikeOnCard ------ */
 
 const renderCard = (item) => {
   // console.log(item);
@@ -137,21 +172,25 @@ const renderCard = (item) => {
 
   cardSection.addItem(cardElement.createCard());
 };
-/* --------------- PopupWithButton class - check Delete Place --------------- */
+/* ------ PopupWithButton class - confirm Delete Place - api.deleteCard ----- */
 
 const checkDeletePopup = new PopupWithButton(
   { modalSelector: selectors.checkDeleteModalID },
   {
     handleFormSubmit: (cardId) => {
+      checkDeletePopup.changeSubmitTextOnUpload();
       api.deleteCard(cardId).then(() => {
-        //close form/ remove card
+        //change button text back/remove card/close
+
         checkDeletePopup.removeCard();
         checkDeletePopup.close();
+        checkDeletePopup.revertSubmitTextAfterUpload();
       });
     },
   }
 );
-/* -------------------- PopupWithForm Class - Edit Avatar ------------------- */
+/* ------- PopupWithForm class - Edit Avatar - api.patchProfileAvatar ------- */
+
 const editAvatarForm = new PopupWithForm(
   {
     modalSelector: selectors.editAvatarModalID,
@@ -160,17 +199,20 @@ const editAvatarForm = new PopupWithForm(
     handleFormSubmit: (formData) => {
       const { [selectors.inputAvatarLinkName]: avatar } = formData;
       // transform key from <image>'s name property to avatarLink
+      editAvatarForm.changeSubmitTextOnUpload();
 
-      api.patchProfileImage(avatar).then(() => {
+      api.patchProfileAvatar(avatar).then(() => {
+        editAvatarForm.revertSubmitTextAfterUpload();
         userInfo.setUserAvatar(avatar);
         editAvatarForm.close();
+        editAvatarForm.reset();
         formValidators[selectors.avatarFormName].disableSubmitButton();
       });
     },
   }
 );
+/* -------- PopupWithForm class -Edit Profile - api.patchProfileData -------- */
 
-/* ------------------- PopupWithForms Class - Edit profile ------------------ */
 const editProfileForm = new PopupWithForm(
   { modalSelector: selectors.editProfileModalID },
   {
@@ -180,16 +222,20 @@ const editProfileForm = new PopupWithForm(
         [selectors.inputAboutName]: about,
       } = formData;
 
+      editProfileForm.changeSubmitTextOnUpload();
+
       api.patchProfileData(name, about).then(() => {
         userInfo.setUserInfo(name, about);
         editProfileForm.close();
+        editProfileForm.reset();
         formValidators[selectors.profileFormName].disableSubmitButton();
+        editProfileForm.revertSubmitTextAfterUpload();
       });
     },
   }
 );
 
-/* -------------------- PopupWithForms Class - Add Place -------------------- */
+/* ------------ PopupWithForm class - Add Place - api.postNewCard ----------- */
 
 const addPlaceForm = new PopupWithForm(
   { modalSelector: selectors.addPlaceModalID },
@@ -199,6 +245,8 @@ const addPlaceForm = new PopupWithForm(
         [selectors.inputTitleName]: inputName,
         [selectors.inputLinkName]: inputLink,
       } = formData;
+
+      addPlaceForm.changeSubmitTextOnUpload();
 
       api.postNewCard(inputName, inputLink).then((data) => {
         renderCard({
@@ -212,100 +260,15 @@ const addPlaceForm = new PopupWithForm(
 
         addPlaceForm.close();
         addPlaceForm.reset();
+        addPlaceForm.revertSubmitTextAfterUpload();
 
         formValidators[selectors.placeFormName].disableSubmitButton();
       });
     },
   }
 );
-
-/* -------------------------------- functions ------------------------------- */
-function fillProfileForm(data) {
-  inputNameElement.value = data.userName;
-  inputAboutElement.value = data.userAbout;
-}
-function handleEditProfileOpenButtonClick() {
-  fillProfileForm(userInfo.getUserInfo());
-  editProfileForm.open();
-}
-
-function handleAddPlaceOpenButtonClick() {
-  addPlaceForm.open();
-}
-function handleEditAvatarOpenButtonClick() {
-  editAvatarForm.open();
-}
-/* -------------------------- open event listeners -------------------------- */
-editProfileOpenButton.addEventListener(
-  "click",
-  handleEditProfileOpenButtonClick
-);
-
-addPlaceOpenButton.addEventListener("click", handleAddPlaceOpenButtonClick);
-
-editAvatarOpenButton.addEventListener("click", handleEditAvatarOpenButtonClick);
-
-/* ------------------------------- Section and Card class ------------------------------- */
-//now called in API stuff at bottom
-// const cardSection = new Section(
-//   {
-//     items: initialCards,
-//     renderer: renderCard,
-//   },
-//   { containerSelector: selectors.cardSectionSelector }
-// );
-
-// //initialize cards
-// // cardSection.renderItems(initialCards);//don't need to pass initial cards here
-// cardSection.renderItems();
-
-/* --------------------------- PopupWithForms Class - Edit Profile -------------------------- */
-//pass formData object containing data from form
-//to a new instance of PopupWithForm
-//formData parameter is a value that will pass
-//to this._handleFormSubmit() when calling it in PopupWith Form
-//on submit click event listener
-//it is an object returned by this._getInputValues()method
-
-//prevent default put onto event listener
-//get input values is done in PopupwithForm class  and put into dom
-//close modal
-
-// const editProfileForm = new PopupWithForm(
-//   { modalSelector: selectors.editProfileModalID },
-//   {
-//     handleFormSubmit: (formData) => {
-//       const {
-//         [selectors.inputNameName]: name,
-//         [selectors.inputAboutName]: about,
-//       } = formData;
-
-//       userInfo.setUserInfo(name, about);
-//       editProfileForm.close();
-//       formValidators[selectors.profileFormName].disableSubmitButton();
-//     },
-//   }
-// );
-
-// /* -------------------- PopupWithForms Class - Add Place -------------------- */
-// const addPlaceForm = new PopupWithForm(
-//   { modalSelector: selectors.addPlaceModalID },
-//   {
-//     handleFormSubmit: (formData) => {
-//       renderCard({
-//         name: formData[selectors.inputTitleName],
-//         link: formData[selectors.inputLinkName],
-//       });
-
-//       addPlaceForm.close();
-//       addPlaceForm.reset();
-
-//       formValidators[selectors.placeFormName].disableSubmitButton();
-//     },
-//   }
-// );
-
 /* ----------------------------- FormValidation ----------------------------- */
+
 const formValidatorConfig = {
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__button-submit",

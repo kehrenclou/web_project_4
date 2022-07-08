@@ -101,12 +101,12 @@ class Card {
 
     //check if userId matches imageOwnerId, set trash to active state
     if (this._userId === this._imageOwnerId) {
-      this._deleteButton.classList.add("cards__button_type_delete-active");
+      this._deleteButton.classList.add(selectors.cardTrashButtonActiveSelector);
     }
 
     //check if userId matches any userIds in likes, set to active state
     if (this._likesIdArray.includes(this._userId)) {
-      this._likeButton.classList.add("cards__button_type_like-active");
+      this._likeButton.classList.add(selectors.cardLikeButtonActiveSelector);
     }
 
     //add event listeners

@@ -14,6 +14,11 @@ export default class Popup {
   constructor(modalSelector) {
     this._modal = document.querySelector(modalSelector);
     this._form = this._modal.querySelector(selectors.formSelector);
+
+    this._submitButton = this._modal.querySelector(
+      selectors.popupSubmitButtonSelector
+    );
+
     this._handleEscClose = this._handleEscClose.bind(this);
     this._handleRemoteClickClose = this._handleRemoteClickClose.bind(this);
 
@@ -39,6 +44,13 @@ export default class Popup {
   }
   _handleCloseButton() {
     this.close();
+  }
+
+  changeSubmitTextOnUpload() {
+    this._submitButton.textContent = "Saving";
+  }
+  revertSubmitTextAfterUpload() {
+    this._submitButton.textContent = "Save";
   }
   open() {
     this._modal.classList.add("modal_open");

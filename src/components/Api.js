@@ -58,7 +58,7 @@ class Api {
       .catch(this._handleErrorResponse);
   }
   //update profile picture
-  patchProfileImage(avatarLink) {
+  patchProfileAvatar(avatarLink) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       headers: this._headers,
       method: "PATCH",
