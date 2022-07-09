@@ -202,13 +202,20 @@ const checkDeletePopup = new PopupWithConfirmation(
   {
     handleFormSubmit: (cardId) => {
       checkDeletePopup.changeSubmitTextOnUpload();
-      api.deleteCard(cardId).then(() => {
-        //change button text back/remove card/close
+      api
+        .deleteCard(cardId)
+        .then(() => {
+          //change button text back/remove card/close
 
-        checkDeletePopup.removeCard();
-        checkDeletePopup.close();
-        checkDeletePopup.revertSubmitTextAfterUpload();
-      });
+          checkDeletePopup.removeCard();
+          checkDeletePopup.close();
+        })
+        .catch((err) => {
+          api.handleErrorResponse(err);
+        })
+        .finally(() => {
+          checkDeletePopup.revertSubmitTextAfterUpload();
+        });
     },
   }
 );
@@ -224,14 +231,19 @@ const editAvatarForm = new PopupWithForm(
       // transform key from <image>'s name property to avatarLink
       editAvatarForm.changeSubmitTextOnUpload();
 
-      api.patchProfileAvatar(avatar).then(() => {
-        editAvatarForm.revertSubmitTextAfterUpload();
-        userInfo.setUserAvatar(avatar);
-
-        editAvatarForm.close();
-
-        formValidators[selectors.avatarFormName].disableSubmitButton();
-      });
+      api
+        .patchProfileAvatar(avatar)
+        .then(() => {
+          userInfo.setUserAvatar(avatar);
+          editAvatarForm.close();
+          formValidators[selectors.avatarFormName].disableSubmitButton();
+        })
+        .catch((err) => {
+          api.handleErrorResponse(err);
+        })
+        .finally(() => {
+          editAvatarForm.revertSubmitTextAfterUpload();
+        });
     },
   }
 );
@@ -248,12 +260,19 @@ const editProfileForm = new PopupWithForm(
 
       editProfileForm.changeSubmitTextOnUpload();
 
-      api.patchProfileData(name, about).then(() => {
-        userInfo.setUserInfo(name, about);
-        editProfileForm.close();
-        formValidators[selectors.profileFormName].disableSubmitButton();
-        editProfileForm.revertSubmitTextAfterUpload();
-      });
+      api
+        .patchProfileData(name, about)
+        .then(() => {
+          userInfo.setUserInfo(name, about);
+          editProfileForm.close();
+          formValidators[selectors.profileFormName].disableSubmitButton();
+        })
+        .catch((err) => {
+          api.handleErrorResponse(err);
+        })
+        .finally(() => {
+          editProfileForm.revertSubmitTextAfterUpload();
+        });
     },
   }
 );
@@ -271,21 +290,27 @@ const addPlaceForm = new PopupWithForm(
 
       addPlaceForm.changeSubmitTextOnUpload();
 
-      api.postNewCard(inputName, inputLink).then((data) => {
-        renderCard({
-          name: data.name,
-          link: data.link,
-          likes: data.likes,
-          owner: data.owner,
-          _id: data._id,
-          // data
+      api
+        .postNewCard(inputName, inputLink)
+        .then((data) => {
+          renderCard({
+            name: data.name,
+            link: data.link,
+            likes: data.likes,
+            owner: data.owner,
+            _id: data._id,
+            // data
+          });
+
+          addPlaceForm.close();
+          formValidators[selectors.placeFormName].disableSubmitButton();
+        })
+        .catch((err) => {
+          api.handleErrorResponse(err);
+        })
+        .finally(() => {
+          addPlaceForm.revertSubmitTextAfterUpload();
         });
-
-        addPlaceForm.close();
-        addPlaceForm.revertSubmitTextAfterUpload();
-
-        formValidators[selectors.placeFormName].disableSubmitButton();
-      });
     },
   }
 );
