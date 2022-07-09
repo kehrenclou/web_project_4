@@ -35,7 +35,5 @@ export default class PopupWithConfirmation extends Popup {
   removeCard() {
     this._card.remove();
   }
-  close() {
-    super.close();
-  }
+ 
 }

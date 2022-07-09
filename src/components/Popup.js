@@ -46,12 +46,7 @@ export default class Popup {
     this.close();
   }
 
-  changeSubmitTextOnUpload() {
-    this._submitButton.textContent = "Saving";
-  }
-  revertSubmitTextAfterUpload() {
-    this._submitButton.textContent = "Save";
-  }
+
   open() {
     this._modal.classList.add("modal_open");
     // this.setEventListeners()//if this is used here creates a new set event lister every time popup opened and not removed on close

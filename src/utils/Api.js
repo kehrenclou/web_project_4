@@ -2,7 +2,7 @@
 // const token = "72dee144-4e03-4ccf-86c7-08640cb55eca";
 
 /* ---------------------------------- class --------------------------------- */
-class Api {
+export default class Api {
   constructor({ baseUrl, headers }) {
     //constructor body
     this._baseUrl = baseUrl;
@@ -15,9 +15,12 @@ class Api {
     }
     return Promise.reject(`Error: ${res.status}`);
   }
+  // _handleErrorResponse(err) {
+  //   console.log(`Error: ${err.status}`);
+  // }
 
-  _handleErrorResponse(err) {
-    console.log(`Error: ${err.status}`);
+  handleErrorResponse(err) {
+    console.log(`Error: ${err}`);
   }
 
   getInfo() {
@@ -25,9 +28,7 @@ class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
       method: "GET",
-    })
-      .then(this._handleResponse)
-      .catch(this._handleErrorResponse);
+    }).then(this._handleResponse);
   }
 
   getInitialCards() {
@@ -35,9 +36,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
       method: "GET",
-    })
-      .then(this._handleResponse)
-      .catch(this._handleErrorResponse);
+    }).then(this._handleResponse);
   }
 
   getAppInfo() {
@@ -86,9 +85,7 @@ class Api {
       headers: this._headers,
       method: "PUT",
       body: JSON.stringify(),
-    })
-      .then(this._handleResponse)
-      .catch(this._handleErrorResponse);
+    }).then(this._handleResponse);
   }
 
   //delete like
@@ -97,9 +94,7 @@ class Api {
       headers: this._headers,
       method: "DELETE",
       body: JSON.stringify(),
-    })
-      .then(this._handleResponse)
-      .catch(this._handleErrorResponse);
+    }).then(this._handleResponse);
   }
   //delete card
   deleteCard(cardId) {
@@ -114,4 +109,3 @@ class Api {
 }
 
 /* --------------------------------- export --------------------------------- */
-export { Api, baseUrl, token };

@@ -18,7 +18,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation";
 
-import Api from "..//utilities/Api.js";
+import Api from "..//utils/Api.js";
 /* -------------------------------------------------------------------------- */
 /*                                tokens                                      */
 /* -------------------------------------------------------------------------- */
@@ -115,24 +115,36 @@ const api = new Api({
 let cardSection = null;
 let userId = null;
 // pull in userData and initialCard data arrays
-api.getAppInfo().then(([userData, initialCards]) => {
-  //1. set UserInfo on page, grab userData._id
-  userInfo.setUserInfo(userData.name, userData.about);
-  userInfo.setUserAvatar(userData.avatar);
-  userInfo.setUserID(userData._id);
-  userId = userData._id; // how to get this globally accessable
+api
+  .getAppInfo()
+  // .then(api.handleResponse())
+  // .catch((err) => {
+  //   console.log("catch 122");
+  //   api.handleErrorResponse(err);
+  // })
+  .then(([userData, initialCards]) => {
+    //1. set UserInfo on page, grab userData._id
+    userInfo.setUserInfo(userData.name, userData.about);
+    userInfo.setUserAvatar(userData.avatar);
+    userInfo.setUserID(userData._id);
+    userId = userData._id; // how to get this globally accessable
 
-  //2. create new section passing in initialCards
-  cardSection = new Section(
-    {
-      items: initialCards,
-      renderer: renderCard,
-    },
-    { containerSelector: selectors.cardSectionSelector }
-  );
-  //3. render items
-  cardSection.renderItems();
-});
+    //2. create new section passing in initialCards
+    cardSection = new Section(
+      {
+        items: initialCards,
+        renderer: renderCard,
+      },
+      { containerSelector: selectors.cardSectionSelector }
+    );
+    //3. render items
+    cardSection.renderItems();
+    //4. catch errors
+  })
+  .catch((err) => {
+    api.handleErrorResponse(err);
+  });
+
 /* ------ Render Card - Card Class -api.addLikeOnCard/deleteLikeOnCard ------ */
 
 const renderCard = (item) => {
@@ -157,20 +169,26 @@ const renderCard = (item) => {
     handleLikeButtonClick: (evt) => {
       if (cardElement.checkLikeArrayForUserId()) {
         //delete like from server
-        api.deleteLikeOnCard(item._id).then((data) => {
-          //remove active class
-          evt.target.classList.remove("cards__button_type_like-active");
-          //update count and array
-          cardElement.updateLikeCount(data);
-        });
+        api
+          .deleteLikeOnCard(item._id)
+          .then((data) => {
+            //update count and array/remove active class
+            cardElement.updateLikes(data);
+          })
+          .catch((err) => {
+            api.handleErrorResponse(err);
+          });
       } else {
         //add like to server
-        api.addLikeOnCard(item._id).then((data) => {
-          //add active class
-          evt.target.classList.add("cards__button_type_like-active");
-          //update count
-          cardElement.updateLikeCount(data);
-        });
+        api
+          .addLikeOnCard(item._id)
+          .then((data) => {
+            //update count/add active class
+            cardElement.updateLikes(data);
+          })
+          .catch((err) => {
+            api.handleErrorResponse(err);
+          });
       }
     },
   });
@@ -209,8 +227,9 @@ const editAvatarForm = new PopupWithForm(
       api.patchProfileAvatar(avatar).then(() => {
         editAvatarForm.revertSubmitTextAfterUpload();
         userInfo.setUserAvatar(avatar);
+
         editAvatarForm.close();
-        editAvatarForm.reset();
+
         formValidators[selectors.avatarFormName].disableSubmitButton();
       });
     },
@@ -232,7 +251,6 @@ const editProfileForm = new PopupWithForm(
       api.patchProfileData(name, about).then(() => {
         userInfo.setUserInfo(name, about);
         editProfileForm.close();
-        editProfileForm.reset();
         formValidators[selectors.profileFormName].disableSubmitButton();
         editProfileForm.revertSubmitTextAfterUpload();
       });
@@ -264,7 +282,6 @@ const addPlaceForm = new PopupWithForm(
         });
 
         addPlaceForm.close();
-        addPlaceForm.reset();
         addPlaceForm.revertSubmitTextAfterUpload();
 
         formValidators[selectors.placeFormName].disableSubmitButton();

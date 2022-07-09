@@ -21,7 +21,7 @@ class Card {
     this._link = data.link;
     this._cardId = data._id;
 
-    this._likesCount = data.likes;
+    this._likes = data.likes; //likes array
     this._userId = userId;
     // this._ownerID = data.owner._id; //broke code on add place click
     this._imageOwnerId = data.owner._id;
@@ -48,8 +48,8 @@ class Card {
     return cardTemplate;
   }
 
-  _handleLikeCardButton(evt) {
-    evt.target.classList.toggle("cards__button_type_like-active");
+  _handleLikeCardButton() {
+    this._likeButton.classList.toggle("cards__button_type_like-active");
   }
 
   _setEventListeners() {
@@ -65,21 +65,29 @@ class Card {
   checkLikeArrayForUserId() {
     return this._likesIdArray.includes(this._userId);
   }
-  updateLikeCount(data) {
-    this._likesCount = data.likes;
-    this._likesIdArray = data.likes.map((like) => like._id);
-    this._likeCounter.textContent = this._likesCount.length;
-    this._cardId = data.likes._id;
+
+  _renderLikes() {
+    this._likeCounter.textContent = this._likesIdArray.length;
+    //check if userId matches any userIds in likes, set to active state
+    if (this.checkLikeArrayForUserId()) {
+      this._likeButton.classList.add(selectors.cardLikeButtonActiveSelector);
+    }
   }
+
+  updateLikes(data) {
+    this._likesIdArray = data.likes.map((like) => like._id); //updates array
+    this._likeCounter.textContent = this._likesIdArray.length;
+    //new
+    this._handleLikeCardButton();
+  }
+
   createCard() {
     // make card
 
     //declare templates, elements
     this._element = this._getTemplate();
 
-    this._likeButton = this._element.querySelector(
-      selectors.likePlaceButtonID
-    );
+    this._likeButton = this._element.querySelector(selectors.likePlaceButtonID);
     // **new
     this._likeCounter = this._element.querySelector(
       selectors.cardLikeCountSelector
@@ -97,18 +105,14 @@ class Card {
     titleElement.textContent = this._name;
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
-    this._likeCounter.textContent = this._likesCount.length;
 
-    //check if userId matches imageOwnerId, set trash to active state
+    // //check if userId matches imageOwnerId, set trash to active state
     if (this._userId === this._imageOwnerId) {
       this._deleteButton.classList.add(selectors.cardTrashButtonActiveSelector);
     }
 
-    //check if userId matches any userIds in likes, set to active state
-    if (this._likesIdArray.includes(this._userId)) {
-      this._likeButton.classList.add(selectors.cardLikeButtonActiveSelector);
-    }
-
+    //check and render like button active
+    this._renderLikes();
     //add event listeners
     this._setEventListeners();
 

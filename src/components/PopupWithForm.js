@@ -41,11 +41,18 @@ export default class PopupWithForm extends Popup {
     return formValues;
   }
 
+  changeSubmitTextOnUpload() {
+    this._submitButton.textContent = "Saving";
+  }
+
+  revertSubmitTextAfterUpload() {
+    this._submitButton.textContent = "Save";
+  }
+
   setEventListeners() {
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
-  
     });
     super.setEventListeners();
   }
@@ -55,6 +62,6 @@ export default class PopupWithForm extends Popup {
 
   close() {
     super.close();
-    // this._form.reset(); //check if this needs to happen on submit
+    this._form.reset(); //check if this needs to happen on submit
   }
 }

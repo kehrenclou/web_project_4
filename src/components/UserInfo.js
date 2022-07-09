@@ -40,8 +40,6 @@ export default class UserInfo {
     this._userId = userId;
   }
   getUserId() {
-    //returns undefined check if used or how to use it!
-
-    return { userID: this._userId };
+    return this._userId;
   }
 }
