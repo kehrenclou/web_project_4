@@ -49,9 +49,7 @@ export default class Api {
         name: inputName,
         about: inputAbout,
       }),
-    })
-      .then(this._handleResponse)
-      .catch(this._handleErrorResponse);
+    }).then(this._handleResponse);
   }
   //update profile picture
   patchProfileAvatar(avatarLink) {
@@ -59,9 +57,7 @@ export default class Api {
       headers: this._headers,
       method: "PATCH",
       body: JSON.stringify({ avatar: avatarLink }),
-    })
-      .then(this._handleResponse)
-      .catch(this._handleErrorResponse);
+    }).then(this._handleResponse);
   }
   //save new card
   postNewCard(inputName, inputLink) {
@@ -72,9 +68,7 @@ export default class Api {
         name: inputName,
         link: inputLink,
       }),
-    })
-      .then(this._handleResponse)
-      .catch(this._handleErrorResponse);
+    }).then(this._handleResponse);
   }
   //add Like not functional yet
   addLikeOnCard(cardId) {
@@ -98,9 +92,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       headers: this._headers,
       method: "DELETE",
-    })
-      .then(this._handleResponse)
-      .catch(this._handleErrorResponse);
+    }).then(this._handleResponse);
   }
 }
 
