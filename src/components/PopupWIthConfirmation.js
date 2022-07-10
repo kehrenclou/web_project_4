@@ -24,9 +24,9 @@ export default class PopupWithConfirmation extends Popup {
     super.open();
   }
 
-  removeCard(cardEl) {
-    cardEl.remove();
-  }
+  // removeCard(cardEl) {
+  //   cardEl.remove();
+  // }
 
   setEventListeners() {
     this._form.addEventListener("submit", (evt) => {

@@ -160,6 +160,7 @@ const renderCard = (item) => {
       checkDeletePopup.open(item._id, cardElement, handleDeleteSubmit);
       //this passes image id, delete submit handler to popupwconf class.
       // opens check delete popup
+      console.log(cardElement); //returns the card element ok
     },
 
     handleLikeButtonClick: (evt) => {
@@ -208,7 +209,8 @@ const handleDeleteSubmit = (cardId, cardEl) => {
     .deleteCard(cardId)
     .then(() => {
       //change button text back/remove card/close
-      checkDeletePopup.removeCard(cardEl);
+      cardEl.remove();
+      // checkDeletePopup.removeCard(cardEl);
       checkDeletePopup.close();
     })
     .catch((err) => {
