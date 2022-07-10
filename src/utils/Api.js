@@ -15,9 +15,6 @@ export default class Api {
     }
     return Promise.reject(`Error: ${res.status}`);
   }
-  // _handleErrorResponse(err) {
-  //   console.log(`Error: ${err.status}`);
-  // }
 
   handleErrorResponse(err) {
     console.log(`Error: ${err}`);
@@ -98,7 +95,6 @@ export default class Api {
   }
   //delete card
   deleteCard(cardId) {
-    // console.log(`${this._baseUrl}/cards/${cardId}`);
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       headers: this._headers,
       method: "DELETE",

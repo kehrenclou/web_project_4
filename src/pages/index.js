@@ -27,19 +27,20 @@ import Api from "..//utils/Api.js";
 // const baseUrl = "https://around.nomoreparties.co/v1/group-12";
 // const token = "72dee144-4e03-4ccf-86c7-08640cb55eca";
 /* -------------------------------- contents -------------------------------- */
-//constants used only once
+//Constants used only once
 //Functions
 //Event Listeners - Open Buttons
 //UserInfo Class
 //Api class - set up API
 //Create initial cards - api.getInfo - Section Class
 //Render Card - Card Class -api.addLikeOnCard/deleteLikeOnCard
-//PopupWithConfirmation class - confirm Delete Place - api.deleteCard
+//PopupWithConfirmation class - confirm Delete Place
+//handleDeleteSubmit - api.deleteCard
 //PopupWithForm class - Edit Avatar - api.patchProfileAvatar
 //PopupWithForm class -Edit Profile - api.patchProfileData
 //PopupWithForm class - Add Place - api.postNewCard
 //FormValidation class
-/* ------------------------ constants used only once ------------------------ */
+/* ------------------------ Constants used only once ------------------------ */
 
 //used in handleEditProfileOPenButton
 const inputNameElement = document.querySelector(selectors.inputNameID);
@@ -117,11 +118,7 @@ let userId = null;
 // pull in userData and initialCard data arrays
 api
   .getAppInfo()
-  // .then(api.handleResponse())
-  // .catch((err) => {
-  //   console.log("catch 122");
-  //   api.handleErrorResponse(err);
-  // })
+
   .then(([userData, initialCards]) => {
     //1. set UserInfo on page, grab userData._id
     userInfo.setUserInfo(userData.name, userData.about);
@@ -148,9 +145,6 @@ api
 /* ------ Render Card - Card Class -api.addLikeOnCard/deleteLikeOnCard ------ */
 
 const renderCard = (item) => {
-  // console.log(item);
-  //item has likes array, owner, cardid
-  //userid is passing in null
   const cardElement = new Card(item, userId, {
     templateSelector: selectors.cardTemplateId,
 
@@ -161,9 +155,11 @@ const renderCard = (item) => {
       imagePopup.open(title, link);
     },
 
-    handleDeleteClick: (evt) => {
-      checkDeletePopup.open(item._id, evt);
-      //this passes image id to class. opens check delete popup
+    handleDeleteClick: () => {
+    
+      checkDeletePopup.open(item._id, cardElement, handleDeleteSubmit);
+      //this passes image id, delete submit handler to popupwconf class.
+      // opens check delete popup
     },
 
     handleLikeButtonClick: (evt) => {
@@ -195,30 +191,34 @@ const renderCard = (item) => {
 
   cardSection.addItem(cardElement.createCard());
 };
-/* ------ PopupWithConfirmation class - confirm Delete Place - api.deleteCard ----- */
+/* ----------- PopupWithConfirmation class - confirm Delete Place ----------- */
 
-const checkDeletePopup = new PopupWithConfirmation(
-  { modalSelector: selectors.checkDeleteModalID },
-  {
-    handleFormSubmit: (cardId) => {
-      checkDeletePopup.changeSubmitTextOnUpload();
-      api
-        .deleteCard(cardId)
-        .then(() => {
-          //change button text back/remove card/close
+const checkDeletePopup = new PopupWithConfirmation({
+  modalSelector: selectors.checkDeleteModalID,
+});
+/* ------------------- handleDeleteSubmit - api.deleteCard ------------------ */
+//Ask why can't this be passed as a functiona nd neest to be passed as a const ()=>{}
+//? look up call back formatting - perhaps because it is a call back
+//gets passed in on checkDeletePopup.open(id, car, handleFormSubmit) via
+//event listener on submit declared in PopupWIthConf. class
+const handleDeleteSubmit = (cardId, cardEl) => {
+  checkDeletePopup.changeSubmitTextOnUpload();
 
-          checkDeletePopup.removeCard();
-          checkDeletePopup.close();
-        })
-        .catch((err) => {
-          api.handleErrorResponse(err);
-        })
-        .finally(() => {
-          checkDeletePopup.revertSubmitTextAfterUpload();
-        });
-    },
-  }
-);
+  api
+    .deleteCard(cardId)
+    .then(() => {
+      //change button text back/remove card/close
+      checkDeletePopup.removeCard(cardEl);
+      checkDeletePopup.close();
+    })
+    .catch((err) => {
+      api.handleErrorResponse(err);
+    })
+    .finally(() => {
+      checkDeletePopup.revertSubmitTextAfterUpload();
+    });
+};
+
 /* ------- PopupWithForm class - Edit Avatar - api.patchProfileAvatar ------- */
 
 const editAvatarForm = new PopupWithForm(
