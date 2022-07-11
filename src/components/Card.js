@@ -21,7 +21,7 @@ class Card {
     this._link = data.link;
     this._cardId = data._id;
 
-    this._likes = data.likes; //likes array
+    // this._likes = data.likes; //likes array
     this._userId = userId;
     // this._ownerID = data.owner._id; //broke code on add place click
     this._imageOwnerId = data.owner._id;
@@ -48,10 +48,6 @@ class Card {
     return cardTemplate;
   }
 
-  _handleLikeCardButton() {
-    this._likeButton.classList.toggle("cards__button_type_like-active");
-  }
-
   _setEventListeners() {
     this._likeButton.addEventListener("click", this._handleLikeButtonClick);
     // this._likeButton.addEventListener("click", this._handleLikeCardButton);
@@ -71,14 +67,17 @@ class Card {
     //check if userId matches any userIds in likes, set to active state
     if (this.checkLikeArrayForUserId()) {
       this._likeButton.classList.add(selectors.cardLikeButtonActiveSelector);
+    } else {
+      this._likeButton.classList.remove(selectors.cardLikeButtonActiveSelector);
     }
   }
 
   updateLikes(data) {
     this._likesIdArray = data.likes.map((like) => like._id); //updates array
-    this._likeCounter.textContent = this._likesIdArray.length;
-    //new
-    this._handleLikeCardButton();
+    this._renderLikes();
+  }
+  deleteCard() {
+    this._element.remove();
   }
 
   createCard() {

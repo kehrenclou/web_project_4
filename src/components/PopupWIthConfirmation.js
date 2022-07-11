@@ -16,9 +16,7 @@ export default class PopupWithConfirmation extends Popup {
     this._submitButton.textContent = "Yes";
   }
 
-  open(id, card, handleFormSubmit) {
-    this._imageId = id;
-    this._cardEl = card._element;
+  open(handleFormSubmit) {
     this._handleFormSubmit = handleFormSubmit;
 
     super.open();
@@ -32,7 +30,7 @@ export default class PopupWithConfirmation extends Popup {
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
 
-      this._handleFormSubmit(this._imageId, this._cardEl);
+      this._handleFormSubmit();
     });
     super.setEventListeners();
   }

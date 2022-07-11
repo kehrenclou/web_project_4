@@ -156,11 +156,9 @@ const renderCard = (item) => {
     },
 
     handleDeleteClick: () => {
-    
-      checkDeletePopup.open(item._id, cardElement, handleDeleteSubmit);
-      //this passes image id, delete submit handler to popupwconf class.
-      // opens check delete popup
-      console.log(cardElement); //returns the card element ok
+      checkDeletePopup.open(() => {
+        handleDeleteSubmit(item._id, cardElement);
+      });
     },
 
     handleLikeButtonClick: (evt) => {
@@ -198,19 +196,15 @@ const checkDeletePopup = new PopupWithConfirmation({
   modalSelector: selectors.checkDeleteModalID,
 });
 /* ------------------- handleDeleteSubmit - api.deleteCard ------------------ */
-//Ask why can't this be passed as a functiona nd neest to be passed as a const ()=>{}
-//? look up call back formatting - perhaps because it is a call back
-//gets passed in on checkDeletePopup.open(id, car, handleFormSubmit) via
-//event listener on submit declared in PopupWIthConf. class
-const handleDeleteSubmit = (cardId, cardEl) => {
+
+const handleDeleteSubmit = (cardId, card) => {
   checkDeletePopup.changeSubmitTextOnUpload();
 
   api
     .deleteCard(cardId)
     .then(() => {
       //change button text back/remove card/close
-      cardEl.remove();
-      // checkDeletePopup.removeCard(cardEl);
+      card.deleteCard();
       checkDeletePopup.close();
     })
     .catch((err) => {
