@@ -32,8 +32,8 @@ export const selectors = {
   cardLikeCountSelector: ".cards__like-count", //Card.js
   cardImageID: "#card-image", //card.js
   cardTitleID: "#card-text", //card.js
-  cardTrashButtonActiveSelector:"cards__button_type_delete-active", //card.js
-  cardLikeButtonActiveSelector:"cards__button_type_like-active", //card.js
+  cardTrashButtonActiveSelector: "cards__button_type_delete-active", //card.js
+  cardLikeButtonActiveSelector: "cards__button_type_like-active", //card.js
 
   imgSelector: ".modal__image", //section.js
   captionSelector: ".modal__caption", //section.js
@@ -65,12 +65,13 @@ export const selectors = {
 
   closeModalButtonSelector: ".modal__button-close",
 
-  profileAvatarContainerID: "#profile-avatar-container", //index.js - div works like a button
+  profileAvatarContainerID: "#profile-avatar-container", //index.
+
   editProfileOpenButtonID: "#edit-profile-open-button", //index.js
   addPlaceOpenButtonID: "#add-place-open-button", //index.js
   deletePlaceButtonID: "#place-delete-button", //card.js
   likePlaceButtonID: "#place-like-button", //card.js
 
-  deletePlaceSubmitButtonID:"#check-delete-submit-button", //index.js
-  popupSubmitButtonSelector:".modal__button-submit",//index.js
+  deletePlaceSubmitButtonID: "#check-delete-submit-button", //index.js
+  popupSubmitButtonSelector: ".modal__button-submit", //index.js
 };
