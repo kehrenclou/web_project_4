@@ -4,6 +4,7 @@ This is a project that creates a social media type platform similar to Instagram
 Edit - refactored code to use classes for Cards and Form Validation
 Edit - refactored code to create classes for Popup, PopupWithImage, PopupWithForm, UserInfo. Added Webpack and NPM
 Edit - refactored code to connect to Server via APIs, add ability to change Avatar, confirm delete popups, Like Button counter. Dynamic page passing information to and from server instead of from project files.
+Edit - refactored code to implement React
 
 ## Project Features
 
@@ -24,6 +25,7 @@ Edit - refactored code to connect to Server via APIs, add ability to change Avat
 - Apis
 - UI/UX features
   -changing alerts on Save
+-React
 
 ## Figma Design
 
@@ -31,7 +33,8 @@ Edit - refactored code to connect to Server via APIs, add ability to change Avat
 
 ## Link to Github Project
 
-https://kehrenclou.github.io/web_project_4/
+https://kehrenclou.github.io/web_project_4/ - pre REACT
+https://kehrenclou.github.io/around-react/ - post REACT
 
 ## Plan on improving project
 
